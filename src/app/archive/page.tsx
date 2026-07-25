@@ -6,13 +6,15 @@ import { AppShell } from "@/components/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { useApp } from "@/context/AppProvider";
+import { useAuth } from "@/context/AuthProvider";
+import { useLocale } from "@/context/LocaleProvider";
 import {
   formatDateLabel,
   formatWeekLabel,
   isCurrentWeek,
   weekKeyFromDate,
 } from "@/lib/dates";
-import { ME_ID, todayKey } from "@/lib/demo-data";
+import { todayKey } from "@/lib/demo-data";
 import {
   buildPeriodSummary,
   formatMonthLabel,
@@ -23,19 +25,23 @@ import {
   type PeriodSummary,
 } from "@/lib/summary";
 import type { FeedbackKind, WeekCapture } from "@/lib/types";
+import type { MessageKey } from "@/lib/i18n/t";
 
 type Tab = "weeks" | "days" | "month" | "year" | "feedback";
 
-const TABS: { id: Tab; label: string; small?: boolean }[] = [
-  { id: "weeks", label: "주간" },
-  { id: "days", label: "일간" },
-  { id: "month", label: "한달" },
-  { id: "year", label: "일년" },
-  { id: "feedback", label: "피드백", small: true },
+const TAB_KEYS: { id: Tab; labelKey: MessageKey; small?: boolean }[] = [
+  { id: "weeks", labelKey: "archive.weeks" },
+  { id: "days", labelKey: "archive.days" },
+  { id: "month", labelKey: "archive.month" },
+  { id: "year", labelKey: "archive.year" },
+  { id: "feedback", labelKey: "archive.feedback", small: true },
 ];
 
 export default function ArchivePage() {
   const { state, addFeedback } = useApp();
+  const { user } = useAuth();
+  const { t, dateLocale } = useLocale();
+  const myId = user?.id ?? "";
   const [tab, setTab] = useState<Tab>("weeks");
   const [openWeek, setOpenWeek] = useState<string | null>(null);
   const [feedbackKind, setFeedbackKind] = useState<FeedbackKind>("feedback");
@@ -54,14 +60,14 @@ export default function ArchivePage() {
       .map((check) => {
         const week = state.weeks.find((w) => w.weekKey === check.weekKey);
         const tokensSent = state.tokens.filter(
-          (t) => t.fromId === ME_ID && t.dateKey === check.dateKey,
+          (tok) => tok.fromId === myId && tok.dateKey === check.dateKey,
         ).length;
         const tokensReceived = state.tokens.filter(
-          (t) => t.toId === ME_ID && t.dateKey === check.dateKey,
+          (tok) => tok.toId === myId && tok.dateKey === check.dateKey,
         ).length;
         return { check, week, tokensSent, tokensReceived };
       });
-  }, [state.checks, state.tokens, state.weeks]);
+  }, [state.checks, state.tokens, state.weeks, myId]);
 
   const monthKey = monthKeyFromDate();
   const yearKey = yearKeyFromDate();
@@ -69,33 +75,38 @@ export default function ArchivePage() {
   const monthSummary = useMemo(() => {
     const monthWeeks = weeks.filter((w) => weekInMonth(w.weekKey, monthKey));
     return buildPeriodSummary(
-      formatMonthLabel(monthKey),
+      formatMonthLabel(monthKey, dateLocale),
       monthWeeks,
       state.checks,
     );
-  }, [weeks, state.checks, monthKey]);
+  }, [weeks, state.checks, monthKey, dateLocale]);
 
   const yearSummary = useMemo(() => {
     const yearWeeks = weeks.filter((w) => weekInYear(w.weekKey, yearKey));
-    return buildPeriodSummary(`${yearKey}년`, yearWeeks, state.checks);
-  }, [weeks, state.checks, yearKey]);
+    return buildPeriodSummary(
+      t("archive.yearLabel", { year: yearKey }),
+      yearWeeks,
+      state.checks,
+    );
+  }, [weeks, state.checks, yearKey, t]);
 
-  function submitFeedback(e: React.FormEvent) {
+  async function submitFeedback(e: React.FormEvent) {
     e.preventDefault();
     if (!feedbackText.trim()) return;
-    addFeedback(feedbackKind, feedbackText);
-    setFeedbackText("");
-    setSavedFlash(true);
-    setTimeout(() => setSavedFlash(false), 1600);
+    try {
+      await addFeedback(feedbackKind, feedbackText);
+      setFeedbackText("");
+      setSavedFlash(true);
+      setTimeout(() => setSavedFlash(false), 1600);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : t("archive.saveFail"));
+    }
   }
 
   return (
-    <AppShell
-      title="보관함"
-      subtitle="주간·일간부터 한달·일년 요약까지 돌아봐요."
-    >
+    <AppShell title={t("archive.title")} subtitle={t("archive.subtitle")}>
       <div className="archive-tabs">
-        {TABS.map((item) => (
+        {TAB_KEYS.map((item) => (
           <button
             key={item.id}
             type="button"
@@ -104,7 +115,7 @@ export default function ArchivePage() {
             }`}
             onClick={() => setTab(item.id)}
           >
-            {item.label}
+            {t(item.labelKey)}
           </button>
         ))}
       </div>
@@ -122,25 +133,25 @@ export default function ArchivePage() {
 
       {tab === "month" ? (
         <SummaryTab
-          title="이번 달 돌아보기"
-          emptyHint="이번 달 기록이 아직 없어요."
+          title={t("archive.monthReview")}
+          emptyHint={t("archive.monthEmpty")}
           summary={monthSummary}
         />
       ) : null}
 
       {tab === "year" ? (
         <SummaryTab
-          title="올해 돌아보기"
-          emptyHint="올해 기록이 아직 없어요."
+          title={t("archive.yearReview")}
+          emptyHint={t("archive.yearEmpty")}
           summary={yearSummary}
         />
       ) : null}
 
       {tab === "feedback" ? (
         <GlassCard>
-          <p className="pill">피드백 · 수정사항</p>
+          <p className="pill">{t("archive.feedbackTitle")}</p>
           <p className="hint" style={{ margin: "10px 0 12px" }}>
-            앱에 대한 가벼운 의견이나 고치고 싶은 점을 남겨주세요.
+            {t("archive.feedbackHint")}
           </p>
           <form onSubmit={submitFeedback}>
             <div className="feedback-kind-row">
@@ -151,7 +162,7 @@ export default function ArchivePage() {
                 }`}
                 onClick={() => setFeedbackKind("feedback")}
               >
-                피드백
+                {t("archive.feedbackKind")}
               </button>
               <button
                 type="button"
@@ -160,7 +171,7 @@ export default function ArchivePage() {
                 }`}
                 onClick={() => setFeedbackKind("fix")}
               >
-                수정사항
+                {t("archive.fixKind")}
               </button>
             </div>
             <div className="field" style={{ marginTop: 12 }}>
@@ -169,8 +180,8 @@ export default function ArchivePage() {
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder={
                   feedbackKind === "feedback"
-                    ? "예: 알림 문구가 더 부드러우면 좋겠어요"
-                    : "예: 보관함에서 작년 기록도 보고 싶어요"
+                    ? t("archive.feedbackPh")
+                    : t("archive.fixPh")
                 }
               />
             </div>
@@ -179,38 +190,19 @@ export default function ArchivePage() {
               style={{ width: "100%" }}
               disabled={!feedbackText.trim()}
             >
-              {savedFlash ? "저장됐어요" : "남기기"}
+              {savedFlash ? t("archive.saved") : t("archive.submit")}
             </Button>
           </form>
-
-          <div style={{ marginTop: 16 }}>
-            {(state.feedbacks ?? []).length === 0 ? (
-              <p className="empty">아직 남긴 메모가 없어요.</p>
-            ) : (
-              (state.feedbacks ?? []).map((note) => (
-                <div key={note.id} className="feed-item">
-                  <div className="feed-meta">
-                    {note.kind === "feedback" ? "피드백" : "수정사항"} ·{" "}
-                    {new Date(note.createdAt).toLocaleDateString("ko-KR", {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </div>
-                  <div>{note.text}</div>
-                </div>
-              ))
-            )}
-          </div>
         </GlassCard>
       ) : null}
 
       {tab !== "feedback" &&
       !weeks.some((w) => w.weekKey === weekKeyFromDate()) ? (
         <GlassCard>
-          <p className="hint">이번 주 기록이 아직 없어요.</p>
+          <p className="hint">{t("archive.noCurrentWeek")}</p>
           <Link href="/capture" style={{ display: "block", marginTop: 10 }}>
             <Button variant="soft" style={{ width: "100%" }}>
-              이번 주 담기
+              {t("archive.captureCurrentWeek")}
             </Button>
           </Link>
         </GlassCard>
@@ -230,12 +222,16 @@ function WeeksTab({
   openWeek: string | null;
   setOpenWeek: (key: string | null) => void;
 }) {
+  const { t, dateLocale } = useLocale();
+
   if (weeks.length === 0) {
     return (
       <GlassCard>
-        <p className="empty">아직 저장된 주간 기록이 없어요.</p>
+        <p className="empty">{t("archive.emptyWeeks")}</p>
         <Link href="/capture">
-          <Button style={{ width: "100%" }}>이번 주 말씀 담기</Button>
+          <Button style={{ width: "100%" }}>
+            {t("archive.captureThisWeek")}
+          </Button>
         </Link>
       </GlassCard>
     );
@@ -258,11 +254,13 @@ function WeeksTab({
               <div>
                 <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
                   {isCurrentWeek(week.weekKey) ? (
-                    <span className="pill">이번 주</span>
+                    <span className="pill">{t("archive.thisWeek")}</span>
                   ) : (
-                    <span className="pill">지난 주</span>
+                    <span className="pill">{t("archive.pastWeek")}</span>
                   )}
-                  <span className="tiny">{checksInWeek}일 체크</span>
+                  <span className="tiny">
+                    {t("archive.checksDays", { n: checksInWeek })}
+                  </span>
                 </div>
                 <h2 className="word-verse" style={{ marginTop: 10 }}>
                   {week.scripture}
@@ -293,12 +291,16 @@ function DaysTab({
     tokensReceived: number;
   }[];
 }) {
+  const { t, dateLocale } = useLocale();
+
   if (days.length === 0) {
     return (
       <GlassCard>
-        <p className="empty">아직 일간 체크 로그가 없어요.</p>
+        <p className="empty">{t("archive.emptyDays")}</p>
         <Link href="/">
-          <Button style={{ width: "100%" }}>오늘 기도하고 체크하기</Button>
+          <Button style={{ width: "100%" }}>
+            {t("archive.checkTodayCta")}
+          </Button>
         </Link>
       </GlassCard>
     );
@@ -306,26 +308,34 @@ function DaysTab({
 
   return (
     <GlassCard>
-      <p className="pill">기도 체크 기록</p>
+      <p className="pill">{t("archive.checkLog")}</p>
       <div style={{ marginTop: 8 }}>
         {days.map(({ check, week, tokensSent, tokensReceived }) => (
           <div key={check.dateKey} className="feed-item">
             <div className="row-between">
               <strong>{formatDateLabel(check.dateKey)}</strong>
               <span className="tiny">
-                {check.dateKey === todayKey() ? "오늘" : "완료"}
+                {check.dateKey === todayKey()
+                  ? t("archive.today")
+                  : t("archive.done")}
               </span>
             </div>
             <p className="hint" style={{ marginTop: 4 }}>
               {week
                 ? `${week.scripture} · ${week.briefPoint}`
-                : `${formatWeekLabel(check.weekKey)} 말씀`}
+                : t("archive.weekWord", {
+                    week: formatWeekLabel(check.weekKey),
+                  })}
             </p>
             {(tokensSent > 0 || tokensReceived > 0) && (
               <p className="tiny" style={{ marginTop: 4 }}>
-                {tokensSent > 0 ? `보낸 기도 ${tokensSent}` : null}
+                {tokensSent > 0
+                  ? t("archive.prayersSent", { n: tokensSent })
+                  : null}
                 {tokensSent > 0 && tokensReceived > 0 ? " · " : null}
-                {tokensReceived > 0 ? `받은 기도 ${tokensReceived}` : null}
+                {tokensReceived > 0
+                  ? t("archive.prayersReceived", { n: tokensReceived })
+                  : null}
               </p>
             )}
           </div>
@@ -344,12 +354,14 @@ function SummaryTab({
   emptyHint: string;
   summary: PeriodSummary;
 }) {
+  const { t } = useLocale();
+
   if (summary.weekCount === 0) {
     return (
       <GlassCard>
         <p className="empty">{emptyHint}</p>
         <Link href="/capture">
-          <Button style={{ width: "100%" }}>말씀 담기</Button>
+          <Button style={{ width: "100%" }}>{t("archive.captureWord")}</Button>
         </Link>
       </GlassCard>
     );
@@ -363,14 +375,17 @@ function SummaryTab({
           {summary.label}
         </h2>
         <p className="hint" style={{ marginTop: 8 }}>
-          주간 기록 {summary.weekCount}개 · 기도 체크 {summary.checkCount}일
+          {t("archive.periodStats", {
+            weeks: summary.weekCount,
+            days: summary.checkCount,
+          })}
         </p>
       </GlassCard>
 
       <GlassCard>
-        <p className="pill">기도 제목 요약</p>
+        <p className="pill">{t("archive.prayerSummary")}</p>
         {summary.prayers.length === 0 ? (
-          <p className="empty">공개된 기도 제목이 없어요.</p>
+          <p className="empty">{t("archive.noPrayers")}</p>
         ) : (
           <div className="keyword-wrap">
             {summary.prayers.map((p) => (
@@ -383,9 +398,9 @@ function SummaryTab({
       </GlassCard>
 
       <GlassCard>
-        <p className="pill">묵상 요약</p>
+        <p className="pill">{t("archive.meditationSummary")}</p>
         {summary.meditations.length === 0 ? (
-          <p className="empty">묵상 포인트가 없어요.</p>
+          <p className="empty">{t("archive.noMeditations")}</p>
         ) : (
           <div className="stack" style={{ marginTop: 10 }}>
             {summary.meditations.map((m) => (
@@ -399,7 +414,7 @@ function SummaryTab({
 
       {summary.practices.length > 0 ? (
         <GlassCard>
-          <p className="pill">실천 모음</p>
+          <p className="pill">{t("archive.practices")}</p>
           <div className="stack" style={{ marginTop: 10 }}>
             {summary.practices.map((p) => (
               <div key={p} className="member-chip">
@@ -412,7 +427,7 @@ function SummaryTab({
 
       {summary.scriptures.length > 0 ? (
         <GlassCard>
-          <p className="pill">본문 모음</p>
+          <p className="pill">{t("archive.scriptures")}</p>
           <div className="stack" style={{ marginTop: 10 }}>
             {summary.scriptures.map((s) => (
               <div key={s} className="tiny" style={{ fontWeight: 600 }}>
@@ -427,34 +442,38 @@ function SummaryTab({
 }
 
 function WeekDetail({ week }: { week: WeekCapture }) {
+  const { t } = useLocale();
+
   return (
     <div className="archive-detail">
       <p style={{ margin: "0 0 8px", fontWeight: 600 }}>{week.briefPoint}</p>
-      <p className="hint">첫 생각: {week.firstThought}</p>
+      <p className="hint">
+        {t("archive.firstThought", { text: week.firstThought })}
+      </p>
       {week.notes ? (
         <p className="hint" style={{ marginTop: 8 }}>
-          노트: {week.notes}
+          {t("archive.notes", { text: week.notes })}
         </p>
       ) : null}
       {week.meditationPoint ? (
         <p className="hint" style={{ marginTop: 8 }}>
-          묵상 포인트: {week.meditationPoint}
+          {t("archive.meditation", { text: week.meditationPoint })}
         </p>
       ) : null}
       {week.practice ? (
         <p className="hint" style={{ marginTop: 4 }}>
-          실천: {week.practice}
+          {t("archive.practice", { text: week.practice })}
         </p>
       ) : null}
       {week.prayerRequest ? (
         <p className="hint" style={{ marginTop: 4 }}>
-          기도: {week.prayerRequest}
+          {t("archive.prayer", { text: week.prayerRequest })}
         </p>
       ) : null}
       {isCurrentWeek(week.weekKey) ? (
         <Link href="/capture" style={{ display: "block", marginTop: 12 }}>
           <Button variant="soft" style={{ width: "100%" }}>
-            이번 주 수정
+            {t("archive.editThisWeek")}
           </Button>
         </Link>
       ) : null}

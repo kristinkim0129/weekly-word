@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 함께묵상 · After Sermon
 
-## Getting Started
+**설교 이후, 한 주를 함께**  
+*After Sermon — Pray the week together*
 
-First, run the development server:
+일요일 말씀이 한 주를 인도하게 하고, 친구·교회와 함께 기도하며 살아가는 앱.
+
+왜 만들었는지는 [`PURPOSE.md`](./PURPOSE.md), 스토어 카피는 [`APP_STORE.md`](./APP_STORE.md).
+
+---
+
+## 이런 사람에게
+
+- 셀·소그룹처럼 **교회 안에서** 같이 한 주를 살고 싶은 사람
+- 멀리 살아도 **accountability buddy**로 신앙을 잇고 싶은 친구들
+- 개인 묵상은 지키되, 기도·실천은 **서로에게 열어** 두고 싶은 사람
+
+---
+
+## 무엇을 하나요
+
+| 흐름 | 내용 |
+| --- | --- |
+| **기록** | 일요일 말씀을 담고, 포인트·첫인상·메모를 남긴다 (개인) |
+| **나눔** | 기도제목·묵상 포인트·실천은 그룹에 공개한다 |
+| **오늘** | 기도한 뒤 체크하고, 친구에게 “기도했어”를 보낸다 |
+| **함께** | 초대 코드로 그룹·시즌을 만든다 |
+| **보관** | 지나간 주의 말씀을 돌아본다 |
+
+---
+
+## 기술 스택
+
+- Next.js · React · TypeScript · Tailwind · Supabase · Google 로그인
 
 ```bash
+npm install
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000) → 언어 선택 → 로그인 → 말씀 담기 → 그룹.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+CUJ 스토리보드(로그인 없이 앱 UI): [http://localhost:3000/storyboard](http://localhost:3000/storyboard)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+설정은 [`SETUP.md`](./SETUP.md).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 문서
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| 문서 | 내용 |
+| --- | --- |
+| [`PURPOSE.md`](./PURPOSE.md) | 목적 · 창업자 노트 |
+| [`PURPOSE.en.md`](./PURPOSE.en.md) | Purpose (English) |
+| [`APP_STORE.md`](./APP_STORE.md) | App Store 타이틀·설명 |
+| [`README.en.md`](./README.en.md) | English overview |
+| [`SETUP.md`](./SETUP.md) | Supabase · OAuth · Vercel |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[English](./README.en.md)

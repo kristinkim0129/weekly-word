@@ -5,44 +5,78 @@ import { AppShell } from "@/components/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { useApp } from "@/context/AppProvider";
+import { useLocale } from "@/context/LocaleProvider";
+import { stripAiDisclaimer } from "@/lib/ai/reply";
 
 export default function QuestionsPage() {
-  const { state, addQuestion, askAi, pastorSummary } = useApp();
+  const { state, addQuestion, askAi, pastorSummary, markPastorSummaryCopied } =
+    useApp();
+  const { t } = useLocale();
   const [text, setText] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [askingId, setAskingId] = useState<string | null>(null);
 
-  function onSubmit(e: React.FormEvent) {
+  const hasAiReply = state.questions.some((q) => q.aiReply);
+  const aiUsed = Boolean(state.settings.aiReplyUsedAt);
+  const summaryUsed = Boolean(state.settings.pastorSummaryCopiedAt);
+
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim()) return;
-    addQuestion(text, anonymous);
-    setText("");
+    try {
+      await addQuestion(text, anonymous);
+      setText("");
+    } catch (err) {
+      alert(err instanceof Error ? err.message : t("questions.addFail"));
+    }
+  }
+
+  async function onAskAi(questionId: string) {
+    if (aiUsed) return;
+    setAskingId(questionId);
+    try {
+      await askAi(questionId);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : t("questions.askFail"));
+    } finally {
+      setAskingId(null);
+    }
   }
 
   async function copySummary() {
+    if (summaryUsed) return;
     const summary = pastorSummary();
     try {
       await navigator.clipboard.writeText(summary);
+    } catch {
+      const ok = window.prompt(t("questions.copyPrompt"), summary);
+      if (ok == null) return;
+    }
+    try {
+      await markPastorSummaryCopied();
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.prompt("복사해서 목사님께 보내세요:", summary);
+    } catch (err) {
+      alert(
+        err instanceof Error ? err.message : t("errors.pastorSummaryUsed"),
+      );
     }
   }
 
   return (
     <AppShell
-      title="질문 보드"
-      subtitle="가볍게 남기고, 필요하면 목사님께 요약해요."
+      title={t("questions.title")}
+      subtitle={t("questions.subtitle")}
     >
       <GlassCard>
         <form onSubmit={onSubmit}>
           <div className="field">
-            <label>질문</label>
+            <label>{t("questions.label")}</label>
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="설교나 말씀에 대해 궁금한 점"
+              placeholder={t("questions.placeholder")}
             />
           </div>
           <label className="row" style={{ marginBottom: 12, cursor: "pointer" }}>
@@ -51,60 +85,77 @@ export default function QuestionsPage() {
               checked={anonymous}
               onChange={(e) => setAnonymous(e.target.checked)}
             />
-            <span className="hint">익명으로 올리기</span>
+            <span className="hint">{t("questions.anonymous")}</span>
           </label>
           <Button type="submit" style={{ width: "100%" }} disabled={!text.trim()}>
-            질문 올리기
+            {t("questions.submit")}
           </Button>
         </form>
       </GlassCard>
 
       <GlassCard>
         <div className="row-between">
-          <p className="pill">목사님께 요약</p>
-          <Button variant="ghost" onClick={copySummary} style={{ padding: "8px 10px" }}>
-            {copied ? "복사됨" : "요약 복사"}
+          <p className="pill">{t("questions.pastorTitle")}</p>
+          <Button
+            variant="ghost"
+            onClick={() => void copySummary()}
+            disabled={summaryUsed}
+            style={{ padding: "8px 10px" }}
+          >
+            {summaryUsed
+              ? t("questions.copySummaryUsed")
+              : copied
+                ? t("group.copied")
+                : t("questions.copySummary")}
           </Button>
         </div>
         <p className="hint" style={{ marginTop: 8 }}>
-          그룹이 모은 질문을 짧게 정리해 공유할 수 있어요.
+          {summaryUsed
+            ? t("questions.summaryOnceUsed")
+            : t("questions.pastorHint")}
         </p>
       </GlassCard>
 
       <GlassCard>
-        <p className="pill">보드</p>
+        <p className="pill">{t("questions.board")}</p>
+        {aiUsed ? (
+          <p className="hint" style={{ marginTop: 8 }}>
+            {t("questions.aiOnceUsed")}
+          </p>
+        ) : null}
         <div style={{ marginTop: 8 }}>
           {state.questions.length === 0 ? (
-            <p className="empty">아직 질문이 없어요.</p>
+            <p className="empty">{t("questions.empty")}</p>
           ) : (
             state.questions.map((q) => (
               <div key={q.id} className="feed-item">
                 <div className="feed-meta">
-                  {q.isAnonymous ? "익명" : q.authorName}
+                  {q.isAnonymous ? t("questions.anonymousName") : q.authorName}
                 </div>
                 <div style={{ marginBottom: 8 }}>{q.text}</div>
                 {q.aiReply ? (
-                  <>
-                    <div className="hint" style={{ whiteSpace: "pre-wrap" }}>
-                      {q.aiReply}
-                    </div>
-                  </>
+                  <div className="hint" style={{ whiteSpace: "pre-wrap" }}>
+                    {stripAiDisclaimer(q.aiReply)}
+                  </div>
                 ) : (
                   <Button
                     variant="soft"
-                    onClick={() => askAi(q.id)}
+                    onClick={() => void onAskAi(q.id)}
+                    disabled={askingId === q.id || aiUsed}
                     style={{ padding: "8px 12px", fontSize: "0.85rem" }}
                   >
-                    AI 간단 답변 보기
+                    {askingId === q.id
+                      ? t("questions.askingAi")
+                      : t("questions.askAi")}
                   </Button>
                 )}
               </div>
             ))
           )}
         </div>
-        <div className="disclaimer">
-          AI 답변은 참고용이며, 100% 정확하거나 검증된 성경 해석이 아닙니다.
-        </div>
+        {hasAiReply ? (
+          <div className="disclaimer">{t("questions.aiDisclaimer")}</div>
+        ) : null}
       </GlassCard>
     </AppShell>
   );

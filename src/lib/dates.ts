@@ -28,6 +28,39 @@ export function formatDateLabel(dateKey: string) {
   });
 }
 
+/** 요일만 — 예: 월, 화 */
+export function formatWeekdayOnly(isoOrDateKey: string) {
+  const d = isoOrDateKey.includes("T")
+    ? new Date(isoOrDateKey)
+    : parseDateKey(isoOrDateKey);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("ko-KR", { weekday: "short" });
+}
+
+/** 날짜 대신 보여주는 귀여운 상대 이모지 — 오늘✨ 어제🌙 이번 주🌱 이달🍃 그 전🕊 */
+export function relativeDayEmoji(dateKey: string, now = new Date()) {
+  const today = toDateKey(now);
+  if (dateKey === today) return "✨";
+
+  const yesterdayDate = new Date(now);
+  yesterdayDate.setHours(12, 0, 0, 0);
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  if (dateKey === toDateKey(yesterdayDate)) return "🌙";
+
+  const target = parseDateKey(dateKey);
+  if (Number.isNaN(target.getTime())) return "🕊";
+
+  const startOfToday = new Date(now);
+  startOfToday.setHours(12, 0, 0, 0);
+  const diffDays = Math.round(
+    (startOfToday.getTime() - target.getTime()) / (24 * 60 * 60 * 1000),
+  );
+
+  if (diffDays >= 0 && diffDays < 7) return "🌱";
+  if (diffDays >= 0 && diffDays < 30) return "🍃";
+  return "🕊";
+}
+
 export function formatWeekLabel(weekKey: string) {
   const start = parseDateKey(weekKey);
   const end = new Date(start);

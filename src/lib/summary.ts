@@ -78,9 +78,9 @@ function unique(items: string[]) {
   return out;
 }
 
-export function formatMonthLabel(monthKey: string) {
+export function formatMonthLabel(monthKey: string, dateLocale = "ko-KR") {
   const [y, m] = monthKey.split("-").map(Number);
-  return new Date(y, m - 1, 1).toLocaleDateString("ko-KR", {
+  return new Date(y, m - 1, 1).toLocaleDateString(dateLocale, {
     year: "numeric",
     month: "long",
   });

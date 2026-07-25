@@ -2,13 +2,14 @@ import { weekKeyFromDate } from "./dates";
 import { createInitialState } from "./demo-data";
 import type { AppState, DailyCheck, WeekCapture } from "./types";
 
-const KEY = "weekly-word-state-v4";
+const KEY = "weekly-word-state-v5";
 
 export function loadState(): AppState {
   if (typeof window === "undefined") return createInitialState();
   try {
     const raw =
       localStorage.getItem(KEY) ??
+      localStorage.getItem("weekly-word-state-v4") ??
       localStorage.getItem("weekly-word-state-v3") ??
       localStorage.getItem("weekly-word-state-v2");
     if (!raw) return createInitialState();
@@ -17,8 +18,7 @@ export function loadState(): AppState {
       checks?: Array<DailyCheck & { weekKey?: string }>;
     };
     const base = createInitialState();
-    const migrated = migrate(parsed, base);
-    return migrated;
+    return migrate(parsed, base);
   } catch {
     return createInitialState();
   }
