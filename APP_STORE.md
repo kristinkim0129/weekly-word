@@ -1,8 +1,10 @@
 # App Store — listing copy & submission prep
 
+**English one-pager (with screenshots):** [`docs/ONE_PAGER.md`](./docs/ONE_PAGER.md)
+
 **App (KR):** 함께묵상  
 **App (EN):** After Sermon  
-**Bundle / product:** weekly-word (web → Capacitor iOS wrapper planned)  
+**Bundle / product:** weekly-word · Capacitor iOS shell (`com.aftersermon.app`)  
 **Production web:** https://weekly-word-eight.vercel.app  
 **Privacy URL:** https://weekly-word-eight.vercel.app/privacy  
 **Support URL:** https://weekly-word-eight.vercel.app/support  
@@ -22,7 +24,7 @@
 | Privacy Policy page (`/privacy`) | Done | Public URL ready for App Store Connect |
 | Support page (`/support`) | Done | Public URL ready for App Store Connect |
 | Listing copy (EN + KO) below | Draft ready | Paste into App Store Connect |
-| Capacitor / `ios/` project | **Not started** | See [SETUP.md](SETUP.md) § App Store (iOS) |
+| Capacitor / `ios/` project | **In repo** | Shell loads prod URL; Archive from Xcode — [SETUP.md](SETUP.md) § App Store (iOS) |
 | Apple Developer account | **You** | Paid membership required |
 | App Store Connect app record | **You** | Create app, bundle ID, screenshots |
 | Age rating questionnaire | **You** | Suggested answers below |
@@ -350,14 +352,15 @@ Test Google account (optional if ASC provides sign-in): ________
 - [ ] Answer encryption questions: app uses HTTPS only (standard TLS). Usually qualifies for **exempt** / standard encryption documentation — no proprietary crypto.
 - [ ] Confirm no custom encryption beyond OS/TLS.
 
-### 9. Capacitor iOS build (not in repo yet)
+### 9. Capacitor iOS build (in repo)
 
-Capacitor is **not** installed; there is no `ios/` folder. Do **not** expect an `.ipa` from this web-only repo until you follow [SETUP.md](SETUP.md) § App Store (iOS). Then:
+Capacitor iOS shell is in the repo (`ios/`, `capacitor.config.ts`). The WebView loads `https://weekly-word-eight.vercel.app` (not a static export). See [SETUP.md](SETUP.md) § App Store (iOS).
 
-- [ ] `npx cap add ios` + open Xcode  
-- [ ] Set bundle ID, signing team, version/build  
-- [ ] Archive → Upload to App Store Connect  
-- [ ] TestFlight internal test → Submit for Review  
+- [x] Capacitor packages + `ios/` project committed  
+- [ ] `npm run cap:sync` → `npm run cap:open:ios`  
+- [ ] Signing & Capabilities → Team; confirm bundle ID `com.aftersermon.app`  
+- [ ] Product → Archive → Distribute → App Store Connect  
+- [ ] Select build in ASC / TestFlight → Submit for Review  
 
 Do **not** invent certificates or upload without your Apple team credentials.
 
@@ -381,6 +384,6 @@ Do **not** invent certificates or upload without your Apple team credentials.
 1. Confirm production URLs above still resolve after deploy.  
 2. Create Apple Developer + App Store Connect app + bundle ID.  
 3. Design 1024 icon + 3–6 screenshots.  
-4. Follow Capacitor steps in SETUP.md; archive from Xcode.  
+4. Open Xcode (`npm run cap:open:ios`), sign, Archive, upload; select build in ASC.  
 5. Fill Privacy nutrition labels + age rating; paste review notes + invite code.  
 6. Submit to App Review (TestFlight first recommended).

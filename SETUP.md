@@ -49,55 +49,75 @@ npm run dev
 
 브라우저에서 Google 로그인 → 말씀 담기 → 그룹 만들기까지 테스트.
 
-## 다음 — App Store (iOS)
+## App Store (iOS) — Capacitor
 
-웹 프로덕션이 안정된 뒤, **네이티브 셸**로 감싸 App Store에 올립니다.  
-현재 저장소에는 Capacitor / `ios/` 프로젝트가 **아직 없습니다.** 아래는 처음부터의 정확한 다음 단계입니다.
+Capacitor iOS 셸이 저장소에 포함되어 있습니다 (`ios/`, `capacitor.config.ts`).
 
-제출 체크리스트·스토어 문구·스크린샷 목록은 [`APP_STORE.md`](APP_STORE.md)를 보세요.
+**현재 방식:** WKWebView가 프로덕션 Next.js 앱을 로드합니다  
+(`server.url` = `https://weekly-word-eight.vercel.app`).  
+`webDir: public`은 sync용 placeholder이며, 앱의 소스가 아닙니다.  
+오프라인 / static export는 이후 단계입니다.
+
+**Bundle ID:** `com.aftersermon.app`  
+**App name:** After Sermon  
+
+**Privacy / Support URLs (이미 라이브):**
+- Privacy: https://weekly-word-eight.vercel.app/privacy
+- Support: https://weekly-word-eight.vercel.app/support  
+
+제출 체크리스트·스토어 문구·스크린샷은 [`APP_STORE.md`](APP_STORE.md)를 보세요.
 
 ### A. 준비 (사람 / Apple)
 
 1. [Apple Developer Program](https://developer.apple.com/programs/) 등록  
-2. Bundle ID 생성 (예: `com.aftersermon.app`)  
-3. App Store Connect에 앱 레코드 생성  
-4. Privacy / Support URL 확인:
-   - `https://weekly-word-eight.vercel.app/privacy`
-   - `https://weekly-word-eight.vercel.app/support`
+2. Bundle ID `com.aftersermon.app` 가 [Identifiers](https://developer.apple.com/account/resources/identifiers/list)에 있는지 확인 (없으면 생성)  
+3. [App Store Connect](https://appstoreconnect.apple.com)에 앱 레코드 생성 (같은 Bundle ID)  
+4. App Information에 Privacy / Support URL 입력 (위 URL)
 
-### B. Capacitor 초기화 (로컬, 자격 증명 불필요)
-
-프로덕션 URL을 WebView로 여는 방식이 가장합니다 (SSR/OAuth가 이미 Vercel에 있음).
+### B. 로컬에서 Xcode로 Archive · 업로드
 
 ```bash
-# 1) Capacitor 추가
-npm install @capacitor/core @capacitor/cli @capacitor/ios
-npx cap init "After Sermon" com.aftersermon.app --web-dir public
-
-# 2) capacitor.config.ts 에서 server.url 을 프로덕션으로 지정 (예시)
-# server: { url: 'https://weekly-word-eight.vercel.app', cleartext: false }
-
-# 3) iOS 플랫폼 추가
-npx cap add ios
-npx cap sync ios
-npx cap open ios
+npm install
+npm run cap:sync
+npm run cap:open:ios
 ```
 
-그다음 Xcode에서:
+Xcode가 열리면:
 
-1. Signing & Capabilities → Team 선택, Bundle Identifier 확인  
-2. 배포용 버전/빌드 번호  
-3. **Product → Archive** → Distribute App → App Store Connect  
-4. TestFlight 내부 테스트 후 Submit for Review  
+1. 왼쪽 네비게이터에서 **App** 타깃 선택  
+2. **Signing & Capabilities** → Team 선택 (개인/조직 Apple Developer)  
+   - Bundle Identifier가 `com.aftersermon.app` 인지 확인  
+3. 필요 시 **General**에서 Version (`1.0`) / Build (`1`) 조정  
+4. 상단 scheme = **App**, destination = **Any iOS Device (arm64)** (시뮬레이터면 Archive 불가)  
+5. **Product → Archive**  
+6. Organizer에서 **Distribute App** → **App Store Connect** → Upload  
+7. [App Store Connect](https://appstoreconnect.apple.com) → 앱 → **TestFlight**에서 빌드 처리 완료 대기  
+8. 빌드를 버전/제출에 선택한 뒤 **Submit for Review**
 
-인증서·프로비저닝은 Xcode / Apple Developer가 발급합니다.  
-이 저장소에 가짜 인증서를 만들거나, 자격 증명 없이 업로드를 시도하지 마세요.
+인증서·프로비저닝은 Xcode가 자동 관리합니다 (Automatically manage signing).  
+이 저장소에 가짜 인증서를 넣거나, 자격 증명 없이 업로드를 시도하지 마세요.
 
-### C. OAuth (iOS WebView) 주의
+설정 변경 후 다시 sync할 때:
 
-Google / Supabase 리다이렉트가 Capacitor WebView에서 막히면:
+```bash
+npm run cap:sync
+```
 
-- Supabase Redirect URLs에 Capacitor/커스텀 스킴 콜백 추가  
-- 또는 ASWebAuthenticationSession / 시스템 브라우저 로그인 플로우로 전환  
+### C. OAuth (iOS WKWebView) 주의
 
-제출 전 실제 기기에서 Google 로그인을 한 번 확인하세요.
+Google 로그인은 **WKWebView 안에서** 돌 때 제약이 있을 수 있습니다.
+
+- Capacitor `server.allowNavigation`에 Google / Supabase 호스트를 넣어 두었습니다 (`capacitor.config.ts`).  
+- Google이 임베디드 WebView 로그인을 차단하면 (`disallowed_useragent` 등):
+  - `@capacitor/browser`로 시스템 Safari / SFSafariViewController 로그인으로 전환하거나  
+  - ASWebAuthenticationSession / 커스텀 URL 스킴 콜백을 검토하세요.  
+- Supabase Redirect URLs에 Capacitor 스킴이 필요해지면 예: `com.aftersermon.app://auth/callback`  
+- **제출 전 실제 기기**에서 Google 로그인을 한 번 확인하세요.
+
+### D. 유용한 npm 스크립트
+
+| Script | 용도 |
+| --- | --- |
+| `npm run cap:sync` | 웹 자산 + 네이티브 플러그인 sync (`ios`) |
+| `npm run cap:open:ios` | Xcode에서 `ios/App/App.xcworkspace` 또는 프로젝트 열기 |
+| `npm run cap:copy` | 웹 자산만 copy |
