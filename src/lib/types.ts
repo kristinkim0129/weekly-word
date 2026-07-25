@@ -6,6 +6,10 @@ export type Member = {
   id: MemberId;
   name: string;
   isMe?: boolean;
+  /** Profile / Google avatar URL when available */
+  avatarUrl?: string;
+  /** Optional emoji override shown instead of avatarUrl */
+  avatarEmoji?: string;
   /** 그룹에 공개되는 짧은 기도 제목/키워드 */
   prayerRequest?: string;
   meditationPoint?: string;
@@ -40,7 +44,10 @@ export type WeekCapture = {
   id: string;
   /** 그 주 일요일 YYYY-MM-DD */
   weekKey: string;
+  /** Chapter / reference for Today week card (e.g. John 15 or John 15:1-8) */
   scripture: string;
+  /** User-entered passage text for Today → Read (5 min) */
+  passage?: string;
   /** 개인용 */
   briefPoint: string;
   /** 개인용 */
@@ -101,6 +108,8 @@ export type AppSettings = {
   themeId: ThemeId;
   nudgeTime: string; // HH:mm
   groupEnabled: boolean;
+  /** Optional emoji avatar override (takes display priority over avatarUrl) */
+  avatarEmoji?: string | null;
   /** Lifetime: account already generated an AI reply */
   aiReplyUsedAt?: string | null;
   /** Lifetime: account already copied pastor summary */

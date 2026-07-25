@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 104" fill="none" aria-hidden="true">
+  <!-- arched frame (open at bottom) -->
+  <path
+    d="M14 102V48A26 26 0 0 1 66 48V102"
+    stroke="#C5A365"
+    stroke-width="3.2"
+    stroke-linecap="round"
+  />
+  <!-- small cross inside arch peak -->
+  <path
+    d="M40 28v12M34 34h12"
+    stroke="#C5A365"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <!-- ground line -->
+  <path
+    d="M25 90h30"
+    stroke="#C5A365"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <!-- sprout stem -->
+  <path
+    d="M40 90V56"
+    stroke="#C5A365"
+    stroke-width="2.6"
+    stroke-linecap="round"
+  />
+  <!-- leaves -->
+  <path d="M40 72c-11-1-17 5-18 14 11 0 17-6 18-14Z" fill="#C5A365" />
+  <path d="M40 68c11-1 17 5 18 14-11 0-17-6-18-14Z" fill="#C5A365" />
+  <path d="M40 60c-7 5-6 13-2 18 7-3 10-10 2-18Z" fill="#C5A365" />
+  <path d="M40 56c7 5 6 13 2 18-7-3-10-10-2-18Z" fill="#C5A365" />
+</svg>

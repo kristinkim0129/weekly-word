@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <rect width="120" height="120" rx="28" fill="#2C333A"/>
+  <!-- open book -->
+  <path
+    d="M22 78c14-10 28-10 38-2 10-8 24-8 38 2v10c-14-8-28-8-38 0-10-8-24-8-38 0V78Z"
+    stroke="#C9A96E"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M60 76v14"
+    stroke="#C9A96E"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <!-- sprout -->
+  <path
+    d="M60 72c0-16 8-28 8-40"
+    stroke="#C9A96E"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+  <path
+    d="M60 48c-12-2-20 6-22 16 12 0 20-6 22-16Z"
+    fill="#C9A96E"
+  />
+  <path
+    d="M60 42c12-2 20 6 22 16-12 0-20-6-22-16Z"
+    fill="#C9A96E"
+  />
+  <path
+    d="M60 28c-7 8-6 18-2 24 8-4 12-12 2-24Z"
+    fill="#C9A96E"
+  />
+</svg>

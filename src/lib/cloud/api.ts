@@ -50,6 +50,7 @@ export async function ensureProfile(
   supabase: SupabaseClient,
   userId: string,
   fallbackName: string,
+  avatarUrl?: string | null,
 ) {
   const { data } = await supabase
     .from("profiles")
@@ -57,13 +58,29 @@ export async function ensureProfile(
     .eq("id", userId)
     .maybeSingle();
 
-  if (data) return data;
+  if (data) {
+    const nextAvatar =
+      typeof avatarUrl === "string" && avatarUrl.trim()
+        ? avatarUrl.trim()
+        : null;
+    if (nextAvatar && !data.avatar_url) {
+      const { data: updated } = await supabase
+        .from("profiles")
+        .update({ avatar_url: nextAvatar })
+        .eq("id", userId)
+        .select("*")
+        .maybeSingle();
+      return updated ?? { ...data, avatar_url: nextAvatar };
+    }
+    return data;
+  }
 
   const { data: created, error } = await supabase
     .from("profiles")
     .insert({
       id: userId,
       display_name: fallbackName || tStored("common.me"),
+      ...(avatarUrl?.trim() ? { avatar_url: avatarUrl.trim() } : {}),
     })
     .select("*")
     .single();
@@ -76,11 +93,13 @@ export async function loadCloudBundle(
   supabase: SupabaseClient,
   userId: string,
   displayNameFallback: string,
+  avatarUrlFallback?: string | null,
 ): Promise<CloudBundle> {
   const profile = await ensureProfile(
     supabase,
     userId,
     displayNameFallback,
+    avatarUrlFallback,
   );
 
   const { data: memberships } = await supabase
@@ -128,11 +147,21 @@ export async function loadCloudBundle(
 
   const { data: memberProfiles } = await supabase
     .from("profiles")
-    .select("id, display_name")
+    .select("id, display_name, avatar_url, avatar_emoji")
     .in("id", memberIds);
 
   const nameById = new Map(
     (memberProfiles ?? []).map((p) => [p.id, p.display_name] as const),
+  );
+  const avatarById = new Map(
+    (memberProfiles ?? [])
+      .filter((p) => typeof p.avatar_url === "string" && p.avatar_url)
+      .map((p) => [p.id as string, p.avatar_url as string] as const),
+  );
+  const emojiById = new Map(
+    (memberProfiles ?? [])
+      .filter((p) => typeof p.avatar_emoji === "string" && p.avatar_emoji.trim())
+      .map((p) => [p.id as string, (p.avatar_emoji as string).trim()] as const),
   );
 
   const { data: latestCaptures } = await supabase
@@ -260,6 +289,19 @@ export async function loadCloudBundle(
 
   const members: Member[] = memberIds.map((id) => {
     const shared = sharedByUser.get(id);
+    const avatarUrl =
+      id === userId
+        ? ((profile.avatar_url as string | null) ??
+          avatarById.get(id) ??
+          undefined)
+        : avatarById.get(id);
+    const avatarEmoji =
+      id === userId
+        ? typeof profile.avatar_emoji === "string" &&
+          profile.avatar_emoji.trim()
+          ? profile.avatar_emoji.trim()
+          : emojiById.get(id)
+        : emojiById.get(id);
     return {
       id,
       name:
@@ -267,6 +309,8 @@ export async function loadCloudBundle(
           ? profile.display_name
           : (nameById.get(id) ?? tStored("common.member")),
       isMe: id === userId,
+      avatarUrl: avatarUrl || undefined,
+      avatarEmoji: avatarEmoji || undefined,
       prayerRequest: shared?.prayer_request ?? undefined,
       meditationPoint: shared?.meditation_point ?? undefined,
       practice: shared?.practice ?? undefined,
@@ -275,12 +319,18 @@ export async function loadCloudBundle(
 
   const mappedWeeks: WeekCapture[] = (weeks ?? []).map(mapWeek);
 
+  const profileEmoji =
+    typeof profile.avatar_emoji === "string" && profile.avatar_emoji.trim()
+      ? profile.avatar_emoji.trim()
+      : null;
+
   const state: AppState = {
     settings: {
       displayName: profile.display_name,
       themeId: parseThemeId(profile.theme_id),
       nudgeTime: profile.nudge_time || "08:00",
       groupEnabled: profile.group_enabled ?? true,
+      avatarEmoji: profileEmoji,
       aiReplyUsedAt: (profile.ai_reply_used_at as string | null) ?? null,
       pastorSummaryCopiedAt:
         (profile.pastor_summary_copied_at as string | null) ?? null,
@@ -310,6 +360,7 @@ function mapWeek(row: Record<string, unknown>): WeekCapture {
     id: String(row.id),
     weekKey: String(row.week_key),
     scripture: String(row.scripture),
+    passage: (row.passage as string | null) ?? undefined,
     briefPoint: String(row.brief_point),
     firstThought: String(row.first_thought),
     notes: (row.notes as string | null) ?? undefined,
@@ -382,7 +433,7 @@ export async function joinGroupByCode(
     if (msg.includes("not found") || msg.includes("Group not found")) {
       throw new Error(tStored("errors.inviteNotFound"));
     }
-    if (msg.includes("at most 5")) {
+    if (msg.includes("at most")) {
       throw new Error(tStored("errors.groupFull"));
     }
     if (msg.includes("ended")) {

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { BottomNav } from "./BottomNav";
 import { useLocale } from "@/context/LocaleProvider";
 
@@ -24,7 +25,14 @@ export function AppShell({
       <div className="ambient ambient-c" aria-hidden />
       <header className="app-header">
         <div className="row-between" style={{ alignItems: "flex-start" }}>
-          <p className="brand" style={{ margin: 0 }}>
+          <p className="brand">
+            <Image
+              src="/logo-icon.png"
+              alt=""
+              width={28}
+              height={28}
+              className="brand-mark"
+            />
             {t("brand")}
           </p>
           {headerRight ? (

@@ -29,11 +29,12 @@ export function BottomNav() {
             key={item.href}
             href={item.href}
             className={`nav-item ${active ? "active" : ""}`}
+            aria-current={active ? "page" : undefined}
           >
             <span className="nav-icon" aria-hidden>
               {item.icon}
             </span>
-            <span>{t(item.labelKey)}</span>
+            <span className="nav-label">{t(item.labelKey)}</span>
           </Link>
         );
       })}

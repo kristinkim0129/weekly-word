@@ -27,7 +27,10 @@ export function translate(
   vars?: Record<string, string | number>,
 ): string {
   let text =
-    lookup(messages[locale], key) ?? lookup(messages.ko, key) ?? key;
+    lookup(messages[locale], key) ??
+    lookup(messages.en, key) ??
+    lookup(messages.ko, key) ??
+    key;
   if (vars) {
     for (const [k, v] of Object.entries(vars)) {
       text = text.replaceAll(`{${k}}`, String(v));

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { AppShell } from "@/components/AppShell";
+import { MemberAvatar } from "@/components/MemberAvatar";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { useApp } from "@/context/AppProvider";
@@ -10,16 +11,54 @@ import { useLocale } from "@/context/LocaleProvider";
 import type { Locale } from "@/lib/i18n/messages";
 import { realTomorrowKey, setAsDateOverride } from "@/lib/demo-data";
 
-type SectionId = "name" | "language" | "nudge" | "local";
+type SectionId = "avatar" | "name" | "language" | "nudge" | "local";
+
+const AVATAR_EMOJI_OPTIONS = [
+  "🙏",
+  "✝️",
+  "🕊️",
+  "💛",
+  "🌿",
+  "✨",
+  "🌅",
+  "📖",
+  "🌾",
+  "🌸",
+  "🌙",
+  "⭐",
+  "🌈",
+  "🫶",
+  "😊",
+  "😇",
+  "🌱",
+  "🔥",
+  "💧",
+  "🎵",
+  "🏡",
+  "☀️",
+  "🍀",
+  "🦋",
+] as const;
 
 export default function SettingsPage() {
-  const { state, setNudgeTime, setDisplayName } = useApp();
+  const { state, setNudgeTime, setDisplayName, setAvatarEmoji } = useApp();
   const { signOut, user } = useAuth();
   const { t, locale, setLocale } = useLocale();
   const [nameDraft, setNameDraft] = useState(state.settings.displayName);
   const [nameSaved, setNameSaved] = useState(false);
+  const [emojiSaved, setEmojiSaved] = useState(false);
   const [isLocal, setIsLocal] = useState(false);
   const [openSection, setOpenSection] = useState<SectionId | null>(null);
+
+  const me = state.members.find((m) => m.isMe);
+  const photoUrl =
+    me?.avatarUrl ||
+    (typeof user?.user_metadata?.avatar_url === "string"
+      ? user.user_metadata.avatar_url
+      : null) ||
+    (typeof user?.user_metadata?.picture === "string"
+      ? user.user_metadata.picture
+      : null);
 
   useEffect(() => {
     setNameDraft(state.settings.displayName);
@@ -36,6 +75,18 @@ export default function SettingsPage() {
     setDisplayName(next);
     setNameSaved(true);
     window.setTimeout(() => setNameSaved(false), 1200);
+  }
+
+  function pickEmoji(emoji: string) {
+    setAvatarEmoji(emoji);
+    setEmojiSaved(true);
+    window.setTimeout(() => setEmojiSaved(false), 1200);
+  }
+
+  function clearEmoji() {
+    setAvatarEmoji(null);
+    setEmojiSaved(true);
+    window.setTimeout(() => setEmojiSaved(false), 1200);
   }
 
   async function enableNotifications() {
@@ -57,6 +108,61 @@ export default function SettingsPage() {
 
   return (
     <AppShell title={t("settings.title")} subtitle={t("settings.subtitle")}>
+      <SettingsSection
+        id="avatar"
+        title={t("settings.avatar")}
+        open={openSection === "avatar"}
+        onToggle={() => toggleSection("avatar")}
+        expandLabel={t("settings.expandSection")}
+        collapseLabel={t("settings.collapseSection")}
+      >
+        <div className="avatar-picker-preview">
+          <MemberAvatar
+            name={state.settings.displayName}
+            src={photoUrl}
+            emoji={state.settings.avatarEmoji}
+            size={56}
+          />
+          <div>
+            <p className="tiny" style={{ margin: 0 }}>
+              {t("settings.avatarPreview")}
+            </p>
+            <p className="hint" style={{ margin: "4px 0 0" }}>
+              {emojiSaved
+                ? t("settings.avatarSaved")
+                : t("settings.avatarHint")}
+            </p>
+          </div>
+        </div>
+        <div className="emoji-picker" role="listbox" aria-label={t("settings.avatar")}>
+          {AVATAR_EMOJI_OPTIONS.map((emoji) => {
+            const selected = state.settings.avatarEmoji === emoji;
+            return (
+              <button
+                key={emoji}
+                type="button"
+                role="option"
+                aria-selected={selected}
+                className={`emoji-option ${selected ? "active" : ""}`}
+                onClick={() => pickEmoji(emoji)}
+              >
+                {emoji}
+              </button>
+            );
+          })}
+        </div>
+        {state.settings.avatarEmoji ? (
+          <button
+            type="button"
+            className="btn btn-soft"
+            style={{ width: "100%", marginTop: 10 }}
+            onClick={clearEmoji}
+          >
+            {t("settings.avatarClear")}
+          </button>
+        ) : null}
+      </SettingsSection>
+
       <SettingsSection
         id="name"
         title={t("settings.name")}

@@ -3,7 +3,15 @@ import { getStoredLocale } from "./i18n/locale";
 import type { Locale } from "./i18n/messages";
 import type { GroupPeriodPreset } from "./types";
 
-export const MAX_GROUP_MEMBERS = 5;
+export const MAX_GROUP_MEMBERS = 8;
+
+/** Display invite codes in readable chunks (e.g. ab12cd34 → AB12  CD34). */
+export function formatInviteCode(code: string): string {
+  const clean = code.replace(/\s+/g, "").toUpperCase();
+  if (clean.length <= 4) return clean;
+  const mid = Math.ceil(clean.length / 2);
+  return `${clean.slice(0, mid)}  ${clean.slice(mid)}`;
+}
 
 export function periodRange(
   preset: GroupPeriodPreset,

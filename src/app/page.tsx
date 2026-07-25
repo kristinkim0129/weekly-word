@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { MemberAvatar } from "@/components/MemberAvatar";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
+import { PrayHandsIcon, TodayPractice } from "@/components/TodayPractice";
 import { useApp } from "@/context/AppProvider";
 import { useAuth } from "@/context/AuthProvider";
 import { useLocale } from "@/context/LocaleProvider";
@@ -32,7 +34,6 @@ export default function TodayPage() {
     streak.current > 0
       ? t("today.streakDays", { n: streak.current })
       : null;
-
   return (
     <AppShell
       title={t("today.title")}
@@ -61,23 +62,34 @@ export default function TodayPage() {
                 })}
               </p>
             </div>
-            <p className="word-verse-sm">{capture.scripture}</p>
-            <p style={{ margin: "0 0 8px", fontWeight: 600 }}>
-              {capture.briefPoint}
+            <p className="week-meta-label" style={{ marginTop: 10 }}>
+              {t("today.chapterLabel")}
             </p>
-            {capture.practice ? (
-              <p className="practice-highlight">{capture.practice}</p>
-            ) : null}
-            {capture.meditationPoint ? (
-              <p className="hint" style={{ marginTop: 8 }}>
-                {t("today.meditation", { text: capture.meditationPoint })}
+            <p className="word-verse-sm" style={{ marginTop: 4 }}>
+              {capture.scripture}
+            </p>
+            <div className="week-meta">
+              <p className="week-meta-label">{t("today.briefLabel")}</p>
+              <p style={{ margin: "0 0 10px", fontWeight: 600 }}>
+                {capture.briefPoint}
               </p>
-            ) : null}
-            {capture.prayerRequest ? (
-              <p className="hint" style={{ marginTop: 4 }}>
-                {t("today.prayer", { text: capture.prayerRequest })}
-              </p>
-            ) : null}
+              {capture.meditationPoint ? (
+                <>
+                  <p className="week-meta-label">{t("today.medLabel")}</p>
+                  <p className="hint" style={{ margin: "0 0 10px" }}>
+                    {capture.meditationPoint}
+                  </p>
+                </>
+              ) : null}
+              {capture.practice ? (
+                <>
+                  <p className="week-meta-label">{t("today.practiceLabel")}</p>
+                  <p className="practice-highlight" style={{ marginTop: 0 }}>
+                    {capture.practice}
+                  </p>
+                </>
+              ) : null}
+            </div>
           </>
         ) : (
           <>
@@ -88,6 +100,12 @@ export default function TodayPage() {
           </>
         )}
       </GlassCard>
+
+      {capture ? (
+        <GlassCard>
+          <TodayPractice capture={capture} />
+        </GlassCard>
+      ) : null}
 
       <GlassCard style={{ textAlign: "center" }}>
         <p className="pill">{t("today.dailyPill")}</p>
@@ -100,21 +118,20 @@ export default function TodayPage() {
             hasCheckedToday ? t("today.ariaDone") : t("today.ariaTodo")
           }
         >
-          {hasCheckedToday ? (
-            <>
-              {t("today.checkDone")}
-              <br />
-              <span style={{ fontSize: "0.85rem" }}>
-                {t("today.checkDoneSub")}
-              </span>
-            </>
-          ) : (
-            <>
-              {t("today.checkTodo")}
-              <br />
-              {t("today.checkTodoSub")}
-            </>
-          )}
+          <span className="check-orb-inner">
+            <PrayHandsIcon />
+            {hasCheckedToday ? (
+              <>
+                <span className="check-orb-title">{t("today.checkDone")}</span>
+                <span className="check-orb-sub">{t("today.checkDoneSub")}</span>
+              </>
+            ) : (
+              <>
+                <span className="check-orb-title">{t("today.checkTodo")}</span>
+                <span className="check-orb-sub">{t("today.checkTodoSub")}</span>
+              </>
+            )}
+          </span>
         </button>
         <p className="hint">
           {hasCheckedToday ? t("today.hintDone") : t("today.hintTodo")}
@@ -146,8 +163,14 @@ export default function TodayPage() {
                         <div style={{ minWidth: 0, flex: 1 }}>
                           <div
                             className="row"
-                            style={{ gap: 6, alignItems: "center" }}
+                            style={{ gap: 8, alignItems: "center" }}
                           >
+                            <MemberAvatar
+                              name={m.name}
+                              src={m.avatarUrl}
+                              emoji={m.avatarEmoji}
+                              size={36}
+                            />
                             <span
                               className="check-emoji"
                               title={

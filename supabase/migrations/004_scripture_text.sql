@@ -1,0 +1,8 @@
+-- Intentionally no-op.
+-- Week captures store a scripture *reference* only (book/chapter/verse).
+-- Verse body text is resolved at read time from the in-app WEB catalog
+-- (see src/lib/memory-verses.ts). Do not add a scripture_text column.
+--
+-- If an older draft of this migration already added scripture_text on a
+-- local DB, the app ignores that column; you may drop it optionally:
+--   alter table public.week_captures drop column if exists scripture_text;

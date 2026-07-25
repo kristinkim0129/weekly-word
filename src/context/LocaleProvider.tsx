@@ -32,9 +32,14 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(LOCALE_STORAGE_KEY);
-      if (isLocale(saved)) setLocaleState(saved);
+      if (isLocale(saved)) {
+        setLocaleState(saved);
+      } else {
+        setLocaleState("en");
+        localStorage.setItem(LOCALE_STORAGE_KEY, "en");
+      }
     } catch {
-      /* ignore */
+      setLocaleState("en");
     }
     setReady(true);
   }, []);
@@ -53,7 +58,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const active: Locale = locale ?? "ko";
+  const active: Locale = locale ?? "en";
 
   return (
     <LocaleContext.Provider

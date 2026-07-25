@@ -3,14 +3,14 @@ import { translate, type MessageKey } from "./t";
 
 /** Read the saved UI locale outside React (API helpers, AppProvider fallbacks). */
 export function getStoredLocale(): Locale {
-  if (typeof window === "undefined") return "ko";
+  if (typeof window === "undefined") return "en";
   try {
     const saved = localStorage.getItem(LOCALE_STORAGE_KEY);
     if (isLocale(saved)) return saved;
   } catch {
     /* ignore */
   }
-  return "ko";
+  return "en";
 }
 
 export function tStored(

@@ -1,7 +1,7 @@
 # 함께묵상 — 왜 이 앱인가
 
-> After Sermon — Pray the week together.  
-> 일요일 말씀에서 매일 기도로, 친구와 교회와 함께.
+> 함께묵상 — 설교 이후, 한 주를 함께.  
+> After Sermon — Pray the week together.
 
 ---
 

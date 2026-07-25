@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { MemberAvatar } from "@/components/MemberAvatar";
 import { PrayerArrows } from "@/components/PrayerArrows";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
@@ -11,6 +12,7 @@ import { useAuth } from "@/context/AuthProvider";
 import { useLocale } from "@/context/LocaleProvider";
 import {
   formatGroupPeriod,
+  formatInviteCode,
   invitePath,
   MAX_GROUP_MEMBERS,
 } from "@/lib/groups";
@@ -274,6 +276,9 @@ export default function GroupPage() {
     );
   }
 
+  const isHost = activeGroup.createdBy === user?.id;
+  const hostSubtitle = isHost ? t("group.hosting") : t("group.memberOf");
+
   return (
     <AppShell
       title={t("group.title")}
@@ -305,13 +310,9 @@ export default function GroupPage() {
           <div className="invite-sheet">
             <div className="invite-sheet-head">
               <div>
-                <p className="pill">{t("group.invite")}</p>
-                <p className="hint" style={{ marginTop: 8 }}>
-                  {t("group.membersCount", {
-                    name: activeGroup.name,
-                    n: state.members.length,
-                    max: MAX_GROUP_MEMBERS,
-                  })}
+                <p className="invite-sheet-title">{t("nav.group")}</p>
+                <p className="hint" style={{ marginTop: 4 }}>
+                  {hostSubtitle}
                 </p>
               </div>
               <button
@@ -328,44 +329,79 @@ export default function GroupPage() {
               </button>
             </div>
 
-            <div className="row" style={{ flexWrap: "wrap", marginBottom: 12 }}>
-              {state.members.map((m) => (
-                <span key={m.id} className="pill">
-                  {m.name}
-                  {m.isMe ? ` · ${t("group.me")}` : ""}
-                </span>
-              ))}
-            </div>
-
             {inviteCode ? (
-              <div
-                className="member-chip"
-                style={{ alignItems: "center", marginBottom: 4 }}
-              >
-                <div>
-                  <strong>{t("group.inviteCode")}</strong>
-                  <div
-                    className="tiny"
-                    style={{
-                      fontFamily: "ui-monospace, monospace",
-                      letterSpacing: "0.08em",
-                      fontSize: "1.15rem",
-                      marginTop: 4,
-                    }}
-                  >
-                    {inviteCode}
-                  </div>
-                  <div className="tiny" style={{ marginTop: 4 }}>
-                    {t("group.inviteHint")}
-                  </div>
+              <div className="invite-code-card">
+                <div className="invite-code-label">
+                  <span className="invite-code-icon" aria-hidden>
+                    ♡
+                  </span>
+                  <span>{t("group.inviteCode")}</span>
                 </div>
-                <Button type="button" variant="soft" onClick={copyInvite}>
+                <p className="invite-code-value">
+                  {formatInviteCode(inviteCode)}
+                </p>
+                <p className="tiny" style={{ margin: "0 0 14px" }}>
+                  {t("group.inviteHint")}
+                </p>
+                <button
+                  type="button"
+                  className="invite-outline-btn"
+                  onClick={copyInvite}
+                >
                   {copied ? t("group.copied") : t("group.copyLink")}
-                </Button>
+                </button>
               </div>
             ) : null}
 
-            <div className="row" style={{ gap: 8, marginTop: 12 }}>
+            <div className="invite-members-card">
+              <div className="invite-members-head">
+                <span>{t("group.members")}</span>
+                <span className="invite-members-ratio">
+                  {t("group.membersRatio", {
+                    n: state.members.length,
+                    max: MAX_GROUP_MEMBERS,
+                  })}
+                </span>
+              </div>
+              <ul className="invite-member-list">
+                {state.members.map((m) => {
+                  const memberIsHost = m.id === activeGroup.createdBy;
+                  return (
+                    <li key={m.id} className="invite-member-row">
+                      <MemberAvatar
+                        name={m.name}
+                        src={m.avatarUrl}
+                        emoji={m.avatarEmoji}
+                        size={42}
+                      />
+                      <div className="invite-member-meta">
+                        <strong>{m.name}</strong>
+                        <span className="tiny">
+                          {memberIsHost
+                            ? t("group.roleHost")
+                            : t("group.roleMember")}
+                        </span>
+                      </div>
+                      {m.isMe ? (
+                        <span className="invite-you-badge">{t("group.you")}</span>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+              {inviteCode ? (
+                <button
+                  type="button"
+                  className="invite-outline-btn"
+                  style={{ marginTop: 4 }}
+                  onClick={copyInvite}
+                >
+                  {copied ? t("group.copied") : t("group.inviteFriends")}
+                </button>
+              ) : null}
+            </div>
+
+            <div className="row" style={{ gap: 8, marginTop: 14 }}>
               <button
                 type="button"
                 className="btn btn-soft"
@@ -389,7 +425,7 @@ export default function GroupPage() {
               >
                 {t("group.leave")}
               </button>
-              {activeGroup.createdBy === user?.id && !endingSeason ? (
+              {isHost && !endingSeason ? (
                 <button
                   type="button"
                   className="btn btn-soft"
@@ -405,7 +441,7 @@ export default function GroupPage() {
               ) : null}
             </div>
 
-            {endingSeason && activeGroup.createdBy === user?.id ? (
+            {endingSeason && isHost ? (
               <div
                 style={{
                   marginTop: 12,
@@ -531,8 +567,9 @@ export default function GroupPage() {
       </Link>
 
       <GlassCard>
-        <p className="pill">
-          {t("group.prayerLog", { name: activeGroup.name })}
+        <p className="pill">{t("group.prayerLog")}</p>
+        <p className="hint" style={{ marginTop: 8 }}>
+          {t("group.prayerLogHint")}
         </p>
         {state.tokens.length === 0 ? (
           <p className="empty" style={{ marginTop: 12 }}>

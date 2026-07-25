@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
+import { ScripturePicker } from "@/components/ScripturePicker";
 import { useApp } from "@/context/AppProvider";
 import { useLocale } from "@/context/LocaleProvider";
+
 
 function Visibility({ kind }: { kind: "private" | "shared" }) {
   const { t } = useLocale();
@@ -35,7 +37,8 @@ export default function CapturePage() {
   const existing = currentWeek;
   const [editing, setEditing] = useState(!existing);
 
-  const [scripture, setScripture] = useState(existing?.scripture ?? "");
+  const [chapter, setChapter] = useState(existing?.scripture ?? "");
+  const [passage, setPassage] = useState(existing?.passage ?? "");
   const [briefPoint, setBriefPoint] = useState(existing?.briefPoint ?? "");
   const [firstThought, setFirstThought] = useState(
     existing?.firstThought ?? "",
@@ -53,7 +56,7 @@ export default function CapturePage() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!scripture.trim() || !briefPoint.trim() || !firstThought.trim()) {
+    if (!chapter.trim() || !briefPoint.trim() || !firstThought.trim()) {
       setError(t("capture.required"));
       return;
     }
@@ -61,7 +64,8 @@ export default function CapturePage() {
     setError("");
     try {
       await saveCapture({
-        scripture: scripture.trim(),
+        scripture: chapter.trim(),
+        passage: passage.trim() || undefined,
         briefPoint: briefPoint.trim(),
         firstThought: firstThought.trim(),
         notes: notes.trim() || undefined,
@@ -100,12 +104,22 @@ export default function CapturePage() {
                 {t("capture.saved", { date: savedLabel })}
               </p>
             ) : null}
-            <h2
-              className="word-verse"
-              style={{ marginTop: savedLabel ? 0 : 12 }}
-            >
+            <p className="week-meta-label" style={{ marginTop: savedLabel ? 0 : 12 }}>
+              {t("capture.chapter")}
+            </p>
+            <h2 className="word-verse" style={{ marginTop: 4 }}>
               {existing.scripture}
             </h2>
+            {existing.passage?.trim() ? (
+              <>
+                <p className="week-meta-label" style={{ marginTop: 12 }}>
+                  {t("capture.passage")}
+                </p>
+                <p className="hint" style={{ margin: "4px 0 10px" }}>
+                  {existing.passage}
+                </p>
+              </>
+            ) : null}
             <p style={{ margin: "0 0 6px", fontWeight: 600 }}>
               {existing.briefPoint}
             </p>
@@ -133,16 +147,39 @@ export default function CapturePage() {
 
   return (
     <AppShell title={t("capture.title")} subtitle={t("capture.subtitle")}>
-      <GlassCard>
-        <form onSubmit={onSubmit}>
+      <GlassCard className="capture-card">
+        <form className="capture-form" onSubmit={onSubmit}>
           <div className="field">
             <label>
-              {t("capture.scripture")} <span className="req">*</span>
+              {t("capture.chapter")} <span className="req">*</span>
             </label>
+            <p className="capture-privacy-hint">{t("capture.chapterHint")}</p>
             <input
-              value={scripture}
-              onChange={(e) => setScripture(e.target.value)}
-              placeholder={t("capture.scripturePh")}
+              value={chapter}
+              onChange={(e) => setChapter(e.target.value)}
+              placeholder={t("capture.chapterPh")}
+            />
+          </div>
+
+          <div className="field">
+            <label>{t("capture.passage")}</label>
+            <p className="capture-privacy-hint">{t("capture.passageHint")}</p>
+            <textarea
+              value={passage}
+              onChange={(e) => setPassage(e.target.value)}
+              placeholder={t("capture.passagePh")}
+              rows={5}
+            />
+          </div>
+
+          <div className="field">
+            <ScripturePicker
+              chapter={chapter}
+              passage={passage}
+              onChange={({ chapter: nextChapter, passage: nextPassage }) => {
+                setChapter(nextChapter);
+                setPassage(nextPassage);
+              }}
             />
           </div>
 
@@ -171,9 +208,8 @@ export default function CapturePage() {
           </div>
 
           <div className="field">
-            <label>
-              {t("capture.notes")} <Visibility kind="private" />
-            </label>
+            <label>{t("capture.notes")}</label>
+            <p className="capture-privacy-hint">{t("capture.notesPrivate")}</p>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -219,7 +255,7 @@ export default function CapturePage() {
               {error}
             </p>
           ) : null}
-          <div className="row" style={{ gap: 8, marginTop: 8 }}>
+          <div className="row capture-actions" style={{ gap: 8, marginTop: 8 }}>
             {existing ? (
               <Button
                 type="button"

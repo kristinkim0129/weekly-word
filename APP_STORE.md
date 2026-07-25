@@ -50,10 +50,32 @@ After Sermon — Pray the week together.
 Sunday’s Word, gently through the week.
 
 **KR primary**  
-함께묵상 — 설교 이후, 한 주를 가볍게.
+함께묵상 — 설교 이후, 한 주를 함께.
 
 **KR secondary**  
 주일 말씀을, 부담 없이 나의 것으로.
+
+### Weekly rhythm (guide) — soft, not a checklist
+
+Invite, don’t assign. Use for onboarding / website / in-app tips. Keep store listing short.
+
+| When | Focus | Light practice |
+| --- | --- | --- |
+| **Sunday** | Capture | Write one verse or one message that landed. Share the grace at home or in small group. |
+| **Mon–Tue** | Meditate | Reread it; say it aloud. Notice how it meets today’s work and meetings. |
+| **Wed–Thu** | Apply | One small obedience. When stress or temptation hits, choose by the Word. |
+| **Fri–Sat** | Reflect & prepare | Look back gently — repent where needed. Pray toward next Sunday. |
+
+**KR**
+
+| 언제 | 초점 | 가볍게 |
+| --- | --- | --- |
+| **주일** | 말씀 담기 | 가장 와닿은 핵심 구절·메시지 하나. 가족·소그룹에서 은혜 나누기. |
+| **월–화** | 말씀 묵상 | 적어둔 구절을 다시 읽고 소리 내어 고백. 오늘 일정과 어떻게 닿는지 되새기기. |
+| **수–목** | 삶에 적용 | 작은 순종 하나. 유혹·스트레스 앞에서 말씀의 기준으로 선택. |
+| **금–토** | 돌아보고 준비 | 한 주를 돌아보며 회개와 용서. 다음 주일을 사모하며 마음 준비. |
+
+Store copy: name the four beats only if needed — **Capture → Meditate → Apply → Reflect**. No day-by-day pressure in the App Store blurb.
 
 ---
 
@@ -84,16 +106,19 @@ Simple follow-through after Sunday — light enough to keep, real enough to matt
 ```
 After Sermon — Pray the week together.
 
-A lightweight way to live from Sunday’s Word.
-Capture what you heard and shared. Return to it through the week. Pray. Check in with friends. That’s it.
+A way to live from Sunday’s Word — with friends.
+Capture what landed. Return to it. Try a small step. Look back. That’s the week.
 
 No heavy reading plans. No pressure to do more.
 Just a simple space for Sunday’s Word to stay with you — and with your people.
 
-• Capture Sunday’s Word and sharing
-• A light daily return in prayer
-• Check in when you’ve prayed
-• Walk the week with friends or a buddy
+A gentle week with one Word:
+• Sunday — Capture what you heard and shared
+• Mon–Tue — Meditate: reread, pray, notice your day
+• Wed–Thu — Apply: one small obedience
+• Fri–Sat — Reflect, and prepare for next Sunday
+
+Check in when you’ve prayed. Walk it with a buddy if you want.
 
 We’re people who believe community matters.
 We built After Sermon (함께묵상) so the week after the sermon can stay simple — and shared. That’s all we’re after.
@@ -118,11 +143,11 @@ Welcome to After Sermon — a light way to carry Sunday’s Word through the wee
 | # | Caption |
 | --- | --- |
 | 1 | Pray the week together |
-| 2 | Capture Sunday’s Word |
-| 3 | A light daily return |
-| 4 | Pray — then check in |
-| 5 | With friends |
-| 6 | Simple. That’s it. |
+| 2 | Sunday — Capture |
+| 3 | Mon–Tue — Meditate |
+| 4 | Wed–Thu — Apply |
+| 5 | Fri–Sat — Reflect |
+| 6 | With friends. Simple. |
 
 **A note from the founder** (long form / About / website)
 
@@ -140,13 +165,13 @@ That’s all we’re after.
 함께묵상
 
 **부제** (30) — 추천  
-설교 이후, 한 주를 가볍게
+설교 이후, 한 주를 함께
 
 **부제 — A/B 옵션** (각 ≤30)
 
 | 옵션 | 글자 | 언제 |
 | --- | --- | --- |
-| 설교 이후, 한 주를 가볍게 | 14 | 기본 — lightweight |
+| 설교 이후, 한 주를 함께 | 14 | 기본 — brand tagline |
 | 주일 말씀을 나의 것으로 | 13 | soft ownership |
 | 부담 없이, 한 주를 함께 | 13 | no-pressure |
 | 같이 들은 말씀을 함께 | 11 | together |
@@ -160,23 +185,26 @@ That’s all we’re after.
 **설명** (App Store Connect에 붙여넣기)
 
 ```
-함께묵상 — 설교 이후, 한 주를 가볍게.
+함께묵상 — 설교 이후, 한 주를 함께.
 
 주일 말씀을 한 주 동안 이어가는 가벼운 방법.
-듣고 나눈 말씀을 담고, 기도로 돌아가고, 친구와 체크인. 그게 전부예요.
+와닿은 말씀을 담고, 묵상하고, 작은 순종으로 적용하고, 돌아보기. 그게 한 주예요.
 
 무거운 묵상 플랜이 아닙니다.
 부담 없이, 주일 말씀이 곁에 남도록 — 친구와 함께.
 
-• 주일 말씀과 나눔을 담기
-• 가볍게 기도로 돌아가기
-• 기도한 뒤 체크인
-• 친구·버디와 한 주를
+한 말씀으로 이어가는 한 주:
+• 주일 — 말씀 담기 (핵심 하나, 은혜 나누기)
+• 월–화 — 말씀 묵상 (다시 읽고, 오늘과 연결)
+• 수–목 — 삶에 적용 (작은 순종 하나)
+• 금–토 — 돌아보고, 다음 주일 준비
+
+기도한 뒤 체크인. 원하면 버디와 함께.
 
 우리는 공동체가 중요한 사람들입니다.
 함께묵상(After Sermon)은 설교 이후의 한 주를 심플하게, 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
 
-함께묵상 — 설교 이후, 한 주를 가볍게.
+함께묵상 — 설교 이후, 한 주를 함께.
 ```
 
 **키워드** (100자 이내, 쉼표 뒤 공백 없이)  
@@ -193,12 +221,12 @@ That’s all we’re after.
 
 | # | 캡션 |
 | --- | --- |
-| 1 | 설교 이후, 한 주를 가볍게 |
-| 2 | 주일 말씀을 담아요 |
-| 3 | 가볍게, 기도로 |
-| 4 | 기도한 뒤 체크인 |
-| 5 | 친구와 함께 |
-| 6 | 심플하게. 그게 전부예요 |
+| 1 | 설교 이후, 한 주를 함께 |
+| 2 | 주일 — 말씀 담기 |
+| 3 | 월–화 — 말씀 묵상 |
+| 4 | 수–목 — 삶에 적용 |
+| 5 | 금–토 — 돌아보고 준비 |
+| 6 | 친구와 함께. 심플하게. |
 
 **창업자 노트** (긴 버전 / About / 웹)
 
@@ -285,12 +313,12 @@ Value-prop shot order (KO + EN):
 
 | # | Value prop (KO) | Value prop (EN) | UI |
 | --- | --- | --- | --- |
-| 1 | 설교 이후, 한 주를 가볍게 | Pray the week together | Login / hero |
-| 2 | 주일 말씀을 담아요 | Capture Sunday’s Word | Capture |
-| 3 | 가볍게, 기도로 | A light daily return | Today check-orb |
-| 4 | 기도한 뒤 체크인 | Pray — then check in | From the heart |
-| 5 | 친구와 함께 | With friends | Group invite |
-| 6 | 심플하게. 그게 전부예요 | Simple. That’s it. | Prayer map |
+| 1 | 설교 이후, 한 주를 함께 | Pray the week together | Login / hero |
+| 2 | 주일 — 말씀 담기 | Sunday — Capture | Capture |
+| 3 | 월–화 — 말씀 묵상 | Mon–Tue — Meditate | Today check-orb |
+| 4 | 수–목 — 삶에 적용 | Wed–Thu — Apply | From the heart |
+| 5 | 금–토 — 돌아보고 준비 | Fri–Sat — Reflect | Group invite |
+| 6 | 친구와 함께. 심플하게. | With friends. Simple. | Prayer map |
 
 **ASC sizes (typical):** 1290×2796 (6.7") — scale up the 9:16 frame if needed.
 

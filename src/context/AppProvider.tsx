@@ -51,6 +51,7 @@ type AppContextValue = {
   refresh: () => Promise<void>;
   setNudgeTime: (time: string) => void;
   setDisplayName: (name: string) => void;
+  setAvatarEmoji: (emoji: string | null) => void;
   setGroupEnabled: (on: boolean) => void;
   saveCapture: (capture: CaptureInput) => Promise<void>;
   checkOffToday: () => Promise<void>;
@@ -122,7 +123,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
         user.user_metadata?.name ||
         user.email?.split("@")[0] ||
         "나";
-      const bundle = await loadCloudBundle(supabase, user.id, fallbackName);
+      const avatarFallback =
+        (typeof user.user_metadata?.avatar_url === "string" &&
+          user.user_metadata.avatar_url) ||
+        (typeof user.user_metadata?.picture === "string" &&
+          user.user_metadata.picture) ||
+        null;
+      const bundle = await loadCloudBundle(
+        supabase,
+        user.id,
+        fallbackName,
+        avatarFallback,
+      );
       applyBrandTheme();
       setState({
         ...bundle.state,
@@ -227,6 +239,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
         })
         .eq("id", user.id);
     },
+    setAvatarEmoji: (emoji) => {
+      const next =
+        typeof emoji === "string" && emoji.trim() ? emoji.trim() : null;
+      setState((s) => ({
+        ...s,
+        settings: { ...s.settings, avatarEmoji: next },
+        members: s.members.map((m) =>
+          m.isMe ? { ...m, avatarEmoji: next || undefined } : m,
+        ),
+      }));
+      void supabase
+        .from("profiles")
+        .update({
+          avatar_emoji: next,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
+    },
     setGroupEnabled: (on) => {
       setState((s) => ({
         ...s,
@@ -249,6 +279,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
             user_id: user.id,
             week_key: weekKey,
             scripture: capture.scripture,
+            passage: capture.passage?.trim() || null,
             brief_point: capture.briefPoint,
             first_thought: capture.firstThought,
             notes: capture.notes ?? null,

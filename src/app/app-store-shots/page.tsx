@@ -32,9 +32,9 @@ function Phone({
 }) {
   const lang: Lang = brand === "After Sermon" ? "en" : "ko";
   const navItems = [
-    { id: "today", ko: "오늘", en: "Today", icon: "◎" },
-    { id: "capture", ko: "기록", en: "Capture", icon: "✎" },
-    { id: "group", ko: "함께", en: "Together", icon: "♡" },
+    { id: "today", ko: "매일", en: "Daily", icon: "◎" },
+    { id: "capture", ko: "설교", en: "Sermon", icon: "✎" },
+    { id: "group", ko: "그룹", en: "Group", icon: "♡" },
     { id: "archive", ko: "보관", en: "Archive", icon: "▤" },
     { id: "me", ko: "나", en: "Me", icon: "◌" },
   ];
@@ -300,42 +300,66 @@ const SHOTS: Shot[] = [
     scene: (lang) => (
       <Phone
         brand={lang === "ko" ? "함께묵상" : "After Sermon"}
-        title={lang === "ko" ? "함께" : "Together"}
+        title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
         sub={
-          lang === "ko" ? "새싹 셀 · 2026 상반기" : "Sprout cell · 2026 H1"
+          lang === "ko"
+            ? "이 그룹을 호스트하고 있어요"
+            : "You're hosting this group"
         }
         nav="group"
       >
-        <GlassCard>
-          <p className="pill">{lang === "ko" ? "그룹 초대" : "Invite"}</p>
-          <p className="hint" style={{ marginTop: 8 }}>
-            {lang === "ko" ? "새싹 셀 · 3/5명" : "Sprout cell · 3/5"}
-          </p>
-          <div className="row" style={{ flexWrap: "wrap", margin: "12px 0" }}>
-            <span className="pill">{lang === "ko" ? "나" : "Me"}</span>
-            <span className="pill">{lang === "ko" ? "수아" : "Sua"}</span>
-            <span className="pill">{lang === "ko" ? "준호" : "June"}</span>
+        <div className="invite-code-card">
+          <div className="invite-code-label">
+            <span className="invite-code-icon" aria-hidden>
+              ♡
+            </span>
+            <span>{lang === "ko" ? "초대 코드" : "Invite code"}</span>
           </div>
-          <div className="member-chip" style={{ alignItems: "center" }}>
-            <div>
-              <strong>{lang === "ko" ? "초대 코드" : "Invite code"}</strong>
-              <div
-                className="tiny"
-                style={{
-                  fontFamily: "ui-monospace, monospace",
-                  letterSpacing: "0.08em",
-                  fontSize: "1.1rem",
-                  marginTop: 4,
-                }}
-              >
-                a1b2c3d4
-              </div>
-            </div>
-            <Button variant="soft">
-              {lang === "ko" ? "링크 복사" : "Copy link"}
-            </Button>
+          <p className="invite-code-value">A1B2  C3D4</p>
+          <button type="button" className="invite-outline-btn">
+            {lang === "ko" ? "링크 복사" : "Copy link"}
+          </button>
+        </div>
+        <div className="invite-members-card">
+          <div className="invite-members-head">
+            <span>{lang === "ko" ? "멤버" : "Members"}</span>
+            <span className="invite-members-ratio">3 / 8</span>
           </div>
-        </GlassCard>
+          <ul className="invite-member-list">
+            {(
+              lang === "ko"
+                ? [
+                    { name: "나", role: "호스트", you: true },
+                    { name: "수아", role: "멤버", you: false },
+                    { name: "준호", role: "멤버", you: false },
+                  ]
+                : [
+                    { name: "Me", role: "Host", you: true },
+                    { name: "Sua", role: "Member", you: false },
+                    { name: "June", role: "Member", you: false },
+                  ]
+            ).map((m) => (
+              <li key={m.name} className="invite-member-row">
+                <img
+                  src="/avatar-placeholder.svg"
+                  alt=""
+                  width={42}
+                  height={42}
+                  className="member-avatar"
+                />
+                <div className="invite-member-meta">
+                  <strong>{m.name}</strong>
+                  <span className="tiny">{m.role}</span>
+                </div>
+                {m.you ? (
+                  <span className="invite-you-badge">
+                    {lang === "ko" ? "나" : "You"}
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
       </Phone>
     ),
   },
@@ -352,17 +376,24 @@ const SHOTS: Shot[] = [
     scene: (lang) => (
       <Phone
         brand={lang === "ko" ? "함께묵상" : "After Sermon"}
-        title={lang === "ko" ? "함께" : "Together"}
+        title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
         sub={
           lang === "ko"
-            ? "기도 발자국 · 새싹 셀"
-            : "Prayer footprints · Sprout"
+            ? "기도 발자국을 돌아봐요"
+            : "See prayer footprints"
         }
         nav="group"
       >
         <GlassCard>
           <p className="pill">
-            {lang === "ko" ? "기도 발자국" : "Prayer footprints"}
+            {lang === "ko"
+              ? "기도 발자국을 돌아봐요"
+              : "See prayer footprints"}
+          </p>
+          <p className="hint" style={{ marginTop: 8 }}>
+            {lang === "ko"
+              ? "우리가 서로 위해 기도한 흔적이 남아요."
+              : "Traces of praying for one another stay with the group."}
           </p>
           <div className="store-footprint" aria-hidden>
             <span className="store-node">{lang === "ko" ? "나" : "Me"}</span>

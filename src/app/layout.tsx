@@ -17,12 +17,12 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "함께묵상 · After Sermon",
+  title: "After Sermon",
   description:
-    "설교 이후, 한 주를 함께 · After Sermon: Pray the week together · From Sunday Word to daily prayer with your friends",
+    "After Sermon: Pray the week together · From Sunday Word to daily prayer with your friends",
   appleWebApp: {
     capable: true,
-    title: "함께묵상",
+    title: "After Sermon",
     statusBarStyle: "default",
   },
 };

@@ -31,7 +31,9 @@ function makeWeek(
 export function createInitialState(): AppState {
   const weeks = [
     makeWeek(7, {
-      scripture: "Psalm 23:1-3",
+      scripture: "Psalm 23",
+      passage:
+        "The Lord is my shepherd; I shall not want. He makes me lie down in green pastures. He leads me beside still waters.",
       briefPoint: "The Lord shepherds me — I am not alone",
       firstThought: "바쁠 때도 인도하심을 믿을 수 있을까?",
       notes: "쉼이 부족할 때 떠올린 구절",

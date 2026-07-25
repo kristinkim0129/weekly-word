@@ -401,6 +401,33 @@ export function findMemoryVerse(scripture: string | null | undefined) {
   return MEMORY_VERSES.find((v) => verseMatches(v, scripture)) ?? null;
 }
 
+/** Resolve verse body from the in-app catalog by reference (never from DB). */
+export function resolveScriptureText(
+  scripture: string | null | undefined,
+): string | null {
+  return findMemoryVerse(scripture)?.text ?? null;
+}
+
+/** Search catalog by reference, alias, or verse text */
+export function searchMemoryVerses(query: string, limit = 12): MemoryVerse[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return MEMORY_VERSES.slice(0, limit);
+  const scored = MEMORY_VERSES.map((v) => {
+    const hay = [
+      v.reference,
+      v.text,
+      ...(v.aliases ?? []),
+    ]
+      .join(" ")
+      .toLowerCase();
+    const idx = hay.indexOf(q);
+    return { v, score: idx < 0 ? Infinity : idx };
+  })
+    .filter((x) => x.score !== Infinity)
+    .sort((a, b) => a.score - b.score);
+  return scored.slice(0, limit).map((x) => x.v);
+}
+
 /** Stable pick for the week (same week → same verse) */
 export function pickMemoryVerseForWeek(weekKey: string): MemoryVerse {
   let hash = 0;
