@@ -5,6 +5,8 @@ import { useLocale } from "@/context/LocaleProvider";
 import type { PrayerToken } from "@/lib/types";
 
 const MAX_EDGES = 12;
+/** Soft mint / ember / slate-adjacent hues for small groups (~6–12 people). */
+const PRAYER_ARROW_PALETTE_SIZE = 12;
 
 type Person = {
   id: string;
@@ -17,7 +19,7 @@ type Edge = {
   fromName: string;
   toId: string;
   toName: string;
-  colorIndex: 0 | 1 | 2;
+  colorIndex: number;
 };
 
 type Point = { x: number; y: number };
@@ -32,12 +34,13 @@ function initials(name: string) {
   return trimmed.slice(0, 2);
 }
 
-function colorIndexForId(id: string): 0 | 1 | 2 {
+/** Stable color index for a person id (who prayed). */
+function colorIndexForId(id: string): number {
   let h = 0;
   for (let i = 0; i < id.length; i++) {
     h = (h * 31 + id.charCodeAt(i)) >>> 0;
   }
-  return (h % 3) as 0 | 1 | 2;
+  return h % PRAYER_ARROW_PALETTE_SIZE;
 }
 
 function buildGraph(tokens: PrayerToken[], fallbackName: string) {
@@ -131,6 +134,11 @@ export function PrayerArrows({ tokens }: { tokens: PrayerToken[] }) {
     return <p className="empty">{t("group.noPrayers")}</p>;
   }
 
+  const paletteIndices = Array.from(
+    { length: PRAYER_ARROW_PALETTE_SIZE },
+    (_, i) => i,
+  );
+
   return (
     <div className="prayer-arrows">
       <p className="prayer-arrows-hint">
@@ -183,7 +191,7 @@ export function PrayerArrows({ tokens }: { tokens: PrayerToken[] }) {
             aria-hidden
           >
             <defs>
-              {[0, 1, 2].map((i) => (
+              {paletteIndices.map((i) => (
                 <marker
                   key={i}
                   id={`prayer-arrowhead-${uid}-${i}`}
@@ -235,13 +243,6 @@ export function PrayerArrows({ tokens }: { tokens: PrayerToken[] }) {
           </li>
         ))}
       </ul>
-
-      <div className="prayer-arrows-legend" aria-hidden>
-        <span className="prayer-arrows-swatch prayer-arrow-fill-0" />
-        <span className="prayer-arrows-swatch prayer-arrow-fill-1" />
-        <span className="prayer-arrows-swatch prayer-arrow-fill-2" />
-        <span className="tiny">{t("group.prayerMapLegend")}</span>
-      </div>
     </div>
   );
 }

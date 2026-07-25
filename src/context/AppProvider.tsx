@@ -18,7 +18,6 @@ import {
   loadCloudBundle,
   type CreateGroupInput,
 } from "@/lib/cloud/api";
-import { LOCALE_STORAGE_KEY } from "@/lib/i18n/messages";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { applyBrandTheme, DEFAULT_THEME } from "@/lib/themes";
 import type {
@@ -58,7 +57,6 @@ type AppContextValue = {
   addCheer: (text: string) => Promise<void>;
   sendToken: (toId: string) => Promise<void>;
   addQuestion: (text: string, isAnonymous: boolean) => Promise<void>;
-  askAi: (questionId: string) => Promise<void>;
   pastorSummary: () => string;
   markPastorSummaryCopied: () => Promise<void>;
   addFeedback: (kind: FeedbackKind, text: string) => Promise<void>;
@@ -313,39 +311,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         week_key: weekKey,
       });
       if (error) throw error;
-      await refresh();
-    },
-    askAi: async (questionId) => {
-      const question = state.questions.find((q) => q.id === questionId);
-      if (!question || question.aiReply) return;
-      if (state.settings.aiReplyUsedAt) {
-        throw new Error(t("errors.aiReplyUsed"));
-      }
-
-      const locale =
-        typeof window !== "undefined"
-          ? localStorage.getItem(LOCALE_STORAGE_KEY)
-          : null;
-      const week =
-        state.weeks.find((w) => w.weekKey === weekKey) ?? state.capture;
-
-      const res = await fetch("/api/ai-reply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          questionId,
-          locale: locale === "en" ? "en" : "ko",
-          scripture: week?.scripture ?? null,
-          briefPoint: week?.briefPoint ?? null,
-        }),
-      });
-      const data = (await res.json().catch(() => ({}))) as {
-        error?: string;
-        reply?: string;
-      };
-      if (!res.ok) {
-        throw new Error(data.error || t("errors.aiFail"));
-      }
       await refresh();
     },
     pastorSummary: () => {

@@ -1525,6 +1525,7 @@ a {
   filter: drop-shadow(0 1px 1px rgba(47, 65, 73, 0.18));
 }
 
+/* Soft per-person palette (keyed by fromId hash % 12) */
 .prayer-arrow-stroke-0,
 .prayer-arrow-fill-0 {
   stroke: color-mix(in srgb, var(--accent) 72%, #6f9e90);
@@ -1543,6 +1544,60 @@ a {
   fill: color-mix(in srgb, var(--accent-deep) 58%, #8fa6b0);
 }
 
+.prayer-arrow-stroke-3,
+.prayer-arrow-fill-3 {
+  stroke: #7a9a8c;
+  fill: #7a9a8c;
+}
+
+.prayer-arrow-stroke-4,
+.prayer-arrow-fill-4 {
+  stroke: #b08a6a;
+  fill: #b08a6a;
+}
+
+.prayer-arrow-stroke-5,
+.prayer-arrow-fill-5 {
+  stroke: #6e8796;
+  fill: #6e8796;
+}
+
+.prayer-arrow-stroke-6,
+.prayer-arrow-fill-6 {
+  stroke: #8f9a72;
+  fill: #8f9a72;
+}
+
+.prayer-arrow-stroke-7,
+.prayer-arrow-fill-7 {
+  stroke: #a89078;
+  fill: #a89078;
+}
+
+.prayer-arrow-stroke-8,
+.prayer-arrow-fill-8 {
+  stroke: #738f98;
+  fill: #738f98;
+}
+
+.prayer-arrow-stroke-9,
+.prayer-arrow-fill-9 {
+  stroke: #9a8470;
+  fill: #9a8470;
+}
+
+.prayer-arrow-stroke-10,
+.prayer-arrow-fill-10 {
+  stroke: #6f9688;
+  fill: #6f9688;
+}
+
+.prayer-arrow-stroke-11,
+.prayer-arrow-fill-11 {
+  stroke: #8a7d8f;
+  fill: #8a7d8f;
+}
+
 .prayer-arrows-sr-list {
   position: absolute;
   width: 1px;
@@ -1553,18 +1608,4 @@ a {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-.prayer-arrows-legend {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.prayer-arrows-swatch {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-  display: inline-block;
 }

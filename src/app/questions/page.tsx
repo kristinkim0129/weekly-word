@@ -6,19 +6,15 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { useApp } from "@/context/AppProvider";
 import { useLocale } from "@/context/LocaleProvider";
-import { stripAiDisclaimer } from "@/lib/ai/reply";
 
 export default function QuestionsPage() {
-  const { state, addQuestion, askAi, pastorSummary, markPastorSummaryCopied } =
+  const { state, addQuestion, pastorSummary, markPastorSummaryCopied } =
     useApp();
   const { t } = useLocale();
   const [text, setText] = useState("");
   const [anonymous, setAnonymous] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [askingId, setAskingId] = useState<string | null>(null);
 
-  const hasAiReply = state.questions.some((q) => q.aiReply);
-  const aiUsed = Boolean(state.settings.aiReplyUsedAt);
   const summaryUsed = Boolean(state.settings.pastorSummaryCopiedAt);
 
   async function onSubmit(e: React.FormEvent) {
@@ -29,18 +25,6 @@ export default function QuestionsPage() {
       setText("");
     } catch (err) {
       alert(err instanceof Error ? err.message : t("questions.addFail"));
-    }
-  }
-
-  async function onAskAi(questionId: string) {
-    if (aiUsed) return;
-    setAskingId(questionId);
-    try {
-      await askAi(questionId);
-    } catch (err) {
-      alert(err instanceof Error ? err.message : t("questions.askFail"));
-    } finally {
-      setAskingId(null);
     }
   }
 
@@ -118,11 +102,6 @@ export default function QuestionsPage() {
 
       <GlassCard>
         <p className="pill">{t("questions.board")}</p>
-        {aiUsed ? (
-          <p className="hint" style={{ marginTop: 8 }}>
-            {t("questions.aiOnceUsed")}
-          </p>
-        ) : null}
         <div style={{ marginTop: 8 }}>
           {state.questions.length === 0 ? (
             <p className="empty">{t("questions.empty")}</p>
@@ -132,30 +111,11 @@ export default function QuestionsPage() {
                 <div className="feed-meta">
                   {q.isAnonymous ? t("questions.anonymousName") : q.authorName}
                 </div>
-                <div style={{ marginBottom: 8 }}>{q.text}</div>
-                {q.aiReply ? (
-                  <div className="hint" style={{ whiteSpace: "pre-wrap" }}>
-                    {stripAiDisclaimer(q.aiReply)}
-                  </div>
-                ) : (
-                  <Button
-                    variant="soft"
-                    onClick={() => void onAskAi(q.id)}
-                    disabled={askingId === q.id || aiUsed}
-                    style={{ padding: "8px 12px", fontSize: "0.85rem" }}
-                  >
-                    {askingId === q.id
-                      ? t("questions.askingAi")
-                      : t("questions.askAi")}
-                  </Button>
-                )}
+                <div>{q.text}</div>
               </div>
             ))
           )}
         </div>
-        {hasAiReply ? (
-          <div className="disclaimer">{t("questions.aiDisclaimer")}</div>
-        ) : null}
       </GlassCard>
     </AppShell>
   );

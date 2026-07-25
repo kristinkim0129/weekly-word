@@ -123,33 +123,6 @@ export default function TodayPage() {
 
       {hasCheckedToday ? (
         <>
-          {user ? (
-            <GoldenTicket
-              userId={user.id}
-              hasCheckedToday={hasCheckedToday}
-              reference={capture?.scripture ?? null}
-            />
-          ) : null}
-
-          {tokensReceivedToday.length > 0 ? (
-            <GlassCard>
-              <p className="pill">{t("today.receivedPrayer")}</p>
-              <p style={{ margin: "10px 0 0", fontWeight: 600 }}>
-                {t("today.receivedCount", {
-                  n: tokensReceivedToday.length,
-                })}
-              </p>
-              <div className="member-chip-grid" style={{ marginTop: 10 }}>
-                {tokensReceivedToday.map((tok) => (
-                  <div key={tok.id} className="member-chip member-chip-compact">
-                    <span className="member-chip-name">{tok.fromName}</span>
-                    <span className="tiny">{t("today.prayed")}</span>
-                  </div>
-                ))}
-              </div>
-            </GlassCard>
-          ) : null}
-
           {groupId ? (
             <GlassCard>
               <div className="row-between">
@@ -211,6 +184,33 @@ export default function TodayPage() {
                   })}
                 </div>
               )}
+            </GlassCard>
+          ) : null}
+
+          {user ? (
+            <GoldenTicket
+              userId={user.id}
+              hasCheckedToday={hasCheckedToday}
+              reference={capture?.scripture ?? null}
+            />
+          ) : null}
+
+          {tokensReceivedToday.length > 0 ? (
+            <GlassCard>
+              <p className="pill">{t("today.receivedPrayer")}</p>
+              <p style={{ margin: "10px 0 0", fontWeight: 600 }}>
+                {t("today.receivedCount", {
+                  n: tokensReceivedToday.length,
+                })}
+              </p>
+              <div className="member-chip-grid" style={{ marginTop: 10 }}>
+                {tokensReceivedToday.map((tok) => (
+                  <div key={tok.id} className="member-chip member-chip-compact">
+                    <span className="member-chip-name">{tok.fromName}</span>
+                    <span className="tiny">{t("today.prayed")}</span>
+                  </div>
+                ))}
+              </div>
             </GlassCard>
           ) : null}
 

@@ -74,14 +74,19 @@ export default function PrivacyPage() {
             has provided personal information, contact us and we will delete it.
           </p>
 
+          <h3>Your choices</h3>
+          <p>
+            You can leave a group/season in the App. To request account or data
+            deletion, email us; we will process the request within a reasonable
+            time.
+          </p>
+
           <h3>Contact</h3>
           <p>
             Questions about privacy:{" "}
             <a href="mailto:aftersermon.review@gmail.com">
               aftersermon.review@gmail.com
             </a>
-            <br />
-            (Replace this with your real support email before launch.)
           </p>
         </section>
 
@@ -129,8 +134,15 @@ export default function PrivacyPage() {
 
           <h3>보관 및 삭제</h3>
           <p>
-            계정이 유지되는 동안 데이터를 보관합니다. 계정 또는 데이터 삭제는
-            아래 이메일로 요청해 주세요.
+            계정이 유지되는 동안 데이터를 보관합니다. 앱에서 그룹/시즌을 나갈 수
+            있습니다. 계정 또는 데이터 삭제는 아래 이메일로 요청해 주시면 합리적
+            기간 내에 처리합니다.
+          </p>
+
+          <h3>아동</h3>
+          <p>
+            본 앱은 만 13세 미만 아동을 대상으로 하지 않습니다. 아동의 개인정보가
+            수집된 것으로 보이면 문의해 주세요. 삭제하겠습니다.
           </p>
 
           <h3>문의</h3>
@@ -138,8 +150,6 @@ export default function PrivacyPage() {
             <a href="mailto:aftersermon.review@gmail.com">
               aftersermon.review@gmail.com
             </a>
-            <br />
-            (출시 전 실제 지원 이메일로 바꿔 주세요.)
           </p>
         </section>
 

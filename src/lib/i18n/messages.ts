@@ -16,7 +16,6 @@ const ko = {
   errors: {
     loadFail: "불러오기 실패",
     groupRequired: "그룹이 필요해요.",
-    aiFail: "AI 답변 실패",
     alreadyInGroupCreate: "이미 그룹에 있어요. 나간 뒤 새 시즌을 시작하세요.",
     alreadyInGroupJoin: "이미 그룹에 있어요. 나간 뒤 다른 코드로 참여하세요.",
     inviteNotFound: "초대 코드를 찾을 수 없어요.",
@@ -24,16 +23,9 @@ const ko = {
     seasonEnded: "이미 종료된 시즌이에요.",
     onlyCreator: "시즌 종료는 만든 사람만 할 수 있어요.",
     supabaseMissing: "Supabase 연결이 없어요.",
-    openaiMissing:
-      "OPENAI_API_KEY가 없어요. .env.local에 추가한 뒤 서버를 다시 시작해 주세요.",
     supabaseServer: "Supabase 서버 설정이 없어요.",
     loginRequired: "로그인이 필요해요.",
     badRequest: "잘못된 요청이에요.",
-    questionIdRequired: "질문 ID가 필요해요.",
-    questionNotFound: "질문을 찾을 수 없어요.",
-    aiFetchFail: "AI 답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.",
-    aiEmpty: "AI가 빈 답변을 보냈어요.",
-    aiReplyUsed: "AI 답변은 계정당 1회만 사용할 수 있어요.",
     pastorSummaryUsed: "요약 복사는 계정당 1회만 사용할 수 있어요.",
   },
 
@@ -189,7 +181,6 @@ const ko = {
     prayedFor: "{from} → {to}를 위해 기도했어요",
     prayerMapHint: "최근 기도 연결 {n}",
     prayerMapAria: "기도 발자국 다이어그램, 연결 {n}개",
-    prayerMapLegend: "화살표 색은 기도한 사람별",
     member: "그룹원",
     cheer: "한 줄 나눔",
     cheerPh: "나누고 싶은 생각이나 묵상이 있다면 :)",
@@ -220,11 +211,6 @@ const ko = {
   questions: {
     title: "질문 보드",
     subtitle: "말씀에 대해 묻고, 함께 묵상해요",
-    askAi: "AI 간단 답변 보기",
-    askingAi: "답변 작성 중…",
-    askFail: "AI 답변 실패",
-    aiDisclaimer:
-      "AI 답변은 참고용이며, 100% 정확하거나 검증된 성경 해석이 아닙니다. 목사님·소그룹과 함께 확인해 주세요.",
     label: "질문",
     placeholder: "설교나 말씀에 대해 궁금한 점",
     anonymous: "익명으로 올리기",
@@ -236,7 +222,6 @@ const ko = {
     copyPrompt: "복사해서 목사님께 보내세요:",
     pastorHint: "말씀 묵상 중 나온 질문을 짧게 정리해 나눌 수 있어요.",
     summaryOnceUsed: "요약 복사는 계정당 1회만 가능해요.",
-    aiOnceUsed: "AI 답변은 계정당 1회만 가능해요.",
     board: "보드",
     empty: "아직 질문이 없어요.",
     anonymousName: "익명",
@@ -379,7 +364,6 @@ const en = {
   errors: {
     loadFail: "Could not load",
     groupRequired: "A group is required.",
-    aiFail: "Could not get AI reply",
     alreadyInGroupCreate:
       "You're already in a group. Leave first, then start a new season.",
     alreadyInGroupJoin:
@@ -389,16 +373,9 @@ const en = {
     seasonEnded: "This season has already ended.",
     onlyCreator: "Only the creator can end the season.",
     supabaseMissing: "Supabase is not connected.",
-    openaiMissing:
-      "OPENAI_API_KEY is missing. Add it to `.env.local` and restart the server.",
     supabaseServer: "Supabase server is not configured.",
     loginRequired: "Please sign in.",
     badRequest: "Invalid request.",
-    questionIdRequired: "Question ID is required.",
-    questionNotFound: "Question not found.",
-    aiFetchFail: "Could not get an AI reply. Try again in a moment.",
-    aiEmpty: "The AI returned an empty reply.",
-    aiReplyUsed: "AI reply can be used once per account.",
     pastorSummaryUsed: "Summary copy can be used once per account.",
   },
 
@@ -554,7 +531,6 @@ const en = {
     prayedFor: "{from} prayed for {to}",
     prayerMapHint: "Recent prayer links · {n}",
     prayerMapAria: "Prayer footprints diagram, {n} links",
-    prayerMapLegend: "Arrow color by who prayed",
     member: "a member",
     cheer: "One-line share",
     cheerPh: "A thought or meditation to share :)",
@@ -585,11 +561,6 @@ const en = {
   questions: {
     title: "Questions",
     subtitle: "Ask about the Word · meditate together",
-    askAi: "Get a short AI reply",
-    askingAi: "Writing a reply…",
-    askFail: "Could not get AI reply",
-    aiDisclaimer:
-      "AI replies are for reference only and are not fully accurate or verified biblical interpretation. Please check with your pastor or small group.",
     label: "Question",
     placeholder: "Something you're wondering about the sermon or Scripture",
     anonymous: "Post anonymously",
@@ -601,7 +572,6 @@ const en = {
     copyPrompt: "Copy and send to your pastor:",
     pastorHint: "Share a short summary of questions from meditating on the Word.",
     summaryOnceUsed: "Summary copy is once per account.",
-    aiOnceUsed: "AI reply is once per account.",
     board: "Board",
     empty: "No questions yet.",
     anonymousName: "Anonymous",

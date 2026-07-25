@@ -546,14 +546,6 @@ const STEPS: Step[] = [
                 />
               </svg>
             </div>
-            <div className="prayer-arrows-legend" aria-hidden>
-              <span className="prayer-arrows-swatch prayer-arrow-fill-0" />
-              <span className="prayer-arrows-swatch prayer-arrow-fill-1" />
-              <span className="prayer-arrows-swatch prayer-arrow-fill-2" />
-              <span className="tiny">
-                {lang === "ko" ? "화살표 색은 기도한 사람별" : "Arrow color by who prayed"}
-              </span>
-            </div>
           </div>
         </GlassCard>
       </PhoneFrame>
