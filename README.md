@@ -41,7 +41,8 @@ npm run dev
 
 [http://localhost:3000](http://localhost:3000) → 언어 선택 → 로그인 → 말씀 담기 → 그룹.
 
-CUJ 스토리보드(로그인 없이 앱 UI): [http://localhost:3000/storyboard](http://localhost:3000/storyboard)
+CUJ 스토리보드: [http://localhost:3000/storyboard](http://localhost:3000/storyboard)  
+App Store 스크린샷(한·영 value props): [http://localhost:3000/app-store-shots](http://localhost:3000/app-store-shots) · PNG는 `public/app-store/`
 
 설정은 [`SETUP.md`](./SETUP.md).
 

@@ -31,79 +31,182 @@
 
 ---
 
-## English (US)
+## Brand lines (reuse everywhere)
 
-**Name**  
-After Sermon
+**Purpose (one sentence)** — product truth; keep light in store copy  
+Make Sunday’s Word — and what you shared — gently yours through the week.  
+주일 말씀과 나눔을, 부담 없이 한 주 동안 나의 것으로.
 
-**Subtitle**  
-Pray the week together
+**Internal note (do not promote)**  
+Contrast vs daily new passages is product insight only — not for subtitle, promo, or screenshot captions.
 
-**Promotional text**  
-From Sunday Word to daily prayer with your friends
+**Tone**  
+Simple. Lightweight. Low pressure. No guilt. No “deeper, not more” campaigning.
 
-**Description**
-
+**Primary**  
 After Sermon — Pray the week together.
 
-Help your Sunday Word guide the week, so you live it more fully to God — with your friends and church.
+**Secondary**  
+Sunday’s Word, gently through the week.
 
-There are many apps for reading the Bible alone. After Sermon is for what comes next: capturing the sermon’s Word, checking in through daily prayer, and walking the week with people you already know — your cell, small group, or faraway friends in the faith.
+**KR primary**  
+함께묵상 — 설교 이후, 한 주를 가볍게.
 
-• Capture Sunday’s Scripture and keep a short point for the week  
-• Meditate privately; share prayer, meditation points, and practice with your group  
-• Check in after prayer each day  
-• Send a simple “I prayed” to your accountability buddies  
-• Walk a season together — not forever scrolling alone  
+**KR secondary**  
+주일 말씀을, 부담 없이 나의 것으로.
 
-**Keywords** (100 chars max, comma-separated, no spaces after commas preferred)  
-prayer,sermon,bible,church,small group,meditation,accountability,faith,devotional
+---
+
+## English (US)
+
+**Name** (30)  
+After Sermon
+
+**Subtitle** (30) — recommended  
+Pray the week together
+
+**Subtitle — A/B options** (≤30 each)  
+| Option | Chars | Use when… |
+| --- | --- | --- |
+| Pray the week together | 22 | Default — light + communal |
+| Sunday’s Word, all week | 22 | Emphasize Sunday → week |
+| Make Sunday’s Word yours | 24 | Soft ownership |
+| Simple Sunday follow-through | 28 | Emphasize lightweight |
+
+**Promotional text** (170)  
+A light way to carry Sunday’s Word through the week — with friends. Capture, pray, check in. No heavy plans.
+
+**One-liner**  
+Simple follow-through after Sunday — light enough to keep, real enough to matter.
+
+**Description** (paste into App Store Connect)
+
+```
+After Sermon — Pray the week together.
+
+A lightweight way to live from Sunday’s Word.
+Capture what you heard and shared. Return to it through the week. Pray. Check in with friends. That’s it.
+
+No heavy reading plans. No pressure to do more.
+Just a simple space for Sunday’s Word to stay with you — and with your people.
+
+• Capture Sunday’s Word and sharing
+• A light daily return in prayer
+• Check in when you’ve prayed
+• Walk the week with friends or a buddy
+
+We’re people who believe community matters.
+We built After Sermon (함께묵상) so the week after the sermon can stay simple — and shared. That’s all we’re after.
+
+After Sermon — Pray the week together.
+```
+
+**Keywords** (100 chars max; no spaces after commas)  
+sermon,prayer,bible,church,accountability,meditation,devotional,sunday,faith,smallgroup
+
+Count check: = 87
 
 **Category**  
-Primary: Lifestyle (or Lifestyle → Health & Fitness only if you prefer)  
+Primary: Lifestyle  
 Secondary: Social Networking (optional)
 
-**A note from the founder**  
-We’re people who believe community matters.  
-We built After Sermon (함께묵상) so the week after the sermon can be lived with friends and church — not in isolation. We want Sunday’s Word to guide the week, prayer to bind us to one another, and life with God to be fuller together.
+**What’s New** (first release)  
+Welcome to After Sermon — a light way to carry Sunday’s Word through the week with friends.
+
+**Screenshot captions** (≤30–40 recommended for overlay)
+
+| # | Caption |
+| --- | --- |
+| 1 | Pray the week together |
+| 2 | Capture Sunday’s Word |
+| 3 | A light daily return |
+| 4 | Pray — then check in |
+| 5 | With friends |
+| 6 | Simple. That’s it. |
+
+**A note from the founder** (long form / About / website)
+
+We’re people who believe community matters.
+
+We built After Sermon (함께묵상) to be light: keep Sunday’s Word and what you shared, return to it through the week, and walk it with friends — without the weight of doing more.
+
+That’s all we’re after.
 
 ---
 
 ## 한국어
 
-**이름**  
+**이름** (30)  
 함께묵상
 
-**부제**  
-설교 이후, 한 주를 함께
+**부제** (30) — 추천  
+설교 이후, 한 주를 가볍게
 
-**홍보 문구**  
-일요일 말씀에서 매일 기도로 · 친구와 교회와 함께
+**부제 — A/B 옵션** (각 ≤30)
 
-**설명**
+| 옵션 | 글자 | 언제 |
+| --- | --- | --- |
+| 설교 이후, 한 주를 가볍게 | 14 | 기본 — lightweight |
+| 주일 말씀을 나의 것으로 | 13 | soft ownership |
+| 부담 없이, 한 주를 함께 | 13 | no-pressure |
+| 같이 들은 말씀을 함께 | 11 | together |
 
-함께묵상 — 설교 이후, 한 주를 함께.
+**홍보 문구** (170)  
+주일 말씀을 한 주 동안 가볍게 이어가요. 담고, 기도하고, 체크인. 무거운 플랜 없이, 친구와 함께.
 
-일요일 말씀이 한 주를 인도하게 하고, 친구·교회와 함께 기도하며 하나님 앞에서 더 충만히 살도록 돕습니다.
+**한 줄**  
+설교 이후의 한 주 — 심플하게, 부담 없이.
 
-말씀을 혼자 쌓는 도구는 이미 많습니다. 함께묵상은 그다음을 잇습니다. 설교의 말씀을 담고, 매일 기도로 체크하며, 이미 아는 이름들 — 셀, 소그룹, 멀리 있는 신앙 친구들과 한 주를 걸어가요.
+**설명** (App Store Connect에 붙여넣기)
 
-• 일요일 말씀을 담고 한 주의 핵심을 남기기  
-• 개인 묵상은 나에게만, 기도·묵상 포인트·실천은 그룹과  
-• 기도한 뒤 하루 체크  
-• “기도했어”로 서로에게 알리기  
-• 시즌을 정해 함께 걷기  
+```
+함께묵상 — 설교 이후, 한 주를 가볍게.
 
-**키워드**  
-기도,설교,말씀,교회,소그룹,묵상,셀,신앙,큐티,공동체
+주일 말씀을 한 주 동안 이어가는 가벼운 방법.
+듣고 나눈 말씀을 담고, 기도로 돌아가고, 친구와 체크인. 그게 전부예요.
+
+무거운 묵상 플랜이 아닙니다.
+부담 없이, 주일 말씀이 곁에 남도록 — 친구와 함께.
+
+• 주일 말씀과 나눔을 담기
+• 가볍게 기도로 돌아가기
+• 기도한 뒤 체크인
+• 친구·버디와 한 주를
+
+우리는 공동체가 중요한 사람들입니다.
+함께묵상(After Sermon)은 설교 이후의 한 주를 심플하게, 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
+
+함께묵상 — 설교 이후, 한 주를 가볍게.
+```
+
+**키워드** (100자 이내, 쉼표 뒤 공백 없이)  
+기도,설교,말씀,교회,묵상,주일,소그룹,적용,신앙,공동체
 
 **카테고리**  
 주: 라이프스타일  
 부: 소셜 네트워킹 (선택)
 
-**창업자 노트**  
-우리는 공동체가 중요한 사람들입니다.  
-말씀을 혼자 쌓는 도구는 이미 많습니다. 함께묵상(After Sermon)은 설교 이후의 한 주를, 친구와 교회 공동체와 함께 살고 싶어서 만들었습니다. 일요일의 말씀이 한 주를 인도하고, 서로 기도하며, 하나님 앞에서 더 충만히 살도록 — 그게 우리가 바라는 전부입니다.
+**새로운 기능** (첫 출시)  
+함께묵상에 오신 것을 환영합니다 — 주일 말씀을 한 주 동안 가볍게, 친구와 함께 이어가세요.
+
+**스크린샷 캡션**
+
+| # | 캡션 |
+| --- | --- |
+| 1 | 설교 이후, 한 주를 가볍게 |
+| 2 | 주일 말씀을 담아요 |
+| 3 | 가볍게, 기도로 |
+| 4 | 기도한 뒤 체크인 |
+| 5 | 친구와 함께 |
+| 6 | 심플하게. 그게 전부예요 |
+
+**창업자 노트** (긴 버전 / About / 웹)
+
+우리는 공동체가 중요한 사람들입니다.
+
+함께묵상(After Sermon)은 설교 이후의 한 주를 무겁지 않게 잇고 싶어서 만들었습니다. 주일 말씀과 나눔을 남기고, 기도로 돌아가고, 친구와 함께 — 부담 없이.
+
+그게 우리가 바라는 전부입니다.
 
 ---
 
@@ -173,27 +276,25 @@ Third parties to mention in privacy answers if asked: **Supabase** (auth + datab
 - [ ] In App Store Connect, leave IAP empty; Pricing = Free  
 - [ ] If you add paid features later, create IAP products *before* submission that uses them
 
-### 6. Screenshots & icon (you must produce)
+### 6. Screenshots & icon
 
-Capture from the **phone-sized** UI (or Simulator after Capacitor). Prefer real Korean + English builds if you localize the store listing.
+**Composer (in app):** [http://localhost:3000/app-store-shots](http://localhost:3000/app-store-shots)  
+(로그인 없이 · 한국어 / English 토글 · 9:16 슬라이드 캡처)
 
-**Required for modern iPhone submission (typical):**
+Value-prop shot order (KO + EN):
 
-| Device class | Size (portrait) | Count |
-| --- | --- | --- |
-| 6.7" / 6.9" display (e.g. iPhone 15/16 Pro Max) | 1290×2796 or current ASC requirement | 3–10 |
-| 6.5" (if ASC still asks) | per ASC | as required |
+| # | Value prop (KO) | Value prop (EN) | UI |
+| --- | --- | --- | --- |
+| 1 | 설교 이후, 한 주를 가볍게 | Pray the week together | Login / hero |
+| 2 | 주일 말씀을 담아요 | Capture Sunday’s Word | Capture |
+| 3 | 가볍게, 기도로 | A light daily return | Today check-orb |
+| 4 | 기도한 뒤 체크인 | Pray — then check in | From the heart |
+| 5 | 친구와 함께 | With friends | Group invite |
+| 6 | 심플하게. 그게 전부예요 | Simple. That’s it. | Prayer map |
 
-**Suggested shot list (order):**
+**ASC sizes (typical):** 1290×2796 (6.7") — scale up the 9:16 frame if needed.
 
-1. Today — this week’s Word + daily prayer check  
-2. Capture — Sunday scripture + brief point  
-3. Group — members / season together  
-4. Prayer footprints — “I prayed” arrows map  
-5. Questions board — ask & share (no AI reply UI)  
-6. Join / invite code — start a season with friends  
-
-**App icon:** 1024×1024 PNG, no alpha, no rounded mask (Apple applies mask). Not yet in repo — design and upload in App Store Connect / Xcode asset catalog.
+**App icon:** 1024×1024 PNG, no alpha, no rounded mask.
 
 ### 7. Review notes (paste into App Store Connect)
 

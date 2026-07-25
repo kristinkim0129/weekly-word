@@ -23,6 +23,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (
     path === "/dev-preview" ||
     path === "/storyboard" ||
+    path === "/app-store-shots" ||
     path === "/privacy" ||
     path === "/support"
   ) {
