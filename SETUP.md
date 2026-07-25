@@ -97,6 +97,25 @@ Xcode가 열리면:
 인증서·프로비저닝은 Xcode가 자동 관리합니다 (Automatically manage signing).  
 이 저장소에 가짜 인증서를 넣거나, 자격 증명 없이 업로드를 시도하지 마세요.
 
+### Resume next (human) — last automated check (2026-07-25)
+
+Automated run confirmed: `cap:sync` OK · scheme **App** · bundle `com.aftersermon.app` · Privacy/Support HTTP 200 · Supabase columns `week_captures.passage`, `profiles.avatar_url`, `profiles.avatar_emoji` present.
+
+**CLI Archive failed** with exact errors:
+
+1. `No Accounts: Add a new account in Accounts settings.`  
+2. `No profiles for 'com.aftersermon.app' were found`
+
+Local machine has an **Apple Development** identity, but **no physical iPhone** was connected (Mac + simulators only). Xcode CLI cannot create/download profiles until an Apple ID is signed into **Xcode → Settings → Accounts**.
+
+**Your next clicks (cannot be automated):**
+
+1. Xcode → **Settings → Accounts** → add your Apple ID (paid Developer team `K8323C2NMD` if that is the intended team).  
+2. Target **App** → **Signing & Capabilities** → Team + Automatically manage signing (fix red errors).  
+3. For a Development run on device: plug in iPhone → Trust → register device when Xcode prompts.  
+4. For store upload: scheme **App**, destination **Any iOS Device (arm64)** → **Product → Archive** → Distribute → App Store Connect.  
+5. ASC: paste Privacy/Support URLs + listing copy from [`APP_STORE.md`](APP_STORE.md); select the uploaded build (upload must succeed first).
+
 설정 변경 후 다시 sync할 때:
 
 ```bash

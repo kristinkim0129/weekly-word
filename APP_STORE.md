@@ -20,16 +20,19 @@
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| Production web deploy | Done in repo workflow | Verify live after each prod deploy |
-| Privacy Policy page (`/privacy`) | Done | Public URL ready for App Store Connect |
-| Support page (`/support`) | Done | Public URL ready for App Store Connect |
+| Production web deploy | Done | Live: https://weekly-word-eight.vercel.app |
+| Privacy Policy page (`/privacy`) | Done | HTTP 200 verified 2026-07-25 |
+| Support page (`/support`) | Done | HTTP 200 verified 2026-07-25 |
 | Listing copy (EN + KO) below | Draft ready | Paste into App Store Connect |
-| Capacitor / `ios/` project | **In repo** | Shell loads prod URL; Archive from Xcode — [SETUP.md](SETUP.md) § App Store (iOS) |
-| Apple Developer account | **You** | Paid membership required |
+| Capacitor / `ios/` project | **In repo** | `cap:sync` OK; WebView → prod URL — [SETUP.md](SETUP.md) |
+| DB columns (passage / avatars) | Verified | `week_captures.passage`, `profiles.avatar_url`, `profiles.avatar_emoji` via PostgREST |
+| CLI / Xcode Archive upload | **Blocked** | Exact: *No Accounts* + *No profiles for com.aftersermon.app* — sign into Xcode Accounts, then Archive in UI |
+| Physical iPhone for Dev profile | **You** | None connected on last check (simulators only) |
+| Apple Developer account | **You** | Paid membership + Team in Signing |
 | App Store Connect app record | **You** | Create app, bundle ID, screenshots |
 | Age rating questionnaire | **You** | Suggested answers below |
-| Screenshots / app icon | **You** | Spec list below |
-| TestFlight / review submission | **You** | After iOS build exists |
+| Screenshots / app icon | **You** | Spec list below (repo icon is 1024 Capacitor placeholder) |
+| TestFlight / review submission | **You** | After Archive upload exists |
 
 ---
 
@@ -381,9 +384,11 @@ Do **not** invent certificates or upload without your Apple team credentials.
 
 ## Human next steps (short list)
 
-1. Confirm production URLs above still resolve after deploy.  
-2. Create Apple Developer + App Store Connect app + bundle ID.  
-3. Design 1024 icon + 3–6 screenshots.  
-4. Open Xcode (`npm run cap:open:ios`), sign, Archive, upload; select build in ASC.  
-5. Fill Privacy nutrition labels + age rating; paste review notes + invite code.  
-6. Submit to App Review (TestFlight first recommended).
+**Do these in order — automation already hit the wall at signing/accounts:**
+
+1. **Xcode → Settings → Accounts** — add Apple ID (fixes CLI/UI *No Accounts*).  
+2. **Signing & Capabilities** — Team for `com.aftersermon.app`; clear “No profiles” (Automatically manage signing).  
+3. Optional Dev device: connect iPhone once so a Development profile can register a UDID.  
+4. **Product → Archive** → Distribute → App Store Connect (build selection in ASC needs this upload).  
+5. ASC metadata: Privacy + Support URLs (already live), paste listing copy below, icon/screenshots, age rating, review notes.  
+6. Select uploaded build → TestFlight → Submit for Review.
