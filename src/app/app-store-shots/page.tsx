@@ -4,6 +4,7 @@
  * App Store feature screenshots — Sundaily value props, KO + EN.
  * Open /app-store-shots → pick language → capture each slide.
  * Export: /app-store-shots?lang=en&shot=0&export=1&w=1284&h=2778
+ * ASC set: hero + Daily · Sermon · Group · Archive · Me
  */
 import Image from "next/image";
 import { Suspense, useEffect, useMemo, useState, type ReactNode } from "react";
@@ -113,10 +114,26 @@ function Phone({
 
   return (
     <div className="store-phone">
-      <div className="ambient ambient-a" aria-hidden />
-      <div className="ambient ambient-b" aria-hidden />
-      <header className="app-header" style={{ marginBottom: 12 }}>
+      <div className="app-bg" aria-hidden>
+        <Image
+          src="/landing-bg.png"
+          alt=""
+          fill
+          sizes="320px"
+          className="app-bg-img"
+          priority
+        />
+        <div className="app-bg-veil" />
+      </div>
+      <header className="app-header" style={{ marginBottom: 12, position: "relative", zIndex: 1 }}>
         <p className="brand" style={{ margin: 0 }}>
+          <Image
+            src="/logo-icon.png"
+            alt=""
+            width={22}
+            height={22}
+            className="brand-mark"
+          />
           {brand}
         </p>
         <h2 className="page-title" style={{ fontSize: "1.35rem" }}>
@@ -214,52 +231,6 @@ const SHOTS: Shot[] = [
               : "Personal notes stay private. Prayer, meditation points, and practice are shared with your group."}
           </p>
         </div>
-      </Phone>
-    ),
-  },
-  {
-    id: "capture",
-    headline: {
-      ko: "일요일 말씀을 담아요",
-      en: "Capture Sunday’s Word",
-    },
-    support: {
-      ko: "장과 본문, 핵심 한 줄. 깊은 메모는 나한테만.",
-      en: "Chapter + passage, one short point. Deep notes stay private.",
-    },
-    scene: (lang) => (
-      <Phone
-        brand="Sundaily"
-        lang={lang}
-        title={lang === "ko" ? "말씀 담기" : "Capture"}
-        sub={
-          lang === "ko"
-            ? "한 주를 말씀과 함께 · 핵심만 짧게"
-            : "A week with the Word · keep it short"
-        }
-        nav="capture"
-      >
-        <GlassCard className="capture-card">
-          <div className="field">
-            <label>{lang === "ko" ? "장 (Chapter)" : "Chapter"}</label>
-            <input readOnly value={SAMPLE.chapter[lang]} />
-          </div>
-          <div className="field">
-            <label>{lang === "ko" ? "본문 (Passage)" : "Passage"}</label>
-            <textarea readOnly rows={2} value={SAMPLE.passage[lang]} />
-          </div>
-          <div className="field">
-            <label>{lang === "ko" ? "핵심 한 줄" : "One-line point"}</label>
-            <input readOnly value={SAMPLE.brief[lang]} />
-          </div>
-          <div className="field">
-            <label>{lang === "ko" ? "이번 주 실천" : "This week's practice"}</label>
-            <input readOnly value={SAMPLE.practice[lang]} />
-          </div>
-          <Button style={{ width: "100%" }}>
-            {lang === "ko" ? "이번 주 말씀 저장" : "Save this week's Word"}
-          </Button>
-        </GlassCard>
       </Phone>
     ),
   },
@@ -364,78 +335,47 @@ const SHOTS: Shot[] = [
     ),
   },
   {
-    id: "pray",
+    id: "capture",
     headline: {
-      ko: "“기도했어”로 이어져요",
-      en: "Send “I prayed”",
+      ko: "일요일 말씀을 담아요",
+      en: "Capture Sunday’s Word",
     },
     support: {
-      ko: "마음을 담아 · 이미 아는 친구·셀과 책임 나눔.",
-      en: "From the heart — accountability with people you know.",
+      ko: "장과 본문, 핵심 한 줄. 깊은 메모는 나한테만.",
+      en: "Chapter + passage, one short point. Deep notes stay private.",
     },
     scene: (lang) => (
       <Phone
         brand="Sundaily"
         lang={lang}
-        title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
+        title={lang === "ko" ? "말씀 담기" : "Capture"}
         sub={
           lang === "ko"
-            ? "주일에 들은 은혜, 매일 나누는 삶"
-            : "From Sunday to Daily"
+            ? "한 주를 말씀과 함께 · 핵심만 짧게"
+            : "A week with the Word · keep it short"
         }
-        nav="today"
+        nav="capture"
       >
-        <GlassCard style={{ textAlign: "center" }}>
-          <div className="check-orb done" style={{ margin: "0 auto 8px" }}>
-            <span className="check-orb-inner">
-              <PrayHandsIcon />
-              <span className="check-orb-title">
-                {lang === "ko" ? "완료" : "Done"}
-              </span>
-              <span className="check-orb-sub">
-                {lang === "ko" ? "잘했어요" : "Well done"}
-              </span>
-            </span>
+        <GlassCard className="capture-card">
+          <div className="field">
+            <label>{lang === "ko" ? "장 (Chapter)" : "Chapter"}</label>
+            <input readOnly value={SAMPLE.chapter[lang]} />
           </div>
-        </GlassCard>
-        <GlassCard>
-          <div className="row-between">
-            <p className="pill">{lang === "ko" ? "마음을 담아" : "From the heart"}</p>
-            <span className="tiny">
-              {lang === "ko" ? "서로를 위해 기도해요" : "Pray for one another"}
-            </span>
+          <div className="field">
+            <label>{lang === "ko" ? "본문 (Passage)" : "Passage"}</label>
+            <textarea readOnly rows={2} value={SAMPLE.passage[lang]} />
           </div>
-          <div className="stack" style={{ marginTop: 12 }}>
-            <div className="member-chip">
-              <div>
-                <strong>{lang === "ko" ? "수아" : "Sua"}</strong>
-                <div className="prayer-keywords">
-                  {lang === "ko" ? "기도제목: 채용" : "Prayer: job search"}
-                </div>
-              </div>
-              <Button
-                variant="soft"
-                style={{ padding: "10px 12px", fontSize: "0.85rem" }}
-              >
-                {lang === "ko" ? "기도했어" : "I prayed"}
-              </Button>
-            </div>
-            <div className="member-chip">
-              <div>
-                <strong>{lang === "ko" ? "준호" : "June"}</strong>
-                <div className="prayer-keywords">
-                  {lang === "ko" ? "기도제목: 가족" : "Prayer: family"}
-                </div>
-              </div>
-              <Button
-                variant="soft"
-                disabled
-                style={{ padding: "10px 12px", fontSize: "0.85rem" }}
-              >
-                {lang === "ko" ? "보냄 🕊️" : "Sent 🕊️"}
-              </Button>
-            </div>
+          <div className="field">
+            <label>{lang === "ko" ? "핵심 한 줄" : "One-line point"}</label>
+            <input readOnly value={SAMPLE.brief[lang]} />
           </div>
+          <div className="field">
+            <label>{lang === "ko" ? "이번 주 실천" : "This week's practice"}</label>
+            <input readOnly value={SAMPLE.practice[lang]} />
+          </div>
+          <Button style={{ width: "100%" }}>
+            {lang === "ko" ? "이번 주 말씀 저장" : "Save this week's Word"}
+          </Button>
         </GlassCard>
       </Phone>
     ),
@@ -447,8 +387,8 @@ const SHOTS: Shot[] = [
       en: "Walk a season together",
     },
     support: {
-      ko: "초대 코드로 셀·친구를 모아요. 최대 8명.",
-      en: "Invite your cell or friends. Up to 8 people.",
+      ko: "초대 3/8 · 기도 발자국을 돌아봐요.",
+      en: "Invite 3/8 · see prayer footprints together.",
     },
     scene: (lang) => (
       <Phone
@@ -473,80 +413,6 @@ const SHOTS: Shot[] = [
           <button type="button" className="invite-outline-btn">
             {lang === "ko" ? "링크 복사" : "Copy link"}
           </button>
-        </div>
-        <div className="invite-members-card">
-          <div className="invite-members-head">
-            <span>{lang === "ko" ? "멤버" : "Members"}</span>
-            <span className="invite-members-ratio">3 / 8</span>
-          </div>
-          <ul className="invite-member-list">
-            {(
-              lang === "ko"
-                ? [
-                    { name: "나", role: "호스트", you: true },
-                    { name: "수아", role: "멤버", you: false },
-                    { name: "준호", role: "멤버", you: false },
-                  ]
-                : [
-                    { name: "Me", role: "Host", you: true },
-                    { name: "Sua", role: "Member", you: false },
-                    { name: "June", role: "Member", you: false },
-                  ]
-            ).map((m) => (
-              <li key={m.name} className="invite-member-row">
-                <img
-                  src="/avatar-placeholder.svg"
-                  alt=""
-                  width={42}
-                  height={42}
-                  className="member-avatar"
-                />
-                <div className="invite-member-meta">
-                  <strong>{m.name}</strong>
-                  <span className="tiny">{m.role}</span>
-                </div>
-                {m.you ? (
-                  <span className="invite-you-badge">
-                    {lang === "ko" ? "나" : "You"}
-                  </span>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Phone>
-    ),
-  },
-  {
-    id: "footprints",
-    headline: {
-      ko: "기도 발자국을 돌아봐요",
-      en: "See prayer footprints",
-    },
-    support: {
-      ko: "초대 3/8 · 서로 위해 기도한 흔적.",
-      en: "Invite 3/8 · traces of praying for one another.",
-    },
-    scene: (lang) => (
-      <Phone
-        brand="Sundaily"
-        lang={lang}
-        title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
-        sub={
-          lang === "ko"
-            ? "이 그룹을 호스트하고 있어요"
-            : "You're hosting this group"
-        }
-        nav="group"
-      >
-        <div className="invite-code-card">
-          <div className="invite-code-label">
-            <span className="invite-code-icon" aria-hidden>
-              ♡
-            </span>
-            <span>{lang === "ko" ? "초대 코드" : "Invite code"}</span>
-          </div>
-          <p className="invite-code-value">A1B2  C3D4</p>
           <div className="invite-members-head" style={{ marginTop: 10 }}>
             <span>{lang === "ko" ? "멤버" : "Members"}</span>
             <span className="invite-members-ratio">3 / 8</span>
@@ -579,15 +445,237 @@ const SHOTS: Shot[] = [
       </Phone>
     ),
   },
+  {
+    id: "archive",
+    headline: {
+      ko: "한 주를 말씀과 함께한 기록을 돌아봐요",
+      en: "Look back on weeks with the Word",
+    },
+    support: {
+      ko: "주간 · 일간 · 한달 · 일년 기록.",
+      en: "Weeks · Days · Month · Year — your trail with the Word.",
+    },
+    scene: (lang) => (
+      <Phone
+        brand="Sundaily"
+        lang={lang}
+        title={lang === "ko" ? "보관함" : "Archive"}
+        sub={
+          lang === "ko"
+            ? "한 주를 말씀과 함께한 기록을 돌아봐요"
+            : "Look back on weeks with the Word"
+        }
+        nav="archive"
+      >
+        <div className="archive-tabs">
+          {(
+            lang === "ko"
+              ? [
+                  { id: "weeks", label: "주간", active: true },
+                  { id: "days", label: "일간", active: false },
+                  { id: "month", label: "한달", active: false },
+                  { id: "year", label: "일년", active: false },
+                ]
+              : [
+                  { id: "weeks", label: "Weeks", active: true },
+                  { id: "days", label: "Days", active: false },
+                  { id: "month", label: "Month", active: false },
+                  { id: "year", label: "Year", active: false },
+                ]
+          ).map((tab) => (
+            <span
+              key={tab.id}
+              className={`archive-tab ${tab.active ? "active" : ""}`}
+            >
+              {tab.label}
+            </span>
+          ))}
+        </div>
+        <GlassCard>
+          <div className="archive-week-head">
+            <div>
+              <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+                <span className="pill">
+                  {lang === "ko" ? "이번 주" : "This week"}
+                </span>
+                <span className="tiny">
+                  {lang === "ko" ? "4일 체크" : "4 day checks"}
+                </span>
+              </div>
+              <h2 className="word-verse" style={{ marginTop: 10, fontSize: "1.05rem" }}>
+                {SAMPLE.chapter[lang]}
+              </h2>
+              <p className="hint" style={{ marginTop: 4 }}>
+                {SAMPLE.brief[lang]}
+              </p>
+            </div>
+            <span className="archive-chevron" aria-hidden>
+              ▾
+            </span>
+          </div>
+        </GlassCard>
+        <GlassCard>
+          <div className="archive-week-head">
+            <div>
+              <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+                <span className="pill">
+                  {lang === "ko" ? "지난 주" : "Past week"}
+                </span>
+                <span className="tiny">
+                  {lang === "ko" ? "6일 체크" : "6 day checks"}
+                </span>
+              </div>
+              <h2 className="word-verse" style={{ marginTop: 10, fontSize: "1.05rem" }}>
+                {lang === "ko" ? "시편 23:1-6" : "Psalm 23:1-6"}
+              </h2>
+              <p className="hint" style={{ marginTop: 4 }}>
+                {lang === "ko"
+                  ? "여호와는 나의 목자시니"
+                  : "The Lord is my shepherd"}
+              </p>
+            </div>
+            <span className="archive-chevron" aria-hidden>
+              ▾
+            </span>
+          </div>
+        </GlassCard>
+      </Phone>
+    ),
+  },
+  {
+    id: "me",
+    headline: {
+      ko: "나 — 프로필과 알림",
+      en: "Me — profile & reminders",
+    },
+    support: {
+      ko: "이름 · 프로필 · 언어 · 하루 한 번 알림.",
+      en: "Name · profile · language · once-a-day nudge.",
+    },
+    scene: (lang) => (
+      <Phone
+        brand="Sundaily"
+        lang={lang}
+        title={lang === "ko" ? "나" : "Me"}
+        sub={lang === "ko" ? "주일에서 매일로" : "From Sunday to Daily"}
+        nav="me"
+      >
+        <GlassCard>
+          <div className="archive-week-head">
+            <div className="row" style={{ gap: 8, minWidth: 0 }}>
+              <span
+                className="member-avatar"
+                style={{
+                  width: 28,
+                  height: 28,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "1rem",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.55)",
+                }}
+                aria-hidden
+              >
+                🙏
+              </span>
+              <p className="pill" style={{ margin: 0 }}>
+                {lang === "ko" ? "프로필" : "Profile"}
+              </p>
+            </div>
+            <span className="archive-chevron" aria-hidden>
+              ▴
+            </span>
+          </div>
+          <div className="archive-detail">
+            <div className="avatar-picker-preview">
+              <span
+                className="member-avatar"
+                style={{
+                  width: 64,
+                  height: 64,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "2rem",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.55)",
+                }}
+                aria-hidden
+              >
+                🙏
+              </span>
+              <div>
+                <p className="tiny" style={{ margin: 0 }}>
+                  {lang === "ko" ? "미리보기" : "Preview"}
+                </p>
+                <p className="hint" style={{ margin: "4px 0 0" }}>
+                  {lang === "ko"
+                    ? "사진 또는 이모지 중 하나를 골라요."
+                    : "Choose a photo or an emoji."}
+                </p>
+              </div>
+            </div>
+            <div className="emoji-picker" style={{ marginTop: 10 }} aria-hidden>
+              {["🙏", "✝️", "🕊️", "💛", "🌿", "✨"].map((emoji) => (
+                <span
+                  key={emoji}
+                  className={`emoji-option ${emoji === "🙏" ? "active" : ""}`}
+                >
+                  {emoji}
+                </span>
+              ))}
+            </div>
+          </div>
+        </GlassCard>
+        <GlassCard>
+          <div className="archive-week-head">
+            <p className="pill" style={{ margin: 0 }}>
+              {lang === "ko" ? "이름" : "Name"}
+            </p>
+            <span className="archive-chevron" aria-hidden>
+              ▾
+            </span>
+          </div>
+        </GlassCard>
+        <GlassCard>
+          <div className="archive-week-head">
+            <p className="pill" style={{ margin: 0 }}>
+              {lang === "ko" ? "언어" : "Language"}
+            </p>
+            <span className="archive-chevron" aria-hidden>
+              ▾
+            </span>
+          </div>
+        </GlassCard>
+        <GlassCard>
+          <div className="archive-week-head">
+            <p className="pill" style={{ margin: 0 }}>
+              {lang === "ko" ? "하루 한 번 알림" : "Once-a-day reminder"}
+            </p>
+            <span className="archive-chevron" aria-hidden>
+              ▾
+            </span>
+          </div>
+        </GlassCard>
+        <GlassCard>
+          <Button variant="ghost" style={{ width: "100%" }} tabIndex={-1}>
+            {lang === "ko" ? "로그아웃" : "Sign out"}
+          </Button>
+        </GlassCard>
+      </Phone>
+    ),
+  },
 ];
 
-/** ASC upload set (5) — maps to existing asc/* filenames */
+/** ASC upload set — hero + all 5 tabs */
 const ASC_SHOT_IDS = [
   "hero",
-  "capture",
   "daily",
-  "pray",
-  "footprints",
+  "capture",
+  "group",
+  "archive",
+  "me",
 ] as const;
 
 function AppStoreShotsInner() {
@@ -668,8 +756,8 @@ function AppStoreShotsInner() {
         </h1>
         <p className="hint" style={{ margin: "8px 0 14px" }}>
           {lang === "ko"
-            ? "실제 앱 UI · 캡처용 슬라이드"
-            : "Real app UI · capture slides"}
+            ? "실제 앱 UI · 캡처용 슬라이드 · 5탭 전체"
+            : "Real app UI · capture slides · all 5 tabs"}
         </p>
 
         <div className="storyboard-lang">
@@ -710,8 +798,8 @@ function AppStoreShotsInner() {
 
         <p className="tiny" style={{ marginTop: 16 }}>
           {lang === "ko"
-            ? "ASC 업로드: hero → capture → daily → pray → footprints(초대 3/8)."
-            : "ASC upload: hero → capture → daily → pray → footprints (invite 3/8)."}
+            ? "ASC 업로드: hero → Daily → Sermon → Group → Archive → Me."
+            : "ASC upload: hero → Daily → Sermon → Group → Archive → Me."}
         </p>
       </aside>
 

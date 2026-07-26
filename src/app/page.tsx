@@ -51,7 +51,7 @@ export default function TodayPage() {
       <GlassCard>
         {capture ? (
           <>
-            <div className="row-between" style={{ alignItems: "baseline" }}>
+            <div className="row-between" style={{ alignItems: "center" }}>
               <p className="pill">{t("today.thisWeek")}</p>
               <p className="tiny" style={{ margin: 0 }}>
                 {new Date(
@@ -62,32 +62,28 @@ export default function TodayPage() {
                 })}
               </p>
             </div>
-            <p className="week-meta-label" style={{ marginTop: 10 }}>
-              {t("today.chapterLabel")}
-            </p>
-            <p className="word-verse-sm" style={{ marginTop: 4 }}>
-              {capture.scripture}
-            </p>
-            <div className="week-meta">
-              <p className="week-meta-label">{t("today.briefLabel")}</p>
-              <p style={{ margin: "0 0 10px", fontWeight: 600 }}>
-                {capture.briefPoint}
+            <div className="week-meta" style={{ marginTop: 18 }}>
+              <p className="week-meta-value week-meta-value--sm">
+                {capture.scripture}
               </p>
+              <p className="week-meta-value">{capture.briefPoint}</p>
               {capture.meditationPoint ? (
-                <>
+                <div>
                   <p className="week-meta-label">{t("today.medLabel")}</p>
-                  <p className="hint" style={{ margin: "0 0 10px" }}>
+                  <p className="week-meta-value week-meta-value--sm">
                     {capture.meditationPoint}
                   </p>
-                </>
+                </div>
               ) : null}
               {capture.practice ? (
-                <>
-                  <p className="week-meta-label">{t("today.practiceLabel")}</p>
-                  <p className="practice-highlight" style={{ marginTop: 0 }}>
+                <div>
+                  <p className="week-meta-label">
+                    {t("today.practiceLabel")}
+                  </p>
+                  <p className="week-meta-value week-meta-value--sm">
                     {capture.practice}
                   </p>
-                </>
+                </div>
               ) : null}
             </div>
           </>
@@ -200,7 +196,7 @@ export default function TodayPage() {
                             flexShrink: 0,
                           }}
                         >
-                          {sent ? t("today.sent") : t("today.prayBtn")}
+                          {sent ? `${t("today.sent")} 🕊️` : t("today.prayBtn")}
                         </Button>
                       </div>
                     );
@@ -210,31 +206,55 @@ export default function TodayPage() {
             </GlassCard>
           ) : null}
 
+          <GlassCard>
+            <p className="pill">{t("today.receivedPrayer")}</p>
+            {tokensReceivedToday.length > 0 ? (
+              <>
+                <p style={{ margin: "10px 0 0", fontWeight: 600 }}>
+                  {t("today.receivedCount", {
+                    n: tokensReceivedToday.length,
+                  })}
+                </p>
+                <div className="member-chip-grid" style={{ marginTop: 10 }}>
+                  {tokensReceivedToday.map((tok) => {
+                    const from = state.members.find(
+                      (m) => m.id === tok.fromId,
+                    );
+                    return (
+                      <div
+                        key={tok.id}
+                        className="member-chip member-chip-compact"
+                      >
+                        <MemberAvatar
+                          name={tok.fromName}
+                          src={from?.avatarUrl ?? tok.fromAvatarUrl}
+                          emoji={from?.avatarEmoji ?? tok.fromAvatarEmoji}
+                          size={32}
+                        />
+                        <span className="member-chip-name">
+                          {tok.fromName}
+                        </span>
+                        <span className="tiny">
+                          {t("today.prayed")} 💌
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <p className="empty" style={{ marginTop: 10 }}>
+                {t("today.receivedEmpty")}
+              </p>
+            )}
+          </GlassCard>
+
           {user ? (
             <GoldenTicket
               userId={user.id}
               hasCheckedToday={hasCheckedToday}
               reference={capture?.scripture ?? null}
             />
-          ) : null}
-
-          {tokensReceivedToday.length > 0 ? (
-            <GlassCard>
-              <p className="pill">{t("today.receivedPrayer")}</p>
-              <p style={{ margin: "10px 0 0", fontWeight: 600 }}>
-                {t("today.receivedCount", {
-                  n: tokensReceivedToday.length,
-                })}
-              </p>
-              <div className="member-chip-grid" style={{ marginTop: 10 }}>
-                {tokensReceivedToday.map((tok) => (
-                  <div key={tok.id} className="member-chip member-chip-compact">
-                    <span className="member-chip-name">{tok.fromName}</span>
-                    <span className="tiny">{t("today.prayed")}</span>
-                  </div>
-                ))}
-              </div>
-            </GlassCard>
           ) : null}
 
           <Link href="/archive" className="archive-link-card">

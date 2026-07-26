@@ -15,12 +15,14 @@ const OUT = path.join(ROOT, "public/app-store/asc");
 
 const BASE = process.argv[2] || "http://localhost:3000";
 
+/** hero + all 5 tabs (Daily, Sermon, Group, Archive, Me) */
 const SHOTS = [
   { asc: "hero", file: "01-hero" },
-  { asc: "capture", file: "02-capture" },
-  { asc: "daily", file: "03-daily" },
-  { asc: "pray", file: "04-prayed" },
-  { asc: "footprints", file: "05-footprints" },
+  { asc: "daily", file: "02-daily" },
+  { asc: "capture", file: "03-sermon" },
+  { asc: "group", file: "04-group" },
+  { asc: "archive", file: "05-archive" },
+  { asc: "me", file: "06-me" },
 ];
 
 const TARGETS = [
@@ -43,6 +45,11 @@ async function waitForServer(url, tries = 60) {
 
 async function main() {
   fs.mkdirSync(OUT, { recursive: true });
+  // Clear previous ASC PNGs so renamed slots don't leave orphans
+  for (const name of fs.readdirSync(OUT)) {
+    if (name.endsWith(".png")) fs.unlinkSync(path.join(OUT, name));
+  }
+
   await waitForServer(`${BASE}/app-store-shots`);
 
   const browser = await chromium.launch({ headless: true });

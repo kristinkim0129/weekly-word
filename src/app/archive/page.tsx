@@ -12,6 +12,7 @@ import {
   formatDateLabel,
   formatWeekLabel,
   isCurrentWeek,
+  toDateKey,
   weekKeyFromDate,
 } from "@/lib/dates";
 import { todayKey } from "@/lib/demo-data";
@@ -65,9 +66,17 @@ export default function ArchivePage() {
         const tokensReceived = state.tokens.filter(
           (tok) => tok.toId === myId && tok.dateKey === check.dateKey,
         ).length;
-        return { check, week, tokensSent, tokensReceived };
+        const shares = state.cheers
+          .filter((c) => {
+            if (c.authorId !== myId) return false;
+            const created = new Date(c.createdAt);
+            if (Number.isNaN(created.getTime())) return false;
+            return toDateKey(created) === check.dateKey;
+          })
+          .map((c) => c.text);
+        return { check, week, tokensSent, tokensReceived, shares };
       });
-  }, [state.checks, state.tokens, state.weeks, myId]);
+  }, [state.checks, state.tokens, state.weeks, state.cheers, myId]);
 
   const monthKey = monthKeyFromDate();
   const yearKey = yearKeyFromDate();
@@ -289,9 +298,10 @@ function DaysTab({
     week?: WeekCapture;
     tokensSent: number;
     tokensReceived: number;
+    shares: string[];
   }[];
 }) {
-  const { t, dateLocale } = useLocale();
+  const { t } = useLocale();
 
   if (days.length === 0) {
     return (
@@ -310,36 +320,67 @@ function DaysTab({
     <GlassCard>
       <p className="pill">{t("archive.checkLog")}</p>
       <div style={{ marginTop: 8 }}>
-        {days.map(({ check, week, tokensSent, tokensReceived }) => (
-          <div key={check.dateKey} className="feed-item">
-            <div className="row-between">
-              <strong>{formatDateLabel(check.dateKey)}</strong>
-              <span className="tiny">
-                {check.dateKey === todayKey()
-                  ? t("archive.today")
-                  : t("archive.done")}
-              </span>
-            </div>
-            <p className="hint" style={{ marginTop: 4 }}>
-              {week
-                ? `${week.scripture} · ${week.briefPoint}`
-                : t("archive.weekWord", {
-                    week: formatWeekLabel(check.weekKey),
-                  })}
-            </p>
-            {(tokensSent > 0 || tokensReceived > 0) && (
-              <p className="tiny" style={{ marginTop: 4 }}>
-                {tokensSent > 0
-                  ? t("archive.prayersSent", { n: tokensSent })
-                  : null}
-                {tokensSent > 0 && tokensReceived > 0 ? " · " : null}
-                {tokensReceived > 0
-                  ? t("archive.prayersReceived", { n: tokensReceived })
-                  : null}
+        {days.map(
+          ({ check, week, tokensSent, tokensReceived, shares }) => (
+            <div key={check.dateKey} className="feed-item">
+              <div className="row-between">
+                <strong>
+                  {formatDateLabel(check.dateKey, "en-US")}
+                </strong>
+                <span className="tiny">
+                  {check.dateKey === todayKey()
+                    ? t("archive.today")
+                    : t("archive.done")}
+                </span>
+              </div>
+              <p className="hint" style={{ marginTop: 4 }}>
+                {week
+                  ? `${week.scripture} · ${week.briefPoint}`
+                  : t("archive.weekWord", {
+                      week: formatWeekLabel(check.weekKey, "en-US"),
+                    })}
               </p>
-            )}
-          </div>
-        ))}
+              {shares.length > 0 ? (
+                <div className="archive-day-shares">
+                  {shares.map((text, i) => (
+                    <p key={`${check.dateKey}-share-${i}`} className="tiny">
+                      “{text}”
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+              {(tokensSent > 0 || tokensReceived > 0) && (
+                <p
+                  className="archive-day-tokens"
+                  aria-label={[
+                    tokensSent > 0
+                      ? t("archive.prayersSent", { n: tokensSent })
+                      : "",
+                    tokensReceived > 0
+                      ? t("archive.prayersReceived", { n: tokensReceived })
+                      : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
+                >
+                  {tokensSent > 0 ? (
+                    <span className="archive-token-emojis" title={t("archive.prayersSent", { n: tokensSent })}>
+                      {"🕊️".repeat(tokensSent)}
+                    </span>
+                  ) : null}
+                  {tokensSent > 0 && tokensReceived > 0 ? (
+                    <span className="archive-token-gap"> </span>
+                  ) : null}
+                  {tokensReceived > 0 ? (
+                    <span className="archive-token-emojis" title={t("archive.prayersReceived", { n: tokensReceived })}>
+                      {"💌".repeat(tokensReceived)}
+                    </span>
+                  ) : null}
+                </p>
+              )}
+            </div>
+          ),
+        )}
       </div>
     </GlassCard>
   );

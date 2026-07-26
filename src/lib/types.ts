@@ -68,6 +68,8 @@ export type CheerPost = {
   id: string;
   authorId: MemberId;
   authorName: string;
+  authorAvatarUrl?: string;
+  authorAvatarEmoji?: string;
   text: string;
   createdAt: string;
   weekKey?: string;
@@ -79,6 +81,8 @@ export type PrayerToken = {
   id: string;
   fromId: MemberId;
   fromName: string;
+  fromAvatarUrl?: string;
+  fromAvatarEmoji?: string;
   toId: MemberId;
   toName?: string;
   dateKey: string;

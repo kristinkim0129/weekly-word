@@ -1,13 +1,11 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { AppShell } from "@/components/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useAuth } from "@/context/AuthProvider";
 import { useLocale } from "@/context/LocaleProvider";
-
-type Mode = "signin" | "signup";
 
 function GoogleGlyph() {
   return (
@@ -54,77 +52,21 @@ function PeopleIcon() {
 }
 
 export function LoginScreen() {
-  const {
-    signInWithGoogle,
-    signInWithEmail,
-    signUpWithEmail,
-    resetPassword,
-  } = useAuth();
+  const { signInWithGoogle } = useAuth();
   const { t } = useLocale();
-  const [mode, setMode] = useState<Mode>("signin");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState<"email" | "google" | "reset" | null>(
-    null,
-  );
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [info, setInfo] = useState("");
-
-  async function onEmailSubmit(e: FormEvent) {
-    e.preventDefault();
-    setLoading("email");
-    setError("");
-    setInfo("");
-    try {
-      if (mode === "signin") {
-        await signInWithEmail(email.trim(), password);
-      } else {
-        await signUpWithEmail(email.trim(), password);
-        setInfo(t("login.checkEmail"));
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t("login.fail"));
-    } finally {
-      setLoading(null);
-    }
-  }
 
   async function onGoogle() {
-    setLoading("google");
+    setLoading(true);
     setError("");
-    setInfo("");
     try {
       await signInWithGoogle();
     } catch (err) {
       setError(err instanceof Error ? err.message : t("login.fail"));
-      setLoading(null);
+      setLoading(false);
     }
   }
-
-  async function onForgot() {
-    if (!email.trim()) {
-      setError(t("login.emailRequired"));
-      return;
-    }
-    setLoading("reset");
-    setError("");
-    setInfo("");
-    try {
-      await resetPassword(email.trim());
-      setInfo(t("login.resetSent"));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t("login.fail"));
-    } finally {
-      setLoading(null);
-    }
-  }
-
-  const primaryLabel =
-    loading === "email"
-      ? t("login.working")
-      : mode === "signup"
-        ? t("login.createAccount")
-        : t("login.signIn");
 
   return (
     <div className="landing-shell">
@@ -154,7 +96,7 @@ export function LoginScreen() {
           <p className="landing-slogan">{t("login.tagline")}</p>
         </header>
 
-        <form className="landing-card" onSubmit={onEmailSubmit}>
+        <div className="landing-card">
           <div className="landing-card-head">
             <span className="landing-people-bubble" aria-hidden>
               <PeopleIcon />
@@ -168,152 +110,17 @@ export function LoginScreen() {
           <button
             type="button"
             className="landing-google"
-            onClick={onGoogle}
-            disabled={loading === "google"}
+            onClick={() => void onGoogle()}
+            disabled={loading}
           >
             <GoogleGlyph />
             <span>
-              {loading === "google"
-                ? t("login.googleLoading")
-                : t("login.google")}
+              {loading ? t("login.googleLoading") : t("login.google")}
             </span>
-          </button>
-
-          <div className="landing-or" role="separator">
-            <span>{t("login.orContinue")}</span>
-          </div>
-
-          <label className="landing-field">
-            <span className="landing-field-icon" aria-hidden>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M4 6.5h16v11H4v-11Z"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                />
-                <path
-                  d="m4.5 7 7.5 6 7.5-6"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <input
-              type="email"
-              autoComplete="email"
-              required
-              placeholder={t("login.emailPh")}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </label>
-
-          <label className="landing-field">
-            <span className="landing-field-icon" aria-hidden>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect
-                  x="5"
-                  y="10"
-                  width="14"
-                  height="10"
-                  rx="2"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                />
-                <path
-                  d="M8 10V7.5a4 4 0 0 1 8 0V10"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-            <input
-              type="password"
-              autoComplete={
-                mode === "signin" ? "current-password" : "new-password"
-              }
-              required
-              minLength={6}
-              placeholder={t("login.passwordPh")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-
-          {mode === "signin" ? (
-            <button
-              type="button"
-              className="landing-forgot"
-              onClick={onForgot}
-              disabled={loading === "reset"}
-            >
-              {loading === "reset" ? t("login.sending") : t("login.forgot")}
-            </button>
-          ) : (
-            <div className="landing-forgot-spacer" />
-          )}
-
-          <button
-            type="submit"
-            className="landing-primary"
-            disabled={loading === "email"}
-          >
-            <span>{primaryLabel}</span>
-            <svg
-              className="landing-primary-arrow"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M5 12h12M13 6l6 6-6 6"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
           </button>
 
           {error ? <p className="landing-error">{error}</p> : null}
-          {info ? <p className="landing-info">{info}</p> : null}
-
-          <p className="landing-switch">
-            {mode === "signin" ? (
-              <>
-                {t("login.noAccount")}{" "}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode("signup");
-                    setError("");
-                    setInfo("");
-                  }}
-                >
-                  {t("login.createAccount")}
-                </button>
-              </>
-            ) : (
-              <>
-                {t("login.hasAccount")}{" "}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode("signin");
-                    setError("");
-                    setInfo("");
-                  }}
-                >
-                  {t("login.signIn")}
-                </button>
-              </>
-            )}
-          </p>
-        </form>
+        </div>
 
         <p className="landing-privacy">{t("login.privacy")}</p>
       </div>

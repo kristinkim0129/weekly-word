@@ -11,7 +11,8 @@ import type {
   QuestionPost,
   WeekCapture,
 } from "@/lib/types";
-import { periodRange } from "@/lib/groups";
+import { defaultEmojiForUser } from "@/lib/avatars";
+import { normalizeInviteCode, periodRange } from "@/lib/groups";
 import { tStored } from "@/lib/i18n/locale";
 import { parseThemeId } from "@/lib/themes";
 
@@ -59,21 +60,45 @@ export async function ensureProfile(
     .maybeSingle();
 
   if (data) {
+    const patch: Record<string, unknown> = {};
     const nextAvatar =
       typeof avatarUrl === "string" && avatarUrl.trim()
         ? avatarUrl.trim()
         : null;
     if (nextAvatar && !data.avatar_url) {
-      const { data: updated } = await supabase
+      patch.avatar_url = nextAvatar;
+    }
+    const hasEmoji =
+      typeof data.avatar_emoji === "string" && data.avatar_emoji.trim();
+    const hasPhoto =
+      typeof (patch.avatar_url ?? data.avatar_url) === "string" &&
+      String(patch.avatar_url ?? data.avatar_url).trim();
+    // Always show something: seed a stable emoji when neither photo nor emoji exists
+    if (!hasEmoji && !hasPhoto) {
+      patch.avatar_emoji = defaultEmojiForUser(userId);
+    }
+    if (Object.keys(patch).length > 0) {
+      const { data: updated, error } = await supabase
         .from("profiles")
-        .update({ avatar_url: nextAvatar })
+        .update({ ...patch, updated_at: new Date().toISOString() })
         .eq("id", userId)
         .select("*")
         .maybeSingle();
-      return updated ?? { ...data, avatar_url: nextAvatar };
+      if (error) {
+        // Column may be missing if migration 007 not applied — keep going with local default
+        if (!hasEmoji && !hasPhoto) {
+          return { ...data, ...patch, avatar_url: data.avatar_url ?? nextAvatar };
+        }
+        throw error;
+      }
+      return updated ?? { ...data, ...patch };
     }
     return data;
   }
+
+  const seededEmoji = avatarUrl?.trim()
+    ? null
+    : defaultEmojiForUser(userId);
 
   const { data: created, error } = await supabase
     .from("profiles")
@@ -81,12 +106,57 @@ export async function ensureProfile(
       id: userId,
       display_name: fallbackName || tStored("common.me"),
       ...(avatarUrl?.trim() ? { avatar_url: avatarUrl.trim() } : {}),
+      ...(seededEmoji ? { avatar_emoji: seededEmoji } : {}),
     })
     .select("*")
     .single();
 
   if (error) throw error;
   return created;
+}
+
+export async function uploadAvatarPhoto(
+  supabase: SupabaseClient,
+  userId: string,
+  file: File,
+): Promise<string> {
+  if (!file.type.startsWith("image/")) {
+    throw new Error(tStored("errors.avatarNotImage"));
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    throw new Error(tStored("errors.avatarTooLarge"));
+  }
+
+  const ext =
+    file.type === "image/png"
+      ? "png"
+      : file.type === "image/webp"
+        ? "webp"
+        : file.type === "image/gif"
+          ? "gif"
+          : "jpg";
+  const path = `${userId}/${Date.now()}.${ext}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("avatars")
+    .upload(path, file, {
+      upsert: true,
+      contentType: file.type,
+      cacheControl: "3600",
+    });
+  if (uploadError) {
+    throw new Error(
+      uploadError.message.includes("Bucket not found")
+        ? tStored("errors.avatarStorageMissing")
+        : uploadError.message,
+    );
+  }
+
+  const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+  if (!data?.publicUrl) {
+    throw new Error(tStored("errors.avatarUploadFail"));
+  }
+  return data.publicUrl;
 }
 
 export async function loadCloudBundle(
@@ -230,7 +300,7 @@ export async function loadCloudBundle(
           .limit(50),
       ]);
 
-    // Resolve names for cheer authors who may have left the group
+    // Resolve names/avatars for cheer authors who may have left the group
     const missingCheerAuthorIds = [
       ...new Set(
         (cheerRows ?? [])
@@ -241,36 +311,85 @@ export async function loadCloudBundle(
     if (missingCheerAuthorIds.length > 0) {
       const { data: extraProfiles } = await supabase
         .from("profiles")
-        .select("id, display_name")
+        .select("id, display_name, avatar_url, avatar_emoji")
         .in("id", missingCheerAuthorIds);
       for (const p of extraProfiles ?? []) {
-        nameById.set(p.id, p.display_name);
+        nameById.set(p.id as string, p.display_name as string);
+        if (typeof p.avatar_url === "string" && p.avatar_url) {
+          avatarById.set(p.id as string, p.avatar_url);
+        }
+        if (typeof p.avatar_emoji === "string" && p.avatar_emoji.trim()) {
+          emojiById.set(p.id as string, p.avatar_emoji.trim());
+        }
       }
     }
 
-    cheers = (cheerRows ?? []).map((c) => ({
-      id: c.id,
-      authorId: c.author_id,
-      authorName: nameById.get(c.author_id) ?? tStored("common.member"),
-      text: c.text,
-      createdAt: c.created_at,
-      weekKey: c.week_key ?? undefined,
-      groupId: c.group_id,
-      groupName: activeGroup?.name,
-    }));
+    cheers = (cheerRows ?? []).map((c) => {
+      const authorId = c.author_id as string;
+      return {
+        id: c.id as string,
+        authorId,
+        authorName: nameById.get(authorId) ?? tStored("common.member"),
+        authorAvatarUrl: avatarById.get(authorId),
+        authorAvatarEmoji: emojiById.get(authorId),
+        text: c.text as string,
+        createdAt: c.created_at as string,
+        weekKey: (c.week_key as string | undefined) ?? undefined,
+        groupId: c.group_id as string | undefined,
+        groupName: activeGroup?.name,
+      };
+    });
 
-    tokens = (tokenRows ?? []).map((t) => ({
-      id: t.id,
-      fromId: t.from_id,
-      fromName:
-        t.from_name || nameById.get(t.from_id) || tStored("common.member"),
-      toId: t.to_id,
-      toName: t.to_name || nameById.get(t.to_id) || tStored("common.member"),
-      dateKey: t.date_key,
-      createdAt: t.created_at,
-      groupId: t.group_id,
-      groupName: t.group_name || activeGroup?.name,
-    }));
+    // Avatars for prayer-token senders who may not be in the active member list
+    const missingTokenFromIds = [
+      ...new Set(
+        (tokenRows ?? [])
+          .map((t) => t.from_id as string)
+          .filter((id) => id && !avatarById.has(id) && !emojiById.has(id)),
+      ),
+    ];
+    if (missingTokenFromIds.length > 0) {
+      const { data: tokenProfiles } = await supabase
+        .from("profiles")
+        .select("id, display_name, avatar_url, avatar_emoji")
+        .in("id", missingTokenFromIds);
+      for (const p of tokenProfiles ?? []) {
+        const id = p.id as string;
+        if (!nameById.has(id) && p.display_name) {
+          nameById.set(id, p.display_name as string);
+        }
+        if (typeof p.avatar_url === "string" && p.avatar_url) {
+          avatarById.set(id, p.avatar_url);
+        }
+        if (typeof p.avatar_emoji === "string" && p.avatar_emoji.trim()) {
+          emojiById.set(id, p.avatar_emoji.trim());
+        }
+      }
+    }
+
+    tokens = (tokenRows ?? []).map((t) => {
+      const fromId = t.from_id as string;
+      return {
+        id: t.id as string,
+        fromId,
+        fromName:
+          (t.from_name as string) ||
+          nameById.get(fromId) ||
+          tStored("common.member"),
+        fromAvatarUrl: avatarById.get(fromId),
+        fromAvatarEmoji: emojiById.get(fromId),
+        toId: t.to_id as string,
+        toName:
+          (t.to_name as string) ||
+          nameById.get(t.to_id as string) ||
+          tStored("common.member"),
+        dateKey: t.date_key as string,
+        createdAt: t.created_at as string,
+        groupId: t.group_id as string | undefined,
+        groupName:
+          (t.group_name as string | undefined) || activeGroup?.name,
+      };
+    });
 
     questions = (questionRows ?? []).map((q) => ({
       id: q.id,
@@ -425,8 +544,13 @@ export async function joinGroupByCode(
   _userId: string,
   code: string,
 ) {
+  const normalized = normalizeInviteCode(code);
+  if (!normalized) {
+    throw new Error(tStored("errors.inviteNotFound"));
+  }
+
   const { data, error } = await supabase.rpc("join_group_by_code", {
-    p_code: code,
+    p_code: normalized,
   });
   if (error) {
     const msg = error.message || "";

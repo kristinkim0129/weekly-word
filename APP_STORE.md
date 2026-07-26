@@ -340,13 +340,14 @@ node scripts/capture-asc-shots.mjs
 sips -g pixelWidth -g pixelHeight public/app-store/asc/*.png
 ```
 
-| # | File | Value prop (EN) | Real UI |
+| # | File | Value prop (EN) | Real UI (tab) |
 | --- | --- | --- | --- |
 | 1 | `*-01-hero` | From Sunday to Daily | Landing — Sundaily + Google sign-in |
-| 2 | `*-02-capture` | Capture Sunday’s Word | Sermon — Chapter + Passage + one-line |
-| 3 | `*-03-daily` | Pray — then check in | Daily — Read · Reflect · One-line + Pray & check |
-| 4 | `*-04-prayed` | Send “I prayed” | Daily — Done + From the heart |
-| 5 | `*-05-footprints` | See prayer footprints | Group — invite 3/8 + footprints |
+| 2 | `*-02-daily` | Pray — then check in | **Daily** — Read · Reflect · One-line + Pray & check |
+| 3 | `*-03-sermon` | Capture Sunday’s Word | **Sermon** — Chapter + Passage + one-line |
+| 4 | `*-04-group` | Walk a season together | **Group** — invite 3/8 + prayer footprints |
+| 5 | `*-05-archive` | Look back on weeks with the Word | **Archive** — Weeks / Days / Month / Year |
+| 6 | `*-06-me` | Me — profile & reminders | **Me** — profile · language · nudge |
 
 **ASC sizes in repo:** iPhone 6.5" **1284×2778**, iPad 13" **2048×2732**.
 
@@ -414,6 +415,6 @@ Do **not** invent certificates or upload without your Apple team credentials.
 1. **NOW — unique App Name** — App Information → Name → try `Sundaily 함께묵상` (or next candidate). Do not resubmit plain “Sundaily”.  
 2. Paste **Privacy** + **Support** URLs (table above; both HTTP 200).  
 3. Complete **Age Rating** (expect ~4+) + **App Privacy** nutrition labels.  
-4. Upload screenshots from `public/app-store/asc/` (iPhone 6.5" then iPad 13", order 01→05).  
+4. Upload screenshots from `public/app-store/asc/` (iPhone 6.5" then iPad 13", order 01→06).  
 5. **Build:** select **1.0 (2)** if already in ASC; otherwise Xcode Archive → Distribute first.  
 6. Export compliance: HTTPS / standard TLS only → exempt. Review notes + invite code → Submit for Review.

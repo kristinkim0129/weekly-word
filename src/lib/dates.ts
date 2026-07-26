@@ -19,22 +19,25 @@ export function parseDateKey(key: string) {
   return new Date(y, m - 1, d, 12);
 }
 
-export function formatDateLabel(dateKey: string) {
+export function formatDateLabel(dateKey: string, locale = "en-US") {
   const d = parseDateKey(dateKey);
-  return d.toLocaleDateString("ko-KR", {
-    month: "long",
-    day: "numeric",
+  return d.toLocaleDateString(locale, {
     weekday: "short",
+    month: "short",
+    day: "numeric",
   });
 }
 
-/** 요일만 — 예: 월, 화 */
-export function formatWeekdayOnly(isoOrDateKey: string) {
+/** Weekday only — e.g. Mon / 월 */
+export function formatWeekdayOnly(
+  isoOrDateKey: string,
+  locale = "en-US",
+) {
   const d = isoOrDateKey.includes("T")
     ? new Date(isoOrDateKey)
     : parseDateKey(isoOrDateKey);
   if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("ko-KR", { weekday: "short" });
+  return d.toLocaleDateString(locale, { weekday: "short" });
 }
 
 /** 날짜 대신 보여주는 귀여운 상대 이모지 — 오늘✨ 어제🌙 이번 주🌱 이달🍃 그 전🕊 */
@@ -61,16 +64,16 @@ export function relativeDayEmoji(dateKey: string, now = new Date()) {
   return "🕊";
 }
 
-export function formatWeekLabel(weekKey: string) {
+export function formatWeekLabel(weekKey: string, locale = "en-US") {
   const start = parseDateKey(weekKey);
   const end = new Date(start);
   end.setDate(start.getDate() + 6);
-  const startText = start.toLocaleDateString("ko-KR", {
-    month: "long",
+  const startText = start.toLocaleDateString(locale, {
+    month: "short",
     day: "numeric",
   });
-  const endText = end.toLocaleDateString("ko-KR", {
-    month: "long",
+  const endText = end.toLocaleDateString(locale, {
+    month: "short",
     day: "numeric",
   });
   return `${startText} – ${endText}`;

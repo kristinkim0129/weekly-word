@@ -16,8 +16,10 @@ import {
   joinGroupByCode,
   leaveGroup,
   loadCloudBundle,
+  uploadAvatarPhoto,
   type CreateGroupInput,
 } from "@/lib/cloud/api";
+import { normalizeInviteCode } from "@/lib/groups";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { applyBrandTheme, DEFAULT_THEME } from "@/lib/themes";
 import type {
@@ -51,7 +53,9 @@ type AppContextValue = {
   refresh: () => Promise<void>;
   setNudgeTime: (time: string) => void;
   setDisplayName: (name: string) => void;
-  setAvatarEmoji: (emoji: string | null) => void;
+  setAvatarEmoji: (emoji: string | null) => Promise<void>;
+  setAvatarPhoto: (file: File) => Promise<void>;
+  clearAvatarPhoto: () => Promise<void>;
   setGroupEnabled: (on: boolean) => void;
   saveCapture: (capture: CaptureInput) => Promise<void>;
   checkOffToday: () => Promise<void>;
@@ -239,23 +243,71 @@ export function AppProvider({ children }: { children: ReactNode }) {
         })
         .eq("id", user.id);
     },
-    setAvatarEmoji: (emoji) => {
+    setAvatarEmoji: async (emoji) => {
       const next =
         typeof emoji === "string" && emoji.trim() ? emoji.trim() : null;
-      setState((s) => ({
-        ...s,
-        settings: { ...s.settings, avatarEmoji: next },
-        members: s.members.map((m) =>
-          m.isMe ? { ...m, avatarEmoji: next || undefined } : m,
-        ),
-      }));
-      void supabase
+      const { error } = await supabase
         .from("profiles")
         .update({
           avatar_emoji: next,
           updated_at: new Date().toISOString(),
         })
         .eq("id", user.id);
+      if (error) throw error;
+      setState((s) => ({
+        ...s,
+        settings: { ...s.settings, avatarEmoji: next },
+        members: s.members.map((m) =>
+          m.isMe
+            ? { ...m, avatarEmoji: next || undefined }
+            : m,
+        ),
+      }));
+    },
+    setAvatarPhoto: async (file) => {
+      const url = await uploadAvatarPhoto(supabase, user.id, file);
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          avatar_url: url,
+          avatar_emoji: null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
+      if (error) throw error;
+      setState((s) => ({
+        ...s,
+        settings: { ...s.settings, avatarEmoji: null },
+        members: s.members.map((m) =>
+          m.isMe
+            ? { ...m, avatarUrl: url, avatarEmoji: undefined }
+            : m,
+        ),
+      }));
+    },
+    clearAvatarPhoto: async () => {
+      const google =
+        (typeof user.user_metadata?.avatar_url === "string" &&
+          user.user_metadata.avatar_url) ||
+        (typeof user.user_metadata?.picture === "string" &&
+          user.user_metadata.picture) ||
+        null;
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          avatar_url: google,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", user.id);
+      if (error) throw error;
+      setState((s) => ({
+        ...s,
+        members: s.members.map((m) =>
+          m.isMe
+            ? { ...m, avatarUrl: google || undefined }
+            : m,
+        ),
+      }));
     },
     setGroupEnabled: (on) => {
       setState((s) => ({
@@ -393,10 +445,26 @@ export function AppProvider({ children }: { children: ReactNode }) {
       await refresh();
     },
     joinGroup: async (code) => {
-      if (groupId) {
-        throw new Error("이미 그룹에 있어요. 나간 뒤 다른 코드로 참여하세요.");
+      const normalized = normalizeInviteCode(code);
+
+      // Already in this group → sync (formatted codes like "3081 F9E1" OK)
+      if (
+        groupId &&
+        inviteCode &&
+        normalizeInviteCode(inviteCode) === normalized
+      ) {
+        await refresh();
+        return;
       }
-      await joinGroupByCode(supabase, user.id, code);
+
+      if (groupId) {
+        throw new Error(
+          "이미 그룹에 있어요. 나간 뒤 다른 코드로 참여하세요.",
+        );
+      }
+
+      // Fresh join or rejoin after leave — RPC clears left_at if prior member
+      await joinGroupByCode(supabase, user.id, normalized);
       await refresh();
     },
     leaveMyGroup: async () => {

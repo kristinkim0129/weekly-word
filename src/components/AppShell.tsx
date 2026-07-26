@@ -20,9 +20,18 @@ export function AppShell({
 
   return (
     <div className="phone-shell">
-      <div className="ambient ambient-a" aria-hidden />
-      <div className="ambient ambient-b" aria-hidden />
-      <div className="ambient ambient-c" aria-hidden />
+      <div className="app-bg" aria-hidden>
+        <Image
+          src="/landing-bg.png"
+          alt=""
+          fill
+          priority
+          sizes="430px"
+          className="app-bg-img"
+        />
+        <div className="app-bg-veil" />
+        <div className="app-bg-shine" />
+      </div>
       <header className="app-header">
         <div className="row-between" style={{ alignItems: "flex-start" }}>
           <p className="brand">

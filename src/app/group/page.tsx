@@ -30,7 +30,7 @@ const PERIOD_KEYS: { id: GroupPeriodPreset; labelKey: MessageKey }[] = [
 
 export default function GroupPage() {
   const { user } = useAuth();
-  const { t } = useLocale();
+  const { t, dateLocale } = useLocale();
   const {
     state,
     groupId,
@@ -538,14 +538,30 @@ export default function GroupPage() {
           {state.cheers.length === 0 ? (
             <p className="empty">{t("group.firstCheer")}</p>
           ) : (
-            state.cheers.map((c) => (
-              <div key={c.id} className="feed-item">
-                <div className="feed-meta">
-                  {formatWeekdayOnly(c.createdAt)}
+            state.cheers.map((c) => {
+              const author = state.members.find((m) => m.id === c.authorId);
+              return (
+                <div key={c.id} className="feed-item cheer-item">
+                  <div className="cheer-author">
+                    <MemberAvatar
+                      name={c.authorName}
+                      src={author?.avatarUrl ?? c.authorAvatarUrl}
+                      emoji={author?.avatarEmoji ?? c.authorAvatarEmoji}
+                      size={32}
+                    />
+                    <div className="cheer-author-meta">
+                      <strong className="cheer-author-name">
+                        {c.authorName}
+                      </strong>
+                      <span className="feed-meta" style={{ margin: 0 }}>
+                        {formatWeekdayOnly(c.createdAt, dateLocale)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="cheer-text">{c.text}</div>
                 </div>
-                <div>{c.text}</div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </GlassCard>

@@ -6,8 +6,8 @@ export type ThemeId = "after";
 
 export const DEFAULT_THEME: ThemeId = "after";
 
-/** Light glass + gold · glossy cool-gray canvas #e2e6e8 */
-export const BRAND_THEME_COLOR = "#E2E6E8";
+/** Misty sky + cool gray */
+export const BRAND_THEME_COLOR = "#E8EEF2";
 
 export function applyBrandTheme() {
   if (typeof document === "undefined") return;

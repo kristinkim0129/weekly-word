@@ -5,9 +5,14 @@ import type { GroupPeriodPreset } from "./types";
 
 export const MAX_GROUP_MEMBERS = 8;
 
+/** Strip spaces/punctuation so "3081 F9E1" matches stored "3081f9e1". */
+export function normalizeInviteCode(code: string): string {
+  return code.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+}
+
 /** Display invite codes in readable chunks (e.g. ab12cd34 → AB12  CD34). */
 export function formatInviteCode(code: string): string {
-  const clean = code.replace(/\s+/g, "").toUpperCase();
+  const clean = normalizeInviteCode(code).toUpperCase();
   if (clean.length <= 4) return clean;
   const mid = Math.ceil(clean.length / 2);
   return `${clean.slice(0, mid)}  ${clean.slice(mid)}`;
