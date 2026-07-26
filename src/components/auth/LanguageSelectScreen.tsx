@@ -14,13 +14,13 @@ const OPTIONS: {
   {
     id: "en",
     label: "English · Sundaily",
-    native: "Pray the week together",
+    native: "From Sunday to Daily",
     continue: "Continue",
   },
   {
     id: "ko",
     label: "한국어 · Sundaily",
-    native: "설교 이후, 한 주를 함께",
+    native: "주일에 들은 은혜, 매일 나누는 삶",
     continue: "계속하기",
   },
 ];
@@ -56,7 +56,7 @@ export function LanguageSelectScreen() {
             priority
           />
           <h1 className="landing-title">Sundaily</h1>
-          <p className="landing-slogan">PRAY THE WEEK TOGETHER</p>
+          <p className="landing-slogan">FROM SUNDAY TO DAILY</p>
         </header>
 
         <div className="landing-card">

@@ -1,6 +1,6 @@
 # Sundaily
 
-**함께묵상** · Pray the week together.
+**Sundaily** · From Sunday to Daily
 
 ---
 
@@ -16,8 +16,8 @@ A light way to carry the Word from the pulpit into Monday morning — with the p
 
 | | |
 | --- | --- |
-| **EN** | Sundaily — Pray the week together. |
-| **KR** | 함께묵상 — 설교 이후, 한 주를 함께. |
+| **EN** | Sundaily — From Sunday to Daily |
+| **KR** | Sundaily — 주일에 들은 은혜, 매일 나누는 삶 |
 | **Promise** | Make Sunday’s Word gently yours through the week. |
 | **Tone** | Simple. Lightweight. Low pressure. No guilt. |
 

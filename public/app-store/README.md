@@ -26,7 +26,7 @@ Scale to **1290×2796** (or current ASC size) before upload if needed.
 ## Copy (value props)
 
 **KO — Sundaily**  
-1. 설교 이후, 한 주를 함께  
+1. 주일에 들은 은혜, 매일 나누는 삶  
 2. 일요일 말씀을 담아요  
 3. 기도한 뒤, 하루를 체크해요  
 4. “기도했어”로 이어져요  
@@ -34,7 +34,7 @@ Scale to **1290×2796** (or current ASC size) before upload if needed.
 6. 기도 발자국을 돌아봐요  
 
 **EN — Sundaily**  
-1. Pray the week together  
+1. From Sunday to Daily  
 2. Capture Sunday’s Word  
 3. Pray — then check in  
 4. Send “I prayed”  

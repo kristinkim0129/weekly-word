@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "Sundaily",
   description:
-    "Sundaily: Pray the week together · From Sunday Word to daily prayer with your friends",
+    "Sundaily: From Sunday to Daily · Sunday's Word, Daily Life.",
   appleWebApp: {
     capable: true,
     title: "Sundaily",

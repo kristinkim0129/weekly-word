@@ -40,26 +40,26 @@
 ## Brand lines (reuse everywhere)
 
 **Purpose (one sentence)** — product truth; keep light in store copy  
-Make Sunday’s Word — and what you shared — gently yours through the week.  
-주일 말씀과 나눔을, 부담 없이 한 주 동안 나의 것으로.
+Apply Sunday’s sermon Word in daily life — and share the walk with your people.  
+주일 설교 말씀을 매일 삶에 적용하고, 공동체와 함께 지켜가요.
 
 **Internal note (do not promote)**  
 Contrast vs daily new passages is product insight only — not for subtitle, promo, or screenshot captions.
 
 **Tone**  
-Simple. Lightweight. Low pressure. No guilt. No “deeper, not more” campaigning.
+Simple. Lightweight. Low pressure. No guilt. Accountability without preachiness.
 
 **Primary**  
-Sundaily — Pray the week together.
+Sundaily — From Sunday to Daily
 
 **Secondary**  
-Sunday’s Word, gently through the week.
+Sunday’s Word, Daily Life.
 
 **KR primary**  
-함께묵상 — 설교 이후, 한 주를 함께.
+Sundaily — 주일에 들은 은혜, 매일 나누는 삶
 
 **KR secondary**  
-주일 말씀을, 부담 없이 나의 것으로.
+주일 설교를 매일의 루틴으로
 
 ### Weekly rhythm (guide) — soft, not a checklist
 
@@ -93,32 +93,34 @@ Sundaily
 > Change this in App Store Connect → App Information → **Name**. Repo/display name alone does not update the store listing. Name must be unique on the App Store.
 
 **Subtitle** (30) — recommended  
-Pray the week together
+From Sunday to Daily
+
+Count: 20 chars ✓
 
 **Subtitle — A/B options** (≤30 each)  
 | Option | Chars | Use when… |
 | --- | --- | --- |
-| Pray the week together | 22 | Default — light + communal |
-| Sunday’s Word, all week | 22 | Emphasize Sunday → week |
-| Make Sunday’s Word yours | 24 | Soft ownership |
+| From Sunday to Daily | 20 | Default — brand arc |
+| Sunday's Word, Daily Life. | 26 | Application emphasis |
+| Apply Sunday’s Word daily | 25 | Accountability / apply |
 | Simple Sunday follow-through | 28 | Emphasize lightweight |
 
 **Promotional text** (170)  
-A light way to carry Sunday’s Word through the week — with friends. Capture, pray, check in. No heavy plans.
+From Sunday to Daily. Capture the sermon Word, apply it in daily life, and check in with friends — light accountability, no heavy plans.
 
 **One-liner**  
-Simple follow-through after Sunday — light enough to keep, real enough to matter.
+Sunday’s Word, Daily Life. — with people who walk it with you.
 
 **Description** (paste into App Store Connect)
 
 ```
-Sundaily — Pray the week together.
+Sundaily — From Sunday to Daily
 
-A way to live from Sunday’s Word — with friends.
-Capture what landed. Return to it. Try a small step. Look back. That’s the week.
+Sunday’s Word, Daily Life.
+Capture what landed on Sunday. Return to it. Try a small step. Look back. Share the walk with friends.
 
 No heavy reading plans. No pressure to do more.
-Just a simple space for Sunday’s Word to stay with you — and with your people.
+Just a simple space to apply one Word through the week — with light accountability.
 
 A gentle week with one Word:
 • Sunday — Capture what you heard and shared
@@ -129,9 +131,9 @@ A gentle week with one Word:
 Check in when you’ve prayed. Walk it with a buddy if you want.
 
 We’re people who believe community matters.
-We built Sundaily (함께묵상) so the week after the sermon can stay simple — and shared. That’s all we’re after.
+We built Sundaily so Sunday’s sermon can become a daily rhythm — lived and shared. That’s all we’re after.
 
-Sundaily — Pray the week together.
+Sundaily — From Sunday to Daily
 ```
 
 **Keywords** (100 chars max; no spaces after commas)  
@@ -144,13 +146,13 @@ Primary: Lifestyle
 Secondary: Social Networking (optional)
 
 **What’s New** (first release)  
-Welcome to Sundaily — a light way to carry Sunday’s Word through the week with friends.
+Welcome to Sundaily — From Sunday to Daily. Apply Sunday’s Word in daily life with friends.
 
 **Screenshot captions** (≤30–40 recommended for overlay)
 
 | # | Caption |
 | --- | --- |
-| 1 | Pray the week together |
+| 1 | From Sunday to Daily |
 | 2 | Sunday — Capture |
 | 3 | Mon–Tue — Meditate |
 | 4 | Wed–Thu — Apply |
@@ -161,7 +163,7 @@ Welcome to Sundaily — a light way to carry Sunday’s Word through the week wi
 
 We’re people who believe community matters.
 
-We built Sundaily (함께묵상) to be light: keep Sunday’s Word and what you shared, return to it through the week, and walk it with friends — without the weight of doing more.
+We built Sundaily to be light: take Sunday’s sermon Word into daily life, return to it through the week, and walk it with friends — accountability without the weight of doing more.
 
 That’s all we’re after.
 
@@ -173,33 +175,36 @@ That’s all we’re after.
 Sundaily
 
 **부제** (30) — 추천  
-설교 이후, 한 주를 함께
+주일에서 매일로
+
+글자 수: 7 ✓  
+(긴 메인 카피 “주일에 들은 은혜, 매일 나누는 삶”은 설명·히어로용)
 
 **부제 — A/B 옵션** (각 ≤30)
 
 | 옵션 | 글자 | 언제 |
 | --- | --- | --- |
-| 설교 이후, 한 주를 함께 | 14 | 기본 — brand tagline |
-| 주일 말씀을 나의 것으로 | 13 | soft ownership |
-| 부담 없이, 한 주를 함께 | 13 | no-pressure |
-| 같이 들은 말씀을 함께 | 11 | together |
+| 주일에서 매일로 | 7 | 기본 — brand arc |
+| 주일 설교를 매일의 루틴으로 | 14 | 적용·루틴 강조 |
+| 은혜를 매일 나누는 삶 | 11 | 나눔·공동체 |
+| 부담 없이, 매일의 말씀 | 11 | no-pressure |
 
 **홍보 문구** (170)  
-주일 말씀을 한 주 동안 가볍게 이어가요. 담고, 기도하고, 체크인. 무거운 플랜 없이, 친구와 함께.
+주일에 들은 은혜, 매일 나누는 삶. 설교 말씀을 담고, 매일 적용하고, 친구와 체크인. 무거운 플랜 없이, 가벼운 책임감으로.
 
 **한 줄**  
-설교 이후의 한 주 — 심플하게, 부담 없이.
+주일 설교를 매일의 루틴으로.
 
 **설명** (App Store Connect에 붙여넣기)
 
 ```
-Sundaily — 설교 이후, 한 주를 함께.
+Sundaily — 주일에 들은 은혜, 매일 나누는 삶
 
-주일 말씀을 한 주 동안 이어가는 가벼운 방법.
+주일 설교를 매일의 루틴으로.
 와닿은 말씀을 담고, 묵상하고, 작은 순종으로 적용하고, 돌아보기. 그게 한 주예요.
 
 무거운 묵상 플랜이 아닙니다.
-부담 없이, 주일 말씀이 곁에 남도록 — 친구와 함께.
+부담 없이, 주일 말씀이 매일 삶에 남도록 — 친구와 함께 지켜가요.
 
 한 말씀으로 이어가는 한 주:
 • 주일 — 말씀 담기 (핵심 하나, 은혜 나누기)
@@ -210,9 +215,9 @@ Sundaily — 설교 이후, 한 주를 함께.
 기도한 뒤 체크인. 원하면 버디와 함께.
 
 우리는 공동체가 중요한 사람들입니다.
-Sundaily(함께묵상)는 설교 이후의 한 주를 심플하게, 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
+Sundaily는 주일 설교가 매일의 삶이 되도록 — 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
 
-Sundaily — 설교 이후, 한 주를 함께.
+Sundaily — 주일에서 매일로
 ```
 
 **키워드** (100자 이내, 쉼표 뒤 공백 없이)  
@@ -223,13 +228,13 @@ Sundaily — 설교 이후, 한 주를 함께.
 부: 소셜 네트워킹 (선택)
 
 **새로운 기능** (첫 출시)  
-Sundaily에 오신 것을 환영합니다 — 주일 말씀을 한 주 동안 가볍게, 친구와 함께 이어가세요.
+Sundaily에 오신 것을 환영합니다 — 주일에 들은 은혜를, 매일 나누는 삶으로.
 
 **스크린샷 캡션**
 
 | # | 캡션 |
 | --- | --- |
-| 1 | 설교 이후, 한 주를 함께 |
+| 1 | 주일에 들은 은혜, 매일 나누는 삶 |
 | 2 | 주일 — 말씀 담기 |
 | 3 | 월–화 — 말씀 묵상 |
 | 4 | 수–목 — 삶에 적용 |
@@ -240,7 +245,7 @@ Sundaily에 오신 것을 환영합니다 — 주일 말씀을 한 주 동안 �
 
 우리는 공동체가 중요한 사람들입니다.
 
-Sundaily(함께묵상)는 설교 이후의 한 주를 무겁지 않게 잇고 싶어서 만들었습니다. 주일 말씀과 나눔을 남기고, 기도로 돌아가고, 친구와 함께 — 부담 없이.
+Sundaily는 주일 설교가 매일의 루틴이 되도록 만들고 싶었습니다. 말씀을 담고, 삶에 적용하고, 친구와 함께 가볍게 지켜가요 — 부담 없이.
 
 그게 우리가 바라는 전부입니다.
 
@@ -321,7 +326,7 @@ Value-prop shot order (KO + EN):
 
 | # | Value prop (KO) | Value prop (EN) | UI |
 | --- | --- | --- | --- |
-| 1 | 설교 이후, 한 주를 함께 | Pray the week together | Login / hero |
+| 1 | 주일에 들은 은혜, 매일 나누는 삶 | From Sunday to Daily | Login / hero |
 | 2 | 주일 — 말씀 담기 | Sunday — Capture | Capture |
 | 3 | 월–화 — 말씀 묵상 | Mon–Tue — Meditate | Today check-orb |
 | 4 | 수–목 — 삶에 적용 | Wed–Thu — Apply | From the heart |

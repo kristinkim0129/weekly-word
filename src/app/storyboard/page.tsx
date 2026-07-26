@@ -105,11 +105,11 @@ const STEPS: Step[] = [
           <div className="lang-options">
             <button type="button" className="lang-option active">
               <span className="lang-option-label">한국어 · Sundaily</span>
-              <span className="lang-option-native">설교 이후, 한 주를 함께</span>
+              <span className="lang-option-native">주일에 들은 은혜, 매일 나누는 삶</span>
             </button>
             <button type="button" className="lang-option">
               <span className="lang-option-label">English · Sundaily</span>
-              <span className="lang-option-native">Pray the week together</span>
+              <span className="lang-option-native">From Sunday to Daily</span>
             </button>
           </div>
           <Button style={{ width: "100%", marginTop: 16 }}>계속하기</Button>
@@ -130,12 +130,14 @@ const STEPS: Step[] = [
         brand="Sundaily"
         lang={lang}
         title={
-          lang === "ko" ? "설교 이후, 한 주를 함께" : "Pray the week together"
+          lang === "ko"
+            ? "주일에 들은 은혜, 매일 나누는 삶"
+            : "From Sunday to Daily"
         }
         sub={
           lang === "ko"
-            ? "일요일 말씀에서 매일 기도로 · 친구와 교회와 함께"
-            : "From Sunday Word to daily prayer with your friends"
+            ? "주일 설교를 매일의 루틴으로"
+            : "Sunday's Word, Daily Life."
         }
       >
         <GlassCard>
@@ -174,8 +176,8 @@ const STEPS: Step[] = [
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
-            ? "일요일 말씀에서 매일 기도로"
-            : "From Sunday Word to daily prayer"
+            ? "주일 설교를 매일의 루틴으로"
+            : "Sunday's Word, Daily Life."
         }
         nav="today"
       >
@@ -276,8 +278,8 @@ const STEPS: Step[] = [
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
-            ? "일요일 말씀에서 매일 기도로"
-            : "From Sunday Word to daily prayer"
+            ? "주일 설교를 매일의 루틴으로"
+            : "Sunday's Word, Daily Life."
         }
         nav="today"
       >
@@ -336,7 +338,11 @@ const STEPS: Step[] = [
         brand="Sundaily"
         lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
-        sub={lang === "ko" ? "한 주를 함께 기도해요" : "Pray the week together"}
+        sub={
+          lang === "ko"
+            ? "주일에 들은 은혜, 매일 나누는 삶"
+            : "From Sunday to Daily"
+        }
         nav="today"
       >
         <GlassCard style={{ textAlign: "center" }}>
@@ -682,8 +688,8 @@ export default function StoryboardPage() {
         </h1>
         <p className="hint" style={{ margin: "8px 0 16px" }}>
           {lang === "ko"
-            ? "설교 이후, 한 주를 함께"
-            : "Pray the week together"}
+            ? "주일에 들은 은혜, 매일 나누는 삶"
+            : "From Sunday to Daily"}
         </p>
 
         <div className="storyboard-lang">

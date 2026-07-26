@@ -75,24 +75,26 @@ const SHOTS: Shot[] = [
   {
     id: "hero",
     headline: {
-      ko: "설교 이후, 한 주를 함께",
-      en: "Pray the week together",
+      ko: "주일에 들은 은혜, 매일 나누는 삶",
+      en: "From Sunday to Daily",
     },
     support: {
-      ko: "일요일 말씀에서 매일 기도로 · 친구와 교회와 함께",
-      en: "From Sunday Word to daily prayer with your friends",
+      ko: "주일 설교를 매일의 루틴으로",
+      en: "Sunday's Word, Daily Life.",
     },
     scene: (lang) => (
       <Phone
         brand="Sundaily"
         lang={lang}
         title={
-          lang === "ko" ? "설교 이후, 한 주를 함께" : "Pray the week together"
+          lang === "ko"
+            ? "주일에 들은 은혜, 매일 나누는 삶"
+            : "From Sunday to Daily"
         }
         sub={
           lang === "ko"
-            ? "일요일 말씀에서 매일 기도로"
-            : "From Sunday Word to daily prayer"
+            ? "주일 설교를 매일의 루틴으로"
+            : "Sunday's Word, Daily Life."
         }
       >
         <GlassCard>
@@ -187,8 +189,8 @@ const SHOTS: Shot[] = [
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
-            ? "일요일 말씀에서 매일 기도로"
-            : "From Sunday Word to daily prayer"
+            ? "주일 설교를 매일의 루틴으로"
+            : "Sunday's Word, Daily Life."
         }
         nav="today"
       >
@@ -248,7 +250,11 @@ const SHOTS: Shot[] = [
         brand="Sundaily"
         lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
-        sub={lang === "ko" ? "한 주를 함께 기도해요" : "Pray the week together"}
+        sub={
+          lang === "ko"
+            ? "주일에 들은 은혜, 매일 나누는 삶"
+            : "From Sunday to Daily"
+        }
         nav="today"
       >
         <GlassCard style={{ textAlign: "center" }}>

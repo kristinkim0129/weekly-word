@@ -4,8 +4,8 @@ export const LOCALE_STORAGE_KEY = "weekly-word-locale";
 
 const ko = {
   brand: "Sundaily",
-  tagline: "설교 이후, 한 주를 함께",
-  taglinePrayer: "일요일 말씀에서 매일 기도로 · 친구와 교회와 함께",
+  tagline: "주일에 들은 은혜, 매일 나누는 삶",
+  taglinePrayer: "주일 설교를 매일의 루틴으로",
   loading: "불러오는 중…",
 
   common: {
@@ -45,11 +45,11 @@ const ko = {
 
   login: {
     start: "시작하기",
-    tagline: "한 주를 함께 기도해요",
-    hero: "설교 이후, 한 주를 함께",
-    heroSupport: "일요일 말씀에서 매일 기도로 · 친구와 교회와 함께",
-    slogan: "설교 이후, 한 주를 함께",
-    blurb: "친구와 함께 기도하며 성장해요.",
+    tagline: "주일에 들은 은혜, 매일 나누는 삶",
+    hero: "주일에 들은 은혜, 매일 나누는 삶",
+    heroSupport: "주일 설교를 매일의 루틴으로",
+    slogan: "주일에 들은 은혜, 매일 나누는 삶",
+    blurb: "주일 말씀을 매일 삶에 적용하고, 친구와 함께 지켜가요.",
     emailPh: "이메일 주소",
     passwordPh: "비밀번호",
     forgot: "비밀번호 찾기",
@@ -91,8 +91,8 @@ const ko = {
 
   today: {
     title: "오늘의 말씀",
-    subDone: "한 주를 함께 기도해요",
-    subTodo: "일요일 말씀에서 매일 기도로",
+    subDone: "주일에 들은 은혜, 매일 나누는 삶",
+    subTodo: "주일 설교를 매일의 루틴으로",
     streakTitle: "연속 묵상",
     streakDays: "{n}일",
     thisWeek: "이번 주 말씀",
@@ -378,7 +378,7 @@ const ko = {
 
   settings: {
     title: "나",
-    subtitle: "설교 이후, 한 주를 함께",
+    subtitle: "주일에서 매일로",
     name: "이름",
     namePh: "그룹에 보일 이름",
     nameSaved: "이름이 저장됐어요.",
@@ -429,8 +429,8 @@ const ko = {
 
 const en = {
   brand: "Sundaily",
-  tagline: "Pray the week together",
-  taglinePrayer: "From Sunday Word to daily prayer with your friends",
+  tagline: "From Sunday to Daily",
+  taglinePrayer: "Sunday's Word, Daily Life.",
   loading: "Loading…",
 
   common: {
@@ -472,11 +472,11 @@ const en = {
 
   login: {
     start: "Get started",
-    tagline: "PRAY THE WEEK TOGETHER",
-    hero: "Pray the week together",
-    heroSupport: "From Sunday Word to daily prayer with your friends",
-    slogan: "Pray the week together",
-    blurb: "Join your friends and grow in prayer together.",
+    tagline: "FROM SUNDAY TO DAILY",
+    hero: "From Sunday to Daily",
+    heroSupport: "Sunday's Word, Daily Life.",
+    slogan: "From Sunday to Daily",
+    blurb: "Apply Sunday's Word in daily life — with friends who walk it with you.",
     emailPh: "Email address",
     passwordPh: "Password",
     forgot: "Forgot password?",
@@ -518,8 +518,8 @@ const en = {
 
   today: {
     title: "Today's Word",
-    subDone: "Pray the week together",
-    subTodo: "From Sunday Word to daily prayer",
+    subDone: "From Sunday to Daily",
+    subTodo: "Sunday's Word, Daily Life.",
     streakTitle: "Streak",
     streakDays: "{n} days",
     thisWeek: "This week's Word",
@@ -806,7 +806,7 @@ const en = {
 
   settings: {
     title: "Me",
-    subtitle: "Pray the week together",
+    subtitle: "From Sunday to Daily",
     name: "Name",
     namePh: "Name shown in the group",
     nameSaved: "Name saved.",
