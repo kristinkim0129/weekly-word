@@ -1,4 +1,4 @@
-# 함께묵상 · After Sermon — 설정 가이드 (Google 로그인)
+# 함께묵상 · Sundaily — 설정 가이드 (Google 로그인)
 
 ## 1. Supabase 프로젝트
 
@@ -58,8 +58,9 @@ Capacitor iOS 셸이 저장소에 포함되어 있습니다 (`ios/`, `capacitor.
 `webDir: public`은 sync용 placeholder이며, 앱의 소스가 아닙니다.  
 오프라인 / static export는 이후 단계입니다.
 
-**Bundle ID:** `com.aftersermon.app`  
-**App name:** After Sermon  
+**Bundle ID:** `com.aftersermon.app` (unchanged)  
+**App name / display name:** Sundaily  
+**App Store Connect:** also update the app **Name** field to Sundaily (must pass Apple’s unique-name check). Bundle ID stays `com.aftersermon.app`.
 
 **Privacy / Support URLs (이미 라이브):**
 - Privacy: https://weekly-word-eight.vercel.app/privacy

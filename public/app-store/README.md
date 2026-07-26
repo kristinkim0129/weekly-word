@@ -1,6 +1,6 @@
 # App Store screenshots
 
-Value-prop frames for **함께묵상** (KO) and **After Sermon** (EN).
+Value-prop frames for **Sundaily** (KO + EN).
 
 ## Live composer (real UI)
 
@@ -25,7 +25,7 @@ Scale to **1290×2796** (or current ASC size) before upload if needed.
 
 ## Copy (value props)
 
-**KO — 함께묵상**  
+**KO — Sundaily**  
 1. 설교 이후, 한 주를 함께  
 2. 일요일 말씀을 담아요  
 3. 기도한 뒤, 하루를 체크해요  
@@ -33,7 +33,7 @@ Scale to **1290×2796** (or current ASC size) before upload if needed.
 5. 시즌을 정해 함께 걸어요  
 6. 기도 발자국을 돌아봐요  
 
-**EN — After Sermon**  
+**EN — Sundaily**  
 1. Pray the week together  
 2. Capture Sunday’s Word  
 3. Pray — then check in  

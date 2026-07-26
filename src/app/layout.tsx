@@ -17,12 +17,12 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "After Sermon",
+  title: "Sundaily",
   description:
-    "After Sermon: Pray the week together · From Sunday Word to daily prayer with your friends",
+    "Sundaily: Pray the week together · From Sunday Word to daily prayer with your friends",
   appleWebApp: {
     capable: true,
-    title: "After Sermon",
+    title: "Sundaily",
     statusBarStyle: "default",
   },
 };

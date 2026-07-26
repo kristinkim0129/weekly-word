@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 /**
- * After Sermon — Capacitor iOS shell
+ * Sundaily — Capacitor iOS shell
  *
  * Current approach: load the production Next.js app in the WKWebView.
  * Offline / static export is a later step — do NOT treat `webDir` alone as the app.
@@ -10,7 +10,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
  */
 const config: CapacitorConfig = {
   appId: 'com.aftersermon.app',
-  appName: 'After Sermon',
+  appName: 'Sundaily',
   // Placeholder assets for `cap sync`; the live app is served via server.url below.
   webDir: 'public',
   server: {

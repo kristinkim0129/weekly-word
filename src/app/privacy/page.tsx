@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy · After Sermon",
-  description: "Privacy Policy for After Sermon (함께묵상)",
+  title: "Privacy Policy · Sundaily",
+  description: "Privacy Policy for Sundaily (함께묵상)",
 };
 
 export default function PrivacyPage() {
   return (
     <div className="phone-shell" style={{ maxWidth: 640, paddingBottom: 48 }}>
       <header className="app-header">
-        <p className="brand">After Sermon · 함께묵상</p>
+        <p className="brand">Sundaily · 함께묵상</p>
         <h1 className="page-title">Privacy Policy</h1>
         <p className="page-sub">Last updated: July 24, 2026</p>
       </header>
@@ -19,7 +19,7 @@ export default function PrivacyPage() {
         <section className="glass-card legal-block">
           <h2>English</h2>
           <p>
-            After Sermon (“the App”) helps you capture Sunday’s Word, pray
+            Sundaily (“the App”) helps you capture Sunday’s Word, pray
             through the week, and walk with friends and church. This policy
             explains what we collect and how we use it.
           </p>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
         <section className="glass-card legal-block">
           <h2>한국어</h2>
           <p>
-            함께묵상(After Sermon, “본 앱”)은 일요일 말씀을 담고, 한 주 동안
+            함께묵상(Sundaily, “본 앱”)은 일요일 말씀을 담고, 한 주 동안
             기도하며, 친구·교회와 함께 걷기 위한 서비스입니다. 본 정책은 수집하는
             정보와 이용 방법을 설명합니다.
           </p>

@@ -3,7 +3,7 @@ export type Locale = "ko" | "en";
 export const LOCALE_STORAGE_KEY = "weekly-word-locale";
 
 const ko = {
-  brand: "After Sermon",
+  brand: "Sundaily",
   tagline: "설교 이후, 한 주를 함께",
   taglinePrayer: "일요일 말씀에서 매일 기도로 · 친구와 교회와 함께",
   loading: "불러오는 중…",
@@ -27,6 +27,12 @@ const ko = {
     loginRequired: "로그인이 필요해요.",
     badRequest: "잘못된 요청이에요.",
     pastorSummaryUsed: "요약 복사는 계정당 1회만 사용할 수 있어요.",
+    avatarNotImage: "이미지 파일만 올릴 수 있어요.",
+    avatarTooLarge: "사진은 2MB 이하로 올려 주세요.",
+    avatarStorageMissing:
+      "사진 저장소가 아직 없어요. Supabase에 009_avatar_storage.sql을 실행해 주세요.",
+    avatarUploadFail: "사진 업로드에 실패했어요.",
+    avatarSaveFail: "프로필 저장에 실패했어요.",
   },
 
   lang: {
@@ -113,7 +119,7 @@ const ko = {
     reflectMin: "3분",
     oneLine: "한 줄 나눔",
     oneLineMin: "2분",
-    chapterLabel: "이번 주 장",
+    chapterLabel: "이번 주 본문",
     readChapterLabel: "장",
     readEmpty: "읽을 본문이 아직 없어요. Capture에서 본문을 적어 주세요.",
     readAddPassage: "Capture에서 본문 추가",
@@ -128,7 +134,8 @@ const ko = {
     sharePosting: "올리는 중…",
     receivedPrayer: "받은 기도",
     receivedCount: "오늘 {n}명이 당신을 위해 기도했어요",
-    prayed: "기도했어 ♡",
+    receivedEmpty: "아직 받은 기도가 없어요. 서로를 위해 기도해 보세요.",
+    prayed: "기도했어",
     loveToken: "마음을 담아",
     forEachOther: "서로를 위해 기도해요",
     noMembers: "그룹원이 생기면 여기서 기도해요.",
@@ -377,12 +384,16 @@ const ko = {
     nameSaved: "이름이 저장됐어요.",
     nameHint: "포커스를 벗어나면 저장돼요.",
     defaultName: "나",
-    avatar: "프로필 이모지",
+    avatar: "프로필",
     avatarHint:
-      "이모지를 고르면 그룹에 그걸로 보여요. 지우면 Google 사진(또는 기본 이미지)으로 돌아가요.",
+      "사진 또는 이모지 중 하나를 골라요. 이모지를 고르면 그게 우선으로 보여요.",
     avatarClear: "이모지 지우기",
+    avatarUpload: "사진 올리기",
+    avatarUploading: "올리는 중…",
+    avatarClearPhoto: "올린 사진 지우기",
     avatarSaved: "프로필이 저장됐어요.",
     avatarPreview: "미리보기",
+    avatarEmojiLabel: "이모지 고르기",
     language: "언어",
     languageHint: "앱 전체에 바로 적용돼요.",
     nudge: "하루 한 번 알림",
@@ -417,7 +428,7 @@ const ko = {
 } as const;
 
 const en = {
-  brand: "After Sermon",
+  brand: "Sundaily",
   tagline: "Pray the week together",
   taglinePrayer: "From Sunday Word to daily prayer with your friends",
   loading: "Loading…",
@@ -443,6 +454,12 @@ const en = {
     loginRequired: "Please sign in.",
     badRequest: "Invalid request.",
     pastorSummaryUsed: "Summary copy can be used once per account.",
+    avatarNotImage: "Please choose an image file.",
+    avatarTooLarge: "Please use a photo under 2MB.",
+    avatarStorageMissing:
+      "Avatar storage isn’t set up yet. Run 009_avatar_storage.sql in Supabase.",
+    avatarUploadFail: "Could not upload the photo.",
+    avatarSaveFail: "Could not save your profile.",
   },
 
   lang: {
@@ -544,7 +561,8 @@ const en = {
     sharePosting: "Posting…",
     receivedPrayer: "Prayers received",
     receivedCount: "{n} people prayed for you today",
-    prayed: "Prayed ♡",
+    receivedEmpty: "No prayers received yet. Pray for one another.",
+    prayed: "Prayed",
     loveToken: "From the heart",
     forEachOther: "Pray for one another",
     noMembers: "When members join, pray for them here.",
@@ -703,7 +721,7 @@ const en = {
     anonymousName: "Anonymous",
     summaryEmpty: "No questions yet.",
     summaryHeader: "This week's small-group questions",
-    summaryFooter: "— Shared from After Sermon",
+    summaryFooter: "— Shared from Sundaily",
     anonymousParen: "(Anonymous)",
   },
 
@@ -794,12 +812,16 @@ const en = {
     nameSaved: "Name saved.",
     nameHint: "Saves when you leave the field.",
     defaultName: "Me",
-    avatar: "Profile emoji",
+    avatar: "Profile",
     avatarHint:
-      "Pick an emoji to show in the group. Clear it to use your Google photo (or the default image).",
+      "Choose a photo or an emoji. Emoji takes priority when both are set.",
     avatarClear: "Clear emoji",
+    avatarUpload: "Upload photo",
+    avatarUploading: "Uploading…",
+    avatarClearPhoto: "Remove uploaded photo",
     avatarSaved: "Profile saved.",
     avatarPreview: "Preview",
+    avatarEmojiLabel: "Choose an emoji",
     language: "Language",
     languageHint: "Applies across the app right away.",
     nudge: "Once-a-day reminder",

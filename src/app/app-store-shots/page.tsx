@@ -22,15 +22,16 @@ function Phone({
   title,
   sub,
   nav,
+  lang = "en",
   children,
 }: {
   brand: string;
   title: string;
   sub?: string;
   nav?: string;
+  lang?: Lang;
   children: ReactNode;
 }) {
-  const lang: Lang = brand === "After Sermon" ? "en" : "ko";
   const navItems = [
     { id: "today", ko: "매일", en: "Daily", icon: "◎" },
     { id: "capture", ko: "설교", en: "Sermon", icon: "✎" },
@@ -83,7 +84,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={
           lang === "ko" ? "설교 이후, 한 주를 함께" : "Pray the week together"
         }
@@ -126,7 +128,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "말씀 담기" : "Capture"}
         sub={
           lang === "ko"
@@ -179,7 +182,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
@@ -241,7 +245,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={lang === "ko" ? "한 주를 함께 기도해요" : "Pray the week together"}
         nav="today"
@@ -299,7 +304,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
         sub={
           lang === "ko"
@@ -375,7 +381,8 @@ const SHOTS: Shot[] = [
     },
     scene: (lang) => (
       <Phone
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
         sub={
           lang === "ko"
@@ -431,7 +438,7 @@ export default function AppStoreShotsPage() {
   }, []);
 
   const shot = SHOTS[index];
-  const brand = lang === "ko" ? "함께묵상" : "After Sermon";
+  const brand = "Sundaily";
 
   return (
     <div className="store-shots">
@@ -454,14 +461,14 @@ export default function AppStoreShotsPage() {
             className={lang === "ko" ? "active" : ""}
             onClick={() => setLang("ko")}
           >
-            한국어 · 함께묵상
+            한국어 · Sundaily
           </button>
           <button
             type="button"
             className={lang === "en" ? "active" : ""}
             onClick={() => setLang("en")}
           >
-            English · After Sermon
+            English · Sundaily
           </button>
         </div>
 

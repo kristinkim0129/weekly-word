@@ -2,9 +2,10 @@
 
 **English one-pager (with screenshots):** [`docs/ONE_PAGER.md`](./docs/ONE_PAGER.md)
 
-**App (KR):** 함께묵상  
-**App (EN):** After Sermon  
-**Bundle / product:** weekly-word · Capacitor iOS shell (`com.aftersermon.app`)  
+**App (KR):** Sundaily (함께묵상)  
+**App (EN):** Sundaily  
+**Bundle / product:** weekly-word · Capacitor iOS shell (`com.aftersermon.app` — do not change)  
+**App Store Connect Name:** set to **Sundaily** (you must change this in ASC; Apple unique-name check applies). Display name on device comes from the iOS build (`CFBundleDisplayName`).
 **Production web:** https://weekly-word-eight.vercel.app  
 **Privacy URL:** https://weekly-word-eight.vercel.app/privacy  
 **Support URL:** https://weekly-word-eight.vercel.app/support  
@@ -49,7 +50,7 @@ Contrast vs daily new passages is product insight only — not for subtitle, pro
 Simple. Lightweight. Low pressure. No guilt. No “deeper, not more” campaigning.
 
 **Primary**  
-After Sermon — Pray the week together.
+Sundaily — Pray the week together.
 
 **Secondary**  
 Sunday’s Word, gently through the week.
@@ -87,7 +88,9 @@ Store copy: name the four beats only if needed — **Capture → Meditate → Ap
 ## English (US)
 
 **Name** (30)  
-After Sermon
+Sundaily
+
+> Change this in App Store Connect → App Information → **Name**. Repo/display name alone does not update the store listing. Name must be unique on the App Store.
 
 **Subtitle** (30) — recommended  
 Pray the week together
@@ -109,7 +112,7 @@ Simple follow-through after Sunday — light enough to keep, real enough to matt
 **Description** (paste into App Store Connect)
 
 ```
-After Sermon — Pray the week together.
+Sundaily — Pray the week together.
 
 A way to live from Sunday’s Word — with friends.
 Capture what landed. Return to it. Try a small step. Look back. That’s the week.
@@ -126,9 +129,9 @@ A gentle week with one Word:
 Check in when you’ve prayed. Walk it with a buddy if you want.
 
 We’re people who believe community matters.
-We built After Sermon (함께묵상) so the week after the sermon can stay simple — and shared. That’s all we’re after.
+We built Sundaily (함께묵상) so the week after the sermon can stay simple — and shared. That’s all we’re after.
 
-After Sermon — Pray the week together.
+Sundaily — Pray the week together.
 ```
 
 **Keywords** (100 chars max; no spaces after commas)  
@@ -141,7 +144,7 @@ Primary: Lifestyle
 Secondary: Social Networking (optional)
 
 **What’s New** (first release)  
-Welcome to After Sermon — a light way to carry Sunday’s Word through the week with friends.
+Welcome to Sundaily — a light way to carry Sunday’s Word through the week with friends.
 
 **Screenshot captions** (≤30–40 recommended for overlay)
 
@@ -158,7 +161,7 @@ Welcome to After Sermon — a light way to carry Sunday’s Word through the wee
 
 We’re people who believe community matters.
 
-We built After Sermon (함께묵상) to be light: keep Sunday’s Word and what you shared, return to it through the week, and walk it with friends — without the weight of doing more.
+We built Sundaily (함께묵상) to be light: keep Sunday’s Word and what you shared, return to it through the week, and walk it with friends — without the weight of doing more.
 
 That’s all we’re after.
 
@@ -167,7 +170,7 @@ That’s all we’re after.
 ## 한국어
 
 **이름** (30)  
-함께묵상
+Sundaily
 
 **부제** (30) — 추천  
 설교 이후, 한 주를 함께
@@ -190,7 +193,7 @@ That’s all we’re after.
 **설명** (App Store Connect에 붙여넣기)
 
 ```
-함께묵상 — 설교 이후, 한 주를 함께.
+Sundaily — 설교 이후, 한 주를 함께.
 
 주일 말씀을 한 주 동안 이어가는 가벼운 방법.
 와닿은 말씀을 담고, 묵상하고, 작은 순종으로 적용하고, 돌아보기. 그게 한 주예요.
@@ -207,9 +210,9 @@ That’s all we’re after.
 기도한 뒤 체크인. 원하면 버디와 함께.
 
 우리는 공동체가 중요한 사람들입니다.
-함께묵상(After Sermon)은 설교 이후의 한 주를 심플하게, 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
+Sundaily(함께묵상)는 설교 이후의 한 주를 심플하게, 함께 잇고 싶어서 만들었습니다. 그게 우리가 바라는 전부입니다.
 
-함께묵상 — 설교 이후, 한 주를 함께.
+Sundaily — 설교 이후, 한 주를 함께.
 ```
 
 **키워드** (100자 이내, 쉼표 뒤 공백 없이)  
@@ -220,7 +223,7 @@ That’s all we’re after.
 부: 소셜 네트워킹 (선택)
 
 **새로운 기능** (첫 출시)  
-함께묵상에 오신 것을 환영합니다 — 주일 말씀을 한 주 동안 가볍게, 친구와 함께 이어가세요.
+Sundaily에 오신 것을 환영합니다 — 주일 말씀을 한 주 동안 가볍게, 친구와 함께 이어가세요.
 
 **스크린샷 캡션**
 
@@ -237,7 +240,7 @@ That’s all we’re after.
 
 우리는 공동체가 중요한 사람들입니다.
 
-함께묵상(After Sermon)은 설교 이후의 한 주를 무겁지 않게 잇고 싶어서 만들었습니다. 주일 말씀과 나눔을 남기고, 기도로 돌아가고, 친구와 함께 — 부담 없이.
+Sundaily(함께묵상)는 설교 이후의 한 주를 무겁지 않게 잇고 싶어서 만들었습니다. 주일 말씀과 나눔을 남기고, 기도로 돌아가고, 친구와 함께 — 부담 없이.
 
 그게 우리가 바라는 전부입니다.
 
@@ -332,7 +335,7 @@ Value-prop shot order (KO + EN):
 ### 7. Review notes (paste into App Store Connect)
 
 ```
-After Sermon (함께묵상) is a small-group prayer & post-sermon meditation app.
+Sundaily (함께묵상) is a small-group prayer & post-sermon meditation app.
 
 Demo / review access:
 1. Sign in with Google (reviewer account).

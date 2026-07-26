@@ -13,13 +13,13 @@ const OPTIONS: {
 }[] = [
   {
     id: "en",
-    label: "English · After Sermon",
+    label: "English · Sundaily",
     native: "Pray the week together",
     continue: "Continue",
   },
   {
     id: "ko",
-    label: "한국어 · After Sermon",
+    label: "한국어 · Sundaily",
     native: "설교 이후, 한 주를 함께",
     continue: "계속하기",
   },
@@ -55,7 +55,7 @@ export function LanguageSelectScreen() {
             className="landing-logo-mark"
             priority
           />
-          <h1 className="landing-title">After Sermon</h1>
+          <h1 className="landing-title">Sundaily</h1>
           <p className="landing-slogan">PRAY THE WEEK TOGETHER</p>
         </header>
 

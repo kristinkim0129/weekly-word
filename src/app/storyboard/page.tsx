@@ -23,12 +23,14 @@ function PhoneFrame({
   title,
   sub,
   nav,
+  lang = "en",
   children,
 }: {
   brand: string;
   title: string;
   sub?: string;
   nav?: string;
+  lang?: Lang;
   children: ReactNode;
 }) {
   const navItems = [
@@ -38,7 +40,6 @@ function PhoneFrame({
     { id: "archive", ko: "보관", en: "Archive", icon: "▤" },
     { id: "me", ko: "나", en: "Me", icon: "◌" },
   ];
-  const lang: Lang = brand === "After Sermon" ? "en" : "ko";
 
   return (
     <div className="story-phone">
@@ -95,19 +96,19 @@ const STEPS: Step[] = [
       en: "Choose language",
     },
     goal: {
-      ko: "한국어(함께묵상) / English(After Sermon)로 브랜드·카피가 갈라집니다.",
-      en: "Korean → 함께묵상 · English → After Sermon branding.",
+      ko: "한국어 / English로 카피가 갈라집니다. 브랜드는 Sundaily.",
+      en: "Korean / English copy; brand is Sundaily.",
     },
     scene: () => (
-      <PhoneFrame brand="함께묵상 · After Sermon" title="언어 선택" sub="Choose your language">
+      <PhoneFrame brand="Sundaily" title="언어 선택" sub="Choose your language" lang="ko">
         <GlassCard>
           <div className="lang-options">
             <button type="button" className="lang-option active">
-              <span className="lang-option-label">한국어 · 함께묵상</span>
+              <span className="lang-option-label">한국어 · Sundaily</span>
               <span className="lang-option-native">설교 이후, 한 주를 함께</span>
             </button>
             <button type="button" className="lang-option">
-              <span className="lang-option-label">English · After Sermon</span>
+              <span className="lang-option-label">English · Sundaily</span>
               <span className="lang-option-native">Pray the week together</span>
             </button>
           </div>
@@ -126,7 +127,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={
           lang === "ko" ? "설교 이후, 한 주를 함께" : "Pray the week together"
         }
@@ -167,7 +169,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
@@ -199,7 +202,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "말씀 담기" : "Capture"}
         sub={
           lang === "ko"
@@ -267,7 +271,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={
           lang === "ko"
@@ -328,7 +333,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "오늘의 말씀" : "Today's Word"}
         sub={lang === "ko" ? "한 주를 함께 기도해요" : "Pray the week together"}
         nav="today"
@@ -399,7 +405,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "시즌을 함께 걸어요" : "Walk a season together"}
         sub={
           lang === "ko"
@@ -462,14 +469,29 @@ const STEPS: Step[] = [
         </div>
         <GlassCard>
           <p className="pill">{lang === "ko" ? "한 줄 나눔" : "One-line share"}</p>
-          <p className="hint" style={{ marginTop: 10 }}>
-            {lang === "ko"
-              ? "포도나무에 붙어 있으라는 말이 계속 남아요."
-              : "“Abide in the vine” keeps coming back."}
-          </p>
-          <p className="tiny" style={{ marginTop: 6 }}>
-            {lang === "ko" ? "수아 · 화" : "Sua · Tue"}
-          </p>
+          <div className="cheer-item" style={{ marginTop: 12 }}>
+            <div className="cheer-author">
+              <span
+                className="member-avatar member-avatar-emoji"
+                style={{ width: 32, height: 32, fontSize: 16 }}
+              >
+                🌿
+              </span>
+              <div className="cheer-author-meta">
+                <strong className="cheer-author-name">
+                  {lang === "ko" ? "수아" : "Sua"}
+                </strong>
+                <span className="feed-meta" style={{ margin: 0 }}>
+                  {lang === "ko" ? "화" : "Tue"}
+                </span>
+              </div>
+            </div>
+            <div className="cheer-text">
+              {lang === "ko"
+                ? "포도나무에 붙어 있으라는 말이 계속 남아요."
+                : "“Abide in the vine” keeps coming back."}
+            </div>
+          </div>
         </GlassCard>
         <GlassCard>
           <p className="pill">
@@ -586,7 +608,8 @@ const STEPS: Step[] = [
     },
     scene: (lang) => (
       <PhoneFrame
-        brand={lang === "ko" ? "함께묵상" : "After Sermon"}
+        brand="Sundaily"
+        lang={lang}
         title={lang === "ko" ? "보관함" : "Archive"}
         sub={
           lang === "ko"
@@ -652,7 +675,7 @@ export default function StoryboardPage() {
     <div className="storyboard">
       <aside className="storyboard-rail">
         <p className="brand" style={{ marginBottom: 4 }}>
-          {lang === "ko" ? "함께묵상" : "After Sermon"}
+          Sundaily
         </p>
         <h1 className="storyboard-title">
           {lang === "ko" ? "CUJ 스토리보드" : "CUJ Storyboard"}
