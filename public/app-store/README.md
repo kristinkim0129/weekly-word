@@ -21,7 +21,26 @@ Toggle language → capture each 9:16 slide.
 | 5 Season | `app-store-ko-05-season.png` | `app-store-en-05-season.png` |
 | 6 Footprints | `app-store-ko-06-footprints.png` | `app-store-en-06-footprints.png` |
 
-Scale to **1290×2796** (or current ASC size) before upload if needed.
+## ASC upload-ready (exact Apple sizes)
+
+English marketing frames, resized/composed for App Store Connect Media Manager:
+
+| Device | Size | Folder |
+| --- | --- | --- |
+| **6.5" iPhone** | **1284 × 2778** | `asc/iphone-65-0N-*.png` |
+| **13" iPad** | **2048 × 2732** | `asc/ipad-13-0N-*.png` |
+
+Upload order (EN):
+
+1. `*-01-hero.png`
+2. `*-02-capture.png`
+3. `*-03-daily.png`
+4. `*-04-prayed.png`
+5. `*-05-footprints.png`
+
+Verify before upload: `sips -g pixelWidth -g pixelHeight public/app-store/asc/*.png`
+
+Source masters remain 1024×1536 (`app-store-en-*.png`). Re-export from `/app-store-shots` if you want newer Sundaily copy on the frames.
 
 ## Copy (value props)
 
