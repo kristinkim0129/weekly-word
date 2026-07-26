@@ -59,8 +59,8 @@ Capacitor iOS 셸이 저장소에 포함되어 있습니다 (`ios/`, `capacitor.
 오프라인 / static export는 이후 단계입니다.
 
 **Bundle ID:** `com.aftersermon.app` (unchanged)  
-**App name / display name:** Sundaily  
-**App Store Connect:** also update the app **Name** field to Sundaily (must pass Apple’s unique-name check). Bundle ID stays `com.aftersermon.app`.
+**App name / display name:** Sundaily (home screen)
+**App Store Connect Name:** plain “Sundaily” was rejected as taken — use a unique ≤30 name (e.g. `Sundaily 함께묵상`). See [`APP_STORE.md`](APP_STORE.md). Bundle ID stays `com.aftersermon.app`.
 
 **Privacy / Support URLs (이미 라이브):**
 - Privacy: https://weekly-word-eight.vercel.app/privacy

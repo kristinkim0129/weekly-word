@@ -5,11 +5,12 @@
 **App (KR):** Sundaily (함께묵상)  
 **App (EN):** Sundaily  
 **Bundle / product:** weekly-word · Capacitor iOS shell (`com.aftersermon.app` — do not change)  
-**App Store Connect Name:** set to **Sundaily** (you must change this in ASC; Apple unique-name check applies). Display name on device comes from the iOS build (`CFBundleDisplayName`).
+**App Store Connect Name:** plain **Sundaily** was **rejected as taken**. Pick a unique Name ≤30 (candidates below). Home-screen label can stay **Sundaily** (`CFBundleDisplayName`).
 **Production web:** https://weekly-word-eight.vercel.app  
 **Privacy URL:** https://weekly-word-eight.vercel.app/privacy  
 **Support URL:** https://weekly-word-eight.vercel.app/support  
 **Support email:** aftersermon.review@gmail.com  
+**iOS version / build:** 1.0 (2) — `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` in Xcode  
 
 **In-app purchases:** None  
 **Subscriptions:** None  
@@ -22,18 +23,17 @@
 | Area | Status | Notes |
 | --- | --- | --- |
 | Production web deploy | Done | Live: https://weekly-word-eight.vercel.app |
-| Privacy Policy page (`/privacy`) | Done | HTTP 200 verified 2026-07-25 |
-| Support page (`/support`) | Done | HTTP 200 verified 2026-07-25 |
+| Privacy Policy page (`/privacy`) | Done | HTTP 200 verified 2026-07-26 |
+| Support page (`/support`) | Done | HTTP 200 verified 2026-07-26 |
 | Listing copy (EN + KO) below | Draft ready | Paste into App Store Connect |
-| Capacitor / `ios/` project | **In repo** | `cap:sync` OK; WebView → prod URL — [SETUP.md](SETUP.md) |
+| ASC screenshots (iPhone 6.5" + iPad 13") | Done | `public/app-store/asc/` — commit `c1d516c` |
+| Capacitor / `ios/` project | **In repo** | WebView → prod URL; display name Sundaily; build **1.0 (2)** |
 | DB columns (passage / avatars) | Verified | `week_captures.passage`, `profiles.avatar_url`, `profiles.avatar_emoji` via PostgREST |
-| CLI / Xcode Archive upload | **Blocked** | Exact: *No Accounts* + *No profiles for com.aftersermon.app* — sign into Xcode Accounts, then Archive in UI |
-| Physical iPhone for Dev profile | **You** | None connected on last check (simulators only) |
-| Apple Developer account | **You** | Paid membership + Team in Signing |
-| App Store Connect app record | **You** | Create app, bundle ID, screenshots |
-| Age rating questionnaire | **You** | Suggested answers below |
-| Screenshots / app icon | **You** | Spec list below (repo icon is 1024 Capacitor placeholder) |
-| TestFlight / review submission | **You** | After Archive upload exists |
+| ASC **Name** (unique) | **Blocked — you now** | Plain “Sundaily” taken — try candidates in § Name |
+| Age rating / App Privacy / Export compliance | **You in ASC** | Suggested answers below |
+| Screenshot upload + build select | **You in ASC** | Upload `asc/` files; select build 1.0 (2) if already processing |
+| CLI / Xcode Archive upload | **You if no build yet** | Sign into Xcode Accounts → Archive → Distribute |
+| TestFlight / Submit for Review | **You** | After Name + metadata + build ready |
 
 ---
 
@@ -87,10 +87,20 @@ Store copy: name the four beats only if needed — **Capture → Meditate → Ap
 
 ## English (US)
 
-**Name** (30)  
-Sundaily
+**Name** (30) — ASC listing name (must be unique; plain **Sundaily** rejected)
 
-> Change this in App Store Connect → App Information → **Name**. Repo/display name alone does not update the store listing. Name must be unique on the App Store.
+Try in order until ASC accepts (device display name stays **Sundaily**):
+
+| Candidate | Chars |
+| --- | --- |
+| `Sundaily 함께묵상` | 13 |
+| `Sundaily Together` | 17 |
+| `Sundaily Daily Word` | 19 |
+| `Sundaily: Sunday Word` | 21 |
+| `Sundaily Pray` | 13 |
+| `Sundaily Weekly Word` | 20 |
+
+> App Store Connect → App Information → **Name**. Repo/`CFBundleDisplayName` alone does not set the store listing.
 
 **Subtitle** (30) — recommended  
 From Sunday to Daily
@@ -171,8 +181,9 @@ That’s all we’re after.
 
 ## 한국어
 
-**이름** (30)  
-Sundaily
+**이름** (30) — ASC 고유 이름 (단순 “Sundaily”는 이미 거절됨)
+
+우선 시도: `Sundaily 함께묵상` → `Sundaily Together` → `Sundaily Daily Word` (기기 표시명은 Sundaily 유지)
 
 **부제** (30) — 추천  
 주일에서 매일로
@@ -341,7 +352,7 @@ sips -g pixelWidth -g pixelHeight public/app-store/asc/*.png
 
 **App icon:** 1024×1024 PNG, no alpha, no rounded mask.
 
-**Name uniqueness:** Apple may reject plain **Sundaily**. Try (≤30): `Sundaily: Sunday Word`, `Sundaily Daily Word`, `Sundaily Together`, `Sundaily 함께묵상`, `Sundaily Pray`. Display name on device can stay **Sundaily**.
+**Name uniqueness:** Plain **Sundaily** already rejected. Use a candidate from the Name table above. Device display name can stay **Sundaily**.
 
 ### 7. Review notes (paste into App Store Connect)
 
@@ -398,11 +409,11 @@ Do **not** invent certificates or upload without your Apple team credentials.
 
 ## Human next steps (short list)
 
-**Do these in order — automation already hit the wall at signing/accounts:**
+**Do these in ASC order (screenshots + URLs ready in repo):**
 
-1. **Xcode → Settings → Accounts** — add Apple ID (fixes CLI/UI *No Accounts*).  
-2. **Signing & Capabilities** — Team for `com.aftersermon.app`; clear “No profiles” (Automatically manage signing).  
-3. Optional Dev device: connect iPhone once so a Development profile can register a UDID.  
-4. **Product → Archive** → Distribute → App Store Connect (build selection in ASC needs this upload).  
-5. ASC metadata: Privacy + Support URLs (already live), paste listing copy below, icon/screenshots, age rating, review notes.  
-6. Select uploaded build → TestFlight → Submit for Review.
+1. **NOW — unique App Name** — App Information → Name → try `Sundaily 함께묵상` (or next candidate). Do not resubmit plain “Sundaily”.  
+2. Paste **Privacy** + **Support** URLs (table above; both HTTP 200).  
+3. Complete **Age Rating** (expect ~4+) + **App Privacy** nutrition labels.  
+4. Upload screenshots from `public/app-store/asc/` (iPhone 6.5" then iPad 13", order 01→05).  
+5. **Build:** select **1.0 (2)** if already in ASC; otherwise Xcode Archive → Distribute first.  
+6. Export compliance: HTTPS / standard TLS only → exempt. Review notes + invite code → Submit for Review.
