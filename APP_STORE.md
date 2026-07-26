@@ -320,22 +320,28 @@ Third parties to mention in privacy answers if asked: **Supabase** (auth + datab
 ### 6. Screenshots & icon
 
 **Composer (in app):** [http://localhost:3000/app-store-shots](http://localhost:3000/app-store-shots)  
-(로그인 없이 · 한국어 / English 토글 · 9:16 슬라이드 캡처)
+(로그인 없이 · 한국어 / English 토글 · 실제 앱 UI 슬라이드)
 
-Value-prop shot order (KO + EN):
+**Do not upload** legacy `public/app-store/app-store-en-*.png` (old “After Sermon” / tiger marketing). Use only `public/app-store/asc/` regenerated from the composer:
 
-| # | Value prop (KO) | Value prop (EN) | UI |
+```bash
+node scripts/capture-asc-shots.mjs
+sips -g pixelWidth -g pixelHeight public/app-store/asc/*.png
+```
+
+| # | File | Value prop (EN) | Real UI |
 | --- | --- | --- | --- |
-| 1 | 주일에 들은 은혜, 매일 나누는 삶 | From Sunday to Daily | Login / hero |
-| 2 | 주일 — 말씀 담기 | Sunday — Capture | Capture |
-| 3 | 월–화 — 말씀 묵상 | Mon–Tue — Meditate | Today check-orb |
-| 4 | 수–목 — 삶에 적용 | Wed–Thu — Apply | From the heart |
-| 5 | 금–토 — 돌아보고 준비 | Fri–Sat — Reflect | Group invite |
-| 6 | 친구와 함께. 심플하게. | With friends. Simple. | Prayer map |
+| 1 | `*-01-hero` | From Sunday to Daily | Landing — Sundaily + Google sign-in |
+| 2 | `*-02-capture` | Capture Sunday’s Word | Sermon — Chapter + Passage + one-line |
+| 3 | `*-03-daily` | Pray — then check in | Daily — Read · Reflect · One-line + Pray & check |
+| 4 | `*-04-prayed` | Send “I prayed” | Daily — Done + From the heart |
+| 5 | `*-05-footprints` | See prayer footprints | Group — invite 3/8 + footprints |
 
-**ASC sizes (typical):** 1290×2796 (6.7") — scale up the 9:16 frame if needed.
+**ASC sizes in repo:** iPhone 6.5" **1284×2778**, iPad 13" **2048×2732**.
 
 **App icon:** 1024×1024 PNG, no alpha, no rounded mask.
+
+**Name uniqueness:** Apple may reject plain **Sundaily**. Try (≤30): `Sundaily: Sunday Word`, `Sundaily Daily Word`, `Sundaily Together`, `Sundaily 함께묵상`, `Sundaily Pray`. Display name on device can stay **Sundaily**.
 
 ### 7. Review notes (paste into App Store Connect)
 

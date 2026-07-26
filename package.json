@@ -9,7 +9,8 @@
     "lint": "eslint",
     "cap:sync": "npx cap sync ios",
     "cap:open:ios": "npx cap open ios",
-    "cap:copy": "npx cap copy ios"
+    "cap:copy": "npx cap copy ios",
+    "asc:shots": "node scripts/capture-asc-shots.mjs"
   },
   "dependencies": {
     "@capacitor/app": "^8.1.1",
@@ -32,6 +33,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
+    "playwright": "^1.62.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
